@@ -7,7 +7,7 @@
 <BODY style="font-family: arial, tahoma;">
 	<TABLE cellpadding="30" align="center" style="margin-top: 50px;">
 		<TR>
-			<TD><span style="font-size: 50px; color: #c0c0c0;">ESCRITA WEB</span>
+			<TD><span style="font-size: 50px; color: #c0c0c0;">BRAZUCA WEB</span>
 				<p>
 					<b>500.</b>
 					<ins>Ocorreu um erro.</ins>
