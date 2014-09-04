@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view>
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<title>SapWeb</title>
+		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/geral.css" />
+		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/sgnweb.css" />
+	</h:head>
+
+	<h:body onload="javascript:document.getElementById('login').focus();">
+
+
+		<div id="divDashBoard">
+
+			<div style="position: relative; top: 30px; margin-left: 3%;">
+				<h:graphicImage width="22%" height="75" value="/resources/images/logo.jpg" />
+			</div>
+
+			<h:form id="formLogin" prependId="false">
+
+				<p:growl id="msgLogin" globalOnly="false" showDetail="true" showSummary="false" />
+				<br />
+				<br />
+				<br />
+				<br />
+				<div align="center">
+
+					<p:panel id="panelLogin" header="Escrita WEB - ADM" style="width: 280px; text-align: left">
+
+						<h:panelGrid style="width: 245px;" columns="2" columnClasses="coluna30, coluna70">
+
+							<p:outputLabel for="login" value="Login:" />
+							<p:inputText id="login" value="#{autenticacaoFaces.usuario.login}" style="width: 100%;" required="true" requiredMessage="UsuÃÂ¡rio: ObrigatÃÂ³rio" />
+
+							<p:outputLabel for="senha" value="Senha:" />
+							<p:password id="senha" value="#{autenticacaoFaces.usuario.senha}" feedback="false" style="width: 100%;" required="true" requiredMessage="Senha: ObrigatÃÂ³rio" />
+
+							<p:outputLabel for="smEmpresa" value="Empresa:" />
+							<p:selectOneMenu id="smEmpresa" value="#{autenticacaoFaces.empresa.id}" style="width: 105%;" required="true" requiredMessage="Empresa: ObrigatÃÂ³rio.">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItems value="#{autenticacaoFaces.empresas}" />
+							</p:selectOneMenu>
+
+						</h:panelGrid>
+						<br />
+
+
+						<div align="right" style="width: 100%">
+							<p:commandButton ajax="false" title="Acessar o Escrita WEB" id="btnAcessar" value="Autenticar" style="height: 35px;width: 135px" icon="cadeado" action="#{autenticacaoFaces.login}" />
+						</div>
+
+
+					</p:panel>
+
+				</div>
+
+			</h:form>
+
+
+			<div style="position: fixed; width: 100%; height: 60px; padding: 0px; bottom: 200px; margin-left: 3%;">
+				<h:graphicImage width="95%" value="/resources/images/rodape.jpg" />
+			</div>
+
+
+		</div>
+
+	</h:body>
+
+</f:view>
+
+</html>
