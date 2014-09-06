@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14100109762390" configfile="/SapWebBrazuca/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf14100109851211" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14100109851212 pf14100109851213 pf14100109851214" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/dashboard" id="pf14100109851215" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14100109851212 pf14100109851213" path="/pages/dashboard.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/login" id="pf14100109851226" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf14100109851214" path="/pages/login.xhtml"/>
+  <links id="pf14100109851212" target="pf14100109851215" source="pf14100109851211" outcome="sucesso"/>
+  <links id="pf14100109851213" target="pf14100109851215" source="pf14100109851211" outcome="entrar" redirect="true"/>
+  <links id="pf14100109851214" target="pf14100109851226" source="pf14100109851211" outcome="sair" redirect="true"/>
+</pageflow:Pageflow>

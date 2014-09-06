@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.sapweb.brazuca.dao.EmpresaDAO;
@@ -21,7 +21,7 @@ import br.com.topsys.web.faces.TSMainFaces;
 import br.com.topsys.web.util.TSFacesUtil;
 
 @SuppressWarnings("serial")
-@ViewScoped
+@SessionScoped
 @ManagedBean(name = "autenticacaoFaces")
 public class AutenticacaoFaces extends TSMainFaces {
 

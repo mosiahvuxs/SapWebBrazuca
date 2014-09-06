@@ -12,13 +12,11 @@
 
 	<p:layout fullPage="true">
 
-		<p:layoutUnit position="north" size="100" rendered="false">
-			<div align="center" style="margin-top:2%;background:#2E9AFE;">
-				<h:outputText value="BRAZUCA" style="font-size:40px;font-family:Arial;color: #FFFFFF;"/>
-			</div>
+		<p:layoutUnit position="north" size="100">
+			
 		</p:layoutUnit>
 
-		<p:layoutUnit position="center" >
+		<p:layoutUnit position="center">
 
 			<h:form id="formLogin" prependId="false">
 				
@@ -28,7 +26,7 @@
 				
 				<div align="center">
 
-					<p:panel id="panelLogin" header="SapWeb - ADM" style="width: 280px; text-align: left">
+					<p:panel id="panelLogin" header="SapWeb - Acesso" style="width: 280px; text-align: left">
 
 						<h:panelGrid style="width: 245px;" columns="2" columnClasses="coluna30, coluna70">
 							<p:outputLabel for="login" value="Login:" />
@@ -45,7 +43,7 @@
 
 						<br />
 
-						<div align="right" style="width: 100%">
+						<div align="right" style="width: 100%; margin-left: -3px;">
 							<p:commandButton ajax="false" title="Acessar o SapWeb" id="btnAcessar" value="Autenticar" style="height: 35px;width: 135px" icon="cadeado" action="#{autenticacaoFaces.login}" />
 						</div>
 
