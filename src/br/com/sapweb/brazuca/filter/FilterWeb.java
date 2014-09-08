@@ -60,7 +60,8 @@ public class FilterWeb implements Filter {
 			}
 
 		} else if (uri.contains("/login.xhtml") && !TSUtil.isEmpty(r.getSession().getAttribute(Constantes.USUARIO_CONECTADO))) {
-
+			
+			r.getSession().removeAttribute(Constantes.AUTENTICACAO_FACES);
 			r.getSession().removeAttribute(Constantes.USUARIO_CONECTADO);
 
 		}

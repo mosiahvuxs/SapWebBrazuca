@@ -1,6 +1,6 @@
 package br.com.sapweb.brazuca.faces;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -37,30 +37,29 @@ public class AutenticacaoFaces extends TSMainFaces {
 
 	public AutenticacaoFaces() {
 
-		clearFields();
-
-		setTabAtiva(new Integer(0));
-
-		setNomeTela("Área de Trabalho");
+		this.clearFields();
+		this.setNomeTela("Área de Trabalho");
 
 	}
 
 	protected void clearFields() {
-
+		
+		this.tabAtiva = 0;
+		
 		this.usuario = new Usuario();
-
-		this.menus = Collections.emptyList();
-
-		this.PermissaoSelecionada = new Permissao();
-
 		this.empresa = new Empresa();
-
+		this.PermissaoSelecionada = new Permissao();
+		
+		this.menus = new ArrayList<Menu>();
+		
 		this.empresas = this.initCombo(new EmpresaDAO().pesquisar(new Empresa(Boolean.TRUE)), "id", "descricao");
 
 		if (!TSUtil.isEmpty(this.empresas) && this.empresas.size() == 1) {
 
 			this.empresa.setId(new Long(this.empresas.get(0).getValue().toString()));
 		}
+		
+		
 
 	}
 
@@ -70,9 +69,9 @@ public class AutenticacaoFaces extends TSMainFaces {
 			TSFacesUtil.removeManagedBeanInSession(this.PermissaoSelecionada.getMenu().getManagedBeanReset());
 		}
 
-		setTela(this.PermissaoSelecionada.getMenu().getUrl());
-		setNomeTela("Area de Trabalho > " + PermissaoSelecionada.getMenu().getMenuPai().getDescricao() + " > " + PermissaoSelecionada.getMenu().getDescricao());
-		setTabAtiva(Integer.valueOf(this.menus.indexOf(this.PermissaoSelecionada.getMenu().getMenuPai())));
+		this.setTela(this.PermissaoSelecionada.getMenu().getUrl());
+		this.setNomeTela("Area de Trabalho > " + PermissaoSelecionada.getMenu().getMenuPai().getDescricao() + " > " + PermissaoSelecionada.getMenu().getDescricao());
+		this.setTabAtiva(Integer.valueOf(this.menus.indexOf(this.PermissaoSelecionada.getMenu().getMenuPai())));
 
 		return SUCESSO;
 	}

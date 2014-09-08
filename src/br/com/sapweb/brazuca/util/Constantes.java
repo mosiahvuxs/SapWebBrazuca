@@ -8,6 +8,7 @@ public final class Constantes {
 
 	}
 
+	public static final String AUTENTICACAO_FACES = "autenticacaoFaces";
 	public static final String USUARIO_CONECTADO = "usuarioConectado";
 	public static final String USUARIOS_CONECTADOS = "usuariosConectados";
 	public static final String EMPRESA = "empresa";
