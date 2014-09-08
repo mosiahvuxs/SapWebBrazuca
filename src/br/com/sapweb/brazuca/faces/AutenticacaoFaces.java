@@ -112,6 +112,7 @@ public class AutenticacaoFaces extends TSMainFaces {
 	public String logout() {
 
 		TSFacesUtil.removeObjectInSession(Constantes.USUARIO_CONECTADO);
+		TSFacesUtil.removeObjectInSession(Constantes.EMPRESA);
 
 		TSFacesUtil.getRequest().getSession().invalidate();
 

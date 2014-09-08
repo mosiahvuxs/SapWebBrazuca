@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.sapweb.brazuca.util.Constantes;
 import br.com.topsys.util.TSUtil;
 
-@WebFilter(filterName = "/filterWeb", urlPatterns="/pages/*")
+@WebFilter(filterName = "/initFilter", urlPatterns = "/pages/*")
 public class FilterWeb implements Filter {
 
 	@Override
@@ -34,20 +34,40 @@ public class FilterWeb implements Filter {
 
 		HttpServletResponse resp = (HttpServletResponse) response;
 
+		Object sessao = request.getServletContext().getAttribute("initSessao");
+
+		if (sessao != null) {
+
+			r.getSession().removeAttribute(Constantes.USUARIO_CONECTADO);
+			r.getSession().removeAttribute(Constantes.EMPRESA);
+
+			request.getServletContext().setAttribute("initSessao", null);
+		}
+
 		String uri = r.getRequestURI();
 
 		if (uri != null) {
-			
+
 			uri = uri.substring(uri.lastIndexOf("/"), uri.length());
 		}
 
-		if (!TSUtil.isEmpty(r.getSession().getAttribute(Constantes.USUARIO_CONECTADO)) && (uri.equals("/dashboard.xhtml")) && (!TSUtil.isEmpty(r.getSession().getAttribute(Constantes.EMPRESA))) || uri.equals("/login.xhtml")) {
+		if (!uri.contains("/login.xhtml")) {
+
+			if (TSUtil.isEmpty(r.getSession().getAttribute(Constantes.USUARIO_CONECTADO))) {
+
+				resp.sendRedirect(r.getContextPath() + "/pages/login.xhtml");
+
+			}
+
+		} else if (uri.contains("/login.xhtml") && !TSUtil.isEmpty(r.getSession().getAttribute(Constantes.USUARIO_CONECTADO))) {
+
+			r.getSession().removeAttribute(Constantes.USUARIO_CONECTADO);
+
+		}
+
+		if (!response.isCommitted()) {
 
 			chain.doFilter(request, response);
-
-		} else {
-
-			resp.sendRedirect(r.getContextPath() + "/pages/login.xhtml");
 
 		}
 
