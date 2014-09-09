@@ -1,4 +1,8 @@
-<ui:composition xmlns:pas="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
 	
 	<ui:param name="mbean" value="#{conferenciaPdvFaces}"/>
 	
@@ -107,11 +111,12 @@
 				
 			</h:form>
 			
-			<p:dialog width="720" showEffect="fade" focus="formDialog:leitorCodigoBarras" height="500" appendTo="@(body)" header="Conferência de Itens" modal="true" widgetVar="dlgConferencia">
+			<p:dialog focus="formDialog:codigoBarras" position="center" width="60%" showEffect="fade" height="500" appendTo="@(body)" header="Conferência de Itens" modal="true" widgetVar="dlgConferencia">
 				
 				<h:form id="formDialog">
 				
-				<div align="center">
+				<p:hotkey bind="ESC" handler="PF('dlgConferencia').hide();"/>
+				
 				<h:panelGrid columns="4">
 					
 					<p:outputLabel for="cliente" value="Cliente" style="font-weight: bold;"/>
@@ -125,21 +130,21 @@
 					<p:inputText readonly="true" id="dtDocumentoDl" value="07/09/2014" style="font-weight: bold;" tabindex="7"/>
 					
 				</h:panelGrid>
-				</div>
 				
 				<br/>
 				
-				<div align="center">
-					<h:panelGrid columns="1">
-						<p:inputText placeholder="Código de Barras" id="leitorCodigoBarras" style="width: 400px; font-weight: bold;" tabindex="1"/>
-					</h:panelGrid>
-				</div>
+				<h:panelGrid columns="2">
+					<p:outputLabel for="codigoBarras" value="Código de Barras" style="font-weight: bold;"/>
+					<p:outputLabel for="quantidade" value="Quantidade" style="font-weight: bold;"/>
+					<p:inputText id="codigoBarras" style="width: 400px; font-weight: bold;" tabindex="1"/>
+					<p:spinner min="0" max="10" value="1" size="8" maxlength="10" id="quantidade" tabindex="2"/>
+				</h:panelGrid>
 				
 				<br/>
 				
-				<p:fieldset legend="Itens do Pedido" style="width: 650px;">
+				<p:fieldset id="fsItens" legend="Itens do Pedido" style="width: 730px;">
 				
-					<p:dataTable scrollable="true" scrollRows="10" emptyMessage="Nenhum P.D.V encontrado" value="10">
+					<p:dataTable id="gridItens" emptyMessage="Nenhum P.D.V encontrado" value="10">
 						
 						<p:column headerText="Código do Item">
 							<div align="center">
@@ -151,14 +156,22 @@
 								<h:outputText value="Item A" style="font-weight: bold;"/>
 							</div>
 						</p:column>
-						<p:column headerText="Qtd Requisitada">
+						<p:column headerText="Qtd Requisitada" styleClass="coluna20">
 							<div align="center">
 								<h:outputText value="10" style="font-weight: bold;"/>
 							</div>
 						</p:column>
-						<p:column headerText="Qtd Liberada">
+						<p:column headerText="Qtd Liberada" styleClass="coluna20">
 							<div align="center">
-								<p:spinner min="0" max="10" value="${5}" size="10"/>
+								<h:outputText value="10" style="font-weight: bold;"/>
+								
+							</div>
+						</p:column>
+						<p:column headerText="Remover" style="width: 50px;">
+							<div align="center">
+								<p:commandLink process="@this">
+									<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+								</p:commandLink>
 							</div>
 						</p:column>
 						

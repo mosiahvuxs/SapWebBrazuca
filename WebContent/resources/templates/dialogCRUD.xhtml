@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:component xmlns="http://www.w3.org/1999/xhtml"
-              xmlns:ui="http://java.sun.com/jsf/facelets"
-              xmlns:p="http://primefaces.org/ui">
+<ui:component xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 
-  <p:confirmDialog message="Confirma exclusão do registro?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdExcluir">
+  <p:confirmDialog message="Confirma exclusÃ£o do registro?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdExcluir">
 	    
-	    <p:commandButton value="Sim" onclick="cdExcluir.hide()" action="#{mbean.deleteEvent}" update="opPesquisa" process="@this opPesquisa" />
-	    <p:commandButton value="Não" onclick="cdExcluir.hide()" />
+	    <p:commandButton value="Sim" onclick="PF('cdExcluir').hide();" action="#{mbean.deleteEvent}" update="opPesquisa" process="@this opPesquisa" />
+	    <p:commandButton value="NÃ£o" onclick="PF('cdExcluir').hide();" />
 	    
   </p:confirmDialog>
 

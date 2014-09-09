@@ -1,8 +1,12 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
 
-	<p:tabView id="tabview" dynamic="false" activeIndex="#{mbean.tabIndex}">
+	<p:tabView prependId="false" dynamic="false" activeIndex="#{mbean.tabIndex}">
 
-		<p:tab id="tabCadastro" title="Cadastro">
+		<p:tab title="Cadastro">
 
 			<h:form prependId="false" id="formCadastro" enctype="multipart/form-data">
 
@@ -30,7 +34,7 @@
 
 		<ui:insert name="tabsMeio" />
 
-		<p:tab id="tabPesquisa" title="Pesquisa">
+		<p:tab title="Pesquisa">
 
 			<h:form id="formPesquisa" prependId="false">
 
@@ -75,7 +79,7 @@
 
 									<div align="center">
 
-										<p:commandLink type="button" icon="delete16" id="clExcluir" onclick="cdExcluir.show()" global="false">
+										<p:commandLink type="button" icon="delete16" id="clExcluir" onclick="PF('cdExcluir').show()" global="false">
 
 											<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
 											<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
