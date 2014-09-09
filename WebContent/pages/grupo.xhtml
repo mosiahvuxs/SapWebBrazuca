@@ -15,36 +15,44 @@
 		
 		<h:panelGrid columns="1" style="width:60%">
 
-				<p:commandButton value="Adicionar Permissão" icon="ui-icon-plus" action="#{mbean.addPermissao}" />
+				<p:commandButton value="Adicionar Permissão" icon="ui-icon-plus" action="#{mbean.addPermissao}" style="margin-left: 0px;"/>
 
 				<p:outputPanel id="panelPermissaoUpdate" autoUpdate="true">
 
 					<p:dataTable id="gridPermissao" emptyMessage="Nenhuma permissão adicionada" value="#{mbeanModel.permissoes}" var="permissao">
 
-						<p:column headerText="Menu" styleClass="coluna80">
+						<p:column headerText="Menu" style="width: 200px;">
 							<p:selectOneMenu id="menu" value="#{permissao.menu.id}" required="true"  requiredMessage="Menu: Campo obrigatório" style="width:100%;text-transform: uppercase">
 								<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 								<f:selectItems value="#{mbean.comboMenus}" />
 							</p:selectOneMenu>
 						</p:column>
 
-						<p:column headerText="Inserir" style="text-align: center" styleClass="coluna5">
-							<p:selectBooleanCheckbox value="#{permissao.flagInserir}" />
+						<p:column headerText="Inserir">
+							<div align="center">
+								<p:selectBooleanCheckbox value="#{permissao.flagInserir}" />
+							</div>
 						</p:column>
 
-						<p:column headerText="Alterar" style="text-align: center" styleClass="coluna5">
-							<p:selectBooleanCheckbox value="#{permissao.flagAlterar}" />
+						<p:column headerText="Alterar">
+							<div align="center">
+								<p:selectBooleanCheckbox value="#{permissao.flagAlterar}" />
+							</div>
 						</p:column>
 
-						<p:column headerText="Excluir" style="text-align: center" styleClass="coluna5">
-							<p:selectBooleanCheckbox value="#{permissao.flagExcluir}" />
+						<p:column headerText="Excluir">
+							<div align="center">
+								<p:selectBooleanCheckbox value="#{permissao.flagExcluir}" />
+							</div>
 						</p:column>
 
-						<p:column headerText="Remover" style="text-align: center" styleClass="coluna5">
-							<p:commandLink action="#{mbean.delPermissao}" process="@this">
-								<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
-								<f:setPropertyActionListener target="#{mbean.permissaoSelecionada}" value="#{permissao}" />
-							</p:commandLink>
+						<p:column headerText="Remover">
+							<div align="center">
+								<p:commandLink action="#{mbean.delPermissao}" process="@this">
+									<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+									<f:setPropertyActionListener target="#{mbean.permissaoSelecionada}" value="#{permissao}" />
+								</p:commandLink>
+							</div>
 						</p:column>
 
 					</p:dataTable>
@@ -52,7 +60,6 @@
 				</p:outputPanel>
 
 			</h:panelGrid>
-		
 
 	</ui:define>
 

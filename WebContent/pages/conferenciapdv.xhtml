@@ -1,8 +1,8 @@
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition xmlns:pas="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 	
 	<ui:param name="mbean" value="#{conferenciaPdvFaces}"/>
 	
-	<p:tabView  id="view">
+	<p:tabView prependId="false">
 	
 		<p:tab title="Conferência">
 			
@@ -75,7 +75,7 @@
 						</f:facet>
 						<p:column headerText="Conferir">
 							<div align="center">
-								<p:commandLink oncomplete="dlgConferencia.show();">
+								<p:commandLink onclick="PF('dlgConferencia').show();" type="button">
 									<h:graphicImage value="/resources/images/edit.png"/>
 								</p:commandLink>
 							</div>
@@ -107,10 +107,11 @@
 				
 			</h:form>
 			
-			<p:dialog id="dlConferencia" draggable="false" position="center" header="Conferência de Itens" modal="true" appendTo="@(body)" width="700" height="500" widgetVar="dlgConferencia">
+			<p:dialog width="720" showEffect="fade" focus="formDialog:leitorCodigoBarras" height="500" appendTo="@(body)" header="Conferência de Itens" modal="true" widgetVar="dlgConferencia">
 				
-				<h:form prependId="false">
+				<h:form id="formDialog">
 				
+				<div align="center">
 				<h:panelGrid columns="4">
 					
 					<p:outputLabel for="cliente" value="Cliente" style="font-weight: bold;"/>
@@ -118,27 +119,27 @@
 					<p:outputLabel for="dtLancamentoDl" value="Data de Lançamento" style="font-weight: bold;"/>
 					<p:outputLabel for="dtDocumentoDl" value="Data do Documento" style="font-weight: bold;"/>
 					
-					<p:inputText disabled="true" id="cliente" value="PDV Ltda." style="width: 200px; font-weight: bold;" tabindex="4"/>
-					<p:inputText disabled="true" id="numeroPedidoDl" value="123456" style="font-weight: bold;" tabindex="5"/>
-					<p:inputText disabled="true" id="dtLancamentoDl" value="07/09/2014" style="font-weight: bold;" tabindex="6"/>
-					<p:inputText disabled="true" id="dtDocumentoDl" value="07/09/2014" style="font-weight: bold;" tabindex="7"/>
+					<p:inputText readonly="true" id="cliente" value="PDV Ltda." style="width: 250px; font-weight: bold;" tabindex="4"/>
+					<p:inputText readonly="true" id="numeroPedidoDl" value="123456" style="font-weight: bold;" tabindex="5"/>
+					<p:inputText readonly="true" id="dtLancamentoDl" value="07/09/2014" style="font-weight: bold;" tabindex="6"/>
+					<p:inputText readonly="true" id="dtDocumentoDl" value="07/09/2014" style="font-weight: bold;" tabindex="7"/>
 					
 				</h:panelGrid>
+				</div>
 				
 				<br/>
 				
-				<h:panelGrid columns="3" id="pgLeitor">
-					<p:outputLabel value="Código de Barras" for="leitorCodigoBarras" style="font-weight: bold;"/>
-					<p:outputLabel value="Quantidade" for="quantidade" style="font-weight: bold;"/>
-					<h:panelGroup/>
-					<p:inputText autofocus="autofocus" id="leitorCodigoBarras" style="width: 400px; font-weight: bold;" tabindex="1"/>
-					<p:spinner id="quantidade" style="font-weight: bold;" size="10" min="1" value="#{1}" tabindex="2"/>
-					<p:commandButton icon="add16" value="Adicionar" tabindex="3"/>
-				</h:panelGrid>
+				<div align="center">
+					<h:panelGrid columns="1">
+						<p:inputText placeholder="Código de Barras" id="leitorCodigoBarras" style="width: 400px; font-weight: bold;" tabindex="1"/>
+					</h:panelGrid>
+				</div>
+				
+				<br/>
 				
 				<p:fieldset legend="Itens do Pedido" style="width: 650px;">
 				
-					<p:dataTable scrollable="true" scrollRows="10" emptyMessage="Nenhum P.D.V encontrado" value="10" style="width: 650px;">
+					<p:dataTable scrollable="true" scrollRows="10" emptyMessage="Nenhum P.D.V encontrado" value="10">
 						
 						<p:column headerText="Código do Item">
 							<div align="center">
@@ -150,14 +151,14 @@
 								<h:outputText value="Item A" style="font-weight: bold;"/>
 							</div>
 						</p:column>
-						<p:column headerText="Qtd Liberada">
+						<p:column headerText="Qtd Requisitada">
 							<div align="center">
 								<h:outputText value="10" style="font-weight: bold;"/>
 							</div>
 						</p:column>
-						<p:column headerText="Qtd Requisitada">
+						<p:column headerText="Qtd Liberada">
 							<div align="center">
-								<p:spinner min="0" max="20" value="#{10}"/>
+								<p:spinner min="0" max="10" value="${5}" size="10"/>
 							</div>
 						</p:column>
 						
@@ -170,7 +171,7 @@
 				<div align="center">
 					<h:panelGrid style="margin-left: -2px;" columns="2">
 						<p:commandButton value="Salvar" icon="salvar"/>
-						<p:commandButton value="Sair" icon="cancelar" onclick="dlgConferencia.hide()"/>
+						<p:commandButton type="button" value="Sair" icon="cancelar" onclick="PF('dlgConferencia').hide();"/>
 					</h:panelGrid>
 				</div>
 				
