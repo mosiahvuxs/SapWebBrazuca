@@ -2,101 +2,118 @@
 	
 	<ui:param name="mbean" value="#{importacaoPdvFaces}"/>
 	
-	<h:form id="form">
-		
-		<br/>
-		
-		<p:fieldset legend="Filtros" style="width: 97%">
+	<p:tabView>
+	
+		<p:tab title="Importação">
 			
-			<h:panelGrid columns="3">
-			
-				<p:fieldset legend="Data de Lançamento">
-					
-					<h:panelGrid columns="2">
-						<p:outputLabel for="dtLacamentoInicial" value="Data Inicial" />
-						<p:outputLabel for="dtLacamentoFinal" value="Data Final" />
-						<p:calendar id="dtLacamentoInicial" pattern="dd/mm/yyyy" size="15"/>
-						<p:calendar id="dtLacamentoFinal" pattern="dd/mm/yyyy" size="15"/>
-					</h:panelGrid>
-					
-				</p:fieldset>
+			<h:form id="form">
+		
+				<br/>
 				
-				<p:fieldset legend="Data de Entrega">
+				<p:fieldset legend="Filtros" style="width: 97%">
 					
-					<h:panelGrid columns="2">
-						<p:outputLabel for="dtEntregaInicial" value="Data Inicial"/>
-						<p:outputLabel for="dtEntregaFinal" value="Data Final"/>
-						<p:calendar id="dtEntregaInicial" pattern="dd/mm/yyyy" size="15"/>
-						<p:calendar id="dtEntregaFinal" pattern="dd/mm/yyyy" size="15"/>
-					</h:panelGrid>
+					<h:panelGrid columns="4">
 					
-				</p:fieldset>
-				
-				<p:fieldset legend="Data do Documento">
+						<p:fieldset legend="Pedido">
+							<h:panelGrid columns="1">
+								<p:outputLabel for="numeroPedido" value="Número" style="font-weight: bold;"/>
+								<p:inputText id="numeroPedido"/>
+							</h:panelGrid>
+						</p:fieldset>
 					
-					<h:panelGrid columns="2">
-						<p:outputLabel for="dtDocumentoInicial" value="Data Inicial" />
-						<p:outputLabel for="dtDocumentoFinal" value="Data Final"/>
-						<p:calendar id="dtDocumentoInicial" pattern="dd/mm/yyyy" size="15"/>
-						<p:calendar id="dtDocumentoFinal" pattern="dd/mm/yyyy" size="15"/>
-					</h:panelGrid>
-					
-				</p:fieldset>
-			
-			</h:panelGrid>	
-			
-			<h:panelGrid columns="2">
-				<p:commandButton value="Pesquisar" icon="pesquisar" style="height:28px; width: 105px;"/>
-				<p:commandButton value="Nova Pesquisa" icon="novo" style="height:28px; width: 130px;"/>
-			</h:panelGrid>		
-			
-		</p:fieldset>
-		
-		<br/>
-		
-		<p:fieldset legend="Resultado"  style="width: 97%">
-			
-			<p:dataTable emptyMessage="Nenhum P.D.V encontrado" value="10">
-				<f:facet name="header">
-					Pedido de Venda
-				</f:facet>
-				<p:column headerText="Selecione">
-					<f:facet name="header">
-					<p:outputLabel value="Todos" for="todos"/>
-					<div align="center">
-						<p:selectBooleanCheckbox id="todos">
+						<p:fieldset legend="Data de Lançamento">
 							
-						</p:selectBooleanCheckbox>
-					</div>
-					</f:facet>
-					<div align="center">
-						<p:selectBooleanCheckbox value="true"/>
-					</div>
-				</p:column>
-				<p:column headerText="Cliente">
-					<div align="center">
-						<h:outputText value="PDV Ltda."/>
-					</div>
-				</p:column>
-				<p:column headerText="Nº do Pedido">
-					<div align="center">
-						<h:outputText value="123456"/>
-					</div>
-				</p:column>
-				<p:column headerText="Data de Lançamento">
-					<div align="center">
-						<h:outputText value="07/09/2014"/>
-					</div>
-				</p:column>
-				<p:column headerText="Data Documento">
-					<div align="center">
-						<h:outputText value="07/09/2014"/>
-					</div>
-				</p:column>
-			</p:dataTable>
+							<h:panelGrid columns="2">
+								<p:outputLabel for="dtLacamentoInicial" value="Data Inicial" style="font-weight: bold;"/>
+								<p:outputLabel for="dtLacamentoFinal" value="Data Final" style="font-weight: bold;"/>
+								<p:calendar id="dtLacamentoInicial" pattern="dd/mm/yyyy" size="15"/>
+								<p:calendar id="dtLacamentoFinal" pattern="dd/mm/yyyy" size="15"/>
+							</h:panelGrid>
+							
+						</p:fieldset>
+						
+						<p:fieldset legend="Data de Entrega">
+							
+							<h:panelGrid columns="2">
+								<p:outputLabel for="dtEntregaInicial" value="Data Inicial" style="font-weight: bold;"/>
+								<p:outputLabel for="dtEntregaFinal" value="Data Final" style="font-weight: bold;"/>
+								<p:calendar id="dtEntregaInicial" pattern="dd/mm/yyyy" size="15"/>
+								<p:calendar id="dtEntregaFinal" pattern="dd/mm/yyyy" size="15"/>
+							</h:panelGrid>
+							
+						</p:fieldset>
+						
+						<p:fieldset legend="Data do Documento">
+							
+							<h:panelGrid columns="2">
+								<p:outputLabel for="dtDocumentoInicial" value="Data Inicial" style="font-weight: bold;"/>
+								<p:outputLabel for="dtDocumentoFinal" value="Data Final" style="font-weight: bold;"/>
+								<p:calendar id="dtDocumentoInicial" pattern="dd/mm/yyyy" size="15"/>
+								<p:calendar id="dtDocumentoFinal" pattern="dd/mm/yyyy" size="15"/>
+							</h:panelGrid>
+							
+						</p:fieldset>
+					
+					</h:panelGrid>	
+					
+				</p:fieldset>
+				
+				<br/>
+				
+				<h:panelGrid columns="3">
+					<p:commandButton value="Pesquisar" icon="pesquisar" style="height:28px; width: 105px;"/>
+					<p:commandButton value="Nova Pesquisa" icon="novo" style="height:28px; width: 130px;"/>
+					<p:commandButton value="Importar" icon="salvar" style="height:28px; width: 105px;"/>
+				</h:panelGrid>
+				
+				<br/>
+				
+				<p:fieldset legend="Resultado"  style="width: 97%">
+					
+					<p:dataTable emptyMessage="Nenhum P.D.V encontrado" value="10">
+						<f:facet name="header">
+							Pedidos de Vendas
+						</f:facet>
+						<p:column headerText="Selecione">
+							<f:facet name="header">
+							<p:outputLabel value="Todos" for="todos"/>
+							<div align="center">
+								<p:selectBooleanCheckbox id="todos" value="#{true}"></p:selectBooleanCheckbox>
+							</div>
+							</f:facet>
+							<div align="center">
+								<p:selectBooleanCheckbox value="#{true}"/>
+							</div>
+						</p:column>
+						<p:column headerText="Cliente">
+							<div align="center">
+								<h:outputText value="PDV Ltda." style="font-weight: bold;"/>
+							</div>
+						</p:column>
+						<p:column headerText="Nº do Pedido">
+							<div align="center">
+								<h:outputText value="123456" style="font-weight: bold;"/>
+							</div>
+						</p:column>
+						<p:column headerText="Data de Lançamento">
+							<div align="center">
+								<h:outputText value="07/09/2014" style="font-weight: bold;"/>
+							</div>
+						</p:column>
+						<p:column headerText="Data Documento">
+							<div align="center">
+								<h:outputText value="07/09/2014" style="font-weight: bold;"/>
+							</div>
+						</p:column>
+					</p:dataTable>
+					
+				</p:fieldset>
+				
+			</h:form>
 			
-		</p:fieldset>
+		</p:tab>
 		
-	</h:form>
+	</p:tabView>
+	
 	
 </ui:composition>

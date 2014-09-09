@@ -2,4 +2,184 @@
 	
 	<ui:param name="mbean" value="#{conferenciaPdvFaces}"/>
 	
+	<p:tabView  id="view">
+	
+		<p:tab title="Conferência">
+			
+			<h:form prependId="false">
+		
+				<br/>
+				
+				<p:fieldset legend="Filtros" style="width: 97%">
+					
+					<h:panelGrid columns="4">
+					
+						<p:fieldset legend="Pedido">
+							<h:panelGrid columns="1">
+								<p:outputLabel for="numeroPedido" value="Número" style="font-weight: bold;"/>
+								<p:inputText id="numeroPedido"/>
+							</h:panelGrid>
+						</p:fieldset>
+					
+						<p:fieldset legend="Data de Lançamento">
+							
+							<h:panelGrid columns="2">
+								<p:outputLabel for="dtLacamentoInicial" value="Data Inicial" style="font-weight: bold;"/>
+								<p:outputLabel for="dtLacamentoFinal" value="Data Final" style="font-weight: bold;"/>
+								<p:calendar id="dtLacamentoInicial" pattern="dd/mm/yyyy" size="15"/>
+								<p:calendar id="dtLacamentoFinal" pattern="dd/mm/yyyy" size="15"/>
+							</h:panelGrid>
+							
+						</p:fieldset>
+						
+						<p:fieldset legend="Data de Entrega">
+							
+							<h:panelGrid columns="2">
+								<p:outputLabel for="dtEntregaInicial" value="Data Inicial" style="font-weight: bold;"/>
+								<p:outputLabel for="dtEntregaFinal" value="Data Final" style="font-weight: bold;"/>
+								<p:calendar id="dtEntregaInicial" pattern="dd/mm/yyyy" size="15"/>
+								<p:calendar id="dtEntregaFinal" pattern="dd/mm/yyyy" size="15"/>
+							</h:panelGrid>
+							
+						</p:fieldset>
+						
+						<p:fieldset legend="Data do Documento">
+							
+							<h:panelGrid columns="2">
+								<p:outputLabel for="dtDocumentoInicial" value="Data Inicial" style="font-weight: bold;"/>
+								<p:outputLabel for="dtDocumentoFinal" value="Data Final" style="font-weight: bold;"/>
+								<p:calendar id="dtDocumentoInicial" pattern="dd/mm/yyyy" size="15"/>
+								<p:calendar id="dtDocumentoFinal" pattern="dd/mm/yyyy" size="15"/>
+							</h:panelGrid>
+							
+						</p:fieldset>
+					
+					</h:panelGrid>	
+					
+				</p:fieldset>
+				
+				<br/>
+					
+				<h:panelGrid columns="2">
+					<p:commandButton value="Pesquisar" icon="pesquisar" style="height:28px; width: 105px;"/>
+					<p:commandButton value="Nova Pesquisa" icon="novo" style="height:28px; width: 130px;"/>
+				</h:panelGrid>
+				
+				<br/>
+				
+				<p:fieldset legend="Resultado" style="width: 97%">
+					
+					<p:dataTable emptyMessage="Nenhum P.D.V encontrado" value="10">
+						<f:facet name="header">
+							Pedidos de Venda
+						</f:facet>
+						<p:column headerText="Conferir">
+							<div align="center">
+								<p:commandLink oncomplete="dlgConferencia.show();">
+									<h:graphicImage value="/resources/images/edit.png"/>
+								</p:commandLink>
+							</div>
+						</p:column>
+						<p:column headerText="Cliente">
+							<div align="center">
+								<h:outputText value="PDV Ltda." style="font-weight: bold;"/>
+							</div>
+						</p:column>
+						<p:column headerText="Nº do Pedido">
+							<div align="center">
+								<h:outputText value="123456" style="font-weight: bold;"/>
+							</div>
+						</p:column>
+						<p:column headerText="Data de Lançamento">
+							<div align="center">
+								<h:outputText value="07/09/2014" style="font-weight: bold;"/>
+							</div>
+						</p:column>
+						<p:column headerText="Data do Documento">
+							<div align="center">
+								<h:outputText value="07/09/2014" style="font-weight: bold;"/>
+							</div>
+						</p:column>
+						
+					</p:dataTable>
+					
+				</p:fieldset>
+				
+			</h:form>
+			
+			<p:dialog id="dlConferencia" draggable="false" position="center" header="Conferência de Itens" modal="true" appendTo="@(body)" width="700" height="500" widgetVar="dlgConferencia">
+				
+				<h:form prependId="false">
+				
+				<h:panelGrid columns="4">
+					
+					<p:outputLabel for="cliente" value="Cliente" style="font-weight: bold;"/>
+					<p:outputLabel for="numeroPedidoDl" value="Nº do Pedido" style="font-weight: bold;"/>
+					<p:outputLabel for="dtLancamentoDl" value="Data de Lançamento" style="font-weight: bold;"/>
+					<p:outputLabel for="dtDocumentoDl" value="Data do Documento" style="font-weight: bold;"/>
+					
+					<p:inputText disabled="true" id="cliente" value="PDV Ltda." style="width: 200px; font-weight: bold;" tabindex="4"/>
+					<p:inputText disabled="true" id="numeroPedidoDl" value="123456" style="font-weight: bold;" tabindex="5"/>
+					<p:inputText disabled="true" id="dtLancamentoDl" value="07/09/2014" style="font-weight: bold;" tabindex="6"/>
+					<p:inputText disabled="true" id="dtDocumentoDl" value="07/09/2014" style="font-weight: bold;" tabindex="7"/>
+					
+				</h:panelGrid>
+				
+				<br/>
+				
+				<h:panelGrid columns="3" id="pgLeitor">
+					<p:outputLabel value="Código de Barras" for="leitorCodigoBarras" style="font-weight: bold;"/>
+					<p:outputLabel value="Quantidade" for="quantidade" style="font-weight: bold;"/>
+					<h:panelGroup/>
+					<p:inputText autofocus="autofocus" id="leitorCodigoBarras" style="width: 400px; font-weight: bold;" tabindex="1"/>
+					<p:spinner id="quantidade" style="font-weight: bold;" size="10" min="1" value="#{1}" tabindex="2"/>
+					<p:commandButton icon="add16" value="Adicionar" tabindex="3"/>
+				</h:panelGrid>
+				
+				<p:fieldset legend="Itens do Pedido" style="width: 650px;">
+				
+					<p:dataTable scrollable="true" scrollRows="10" emptyMessage="Nenhum P.D.V encontrado" value="10" style="width: 650px;">
+						
+						<p:column headerText="Código do Item">
+							<div align="center">
+								<h:outputText value="IT0001" style="font-weight: bold;"/>
+							</div>
+						</p:column>
+						<p:column headerText="Descrição">
+							<div align="center">
+								<h:outputText value="Item A" style="font-weight: bold;"/>
+							</div>
+						</p:column>
+						<p:column headerText="Qtd Liberada">
+							<div align="center">
+								<h:outputText value="10" style="font-weight: bold;"/>
+							</div>
+						</p:column>
+						<p:column headerText="Qtd Requisitada">
+							<div align="center">
+								<p:spinner min="0" max="20" value="#{10}"/>
+							</div>
+						</p:column>
+						
+					</p:dataTable>
+				
+				</p:fieldset>
+				
+				<br/>
+				
+				<div align="center">
+					<h:panelGrid style="margin-left: -2px;" columns="2">
+						<p:commandButton value="Salvar" icon="salvar"/>
+						<p:commandButton value="Sair" icon="cancelar" onclick="dlgConferencia.hide()"/>
+					</h:panelGrid>
+				</div>
+				
+				</h:form>
+					
+			</p:dialog>
+					
+		</p:tab>
+		
+	</p:tabView>
+		
 </ui:composition>
