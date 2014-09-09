@@ -18,7 +18,7 @@
 
 	<h:body style="font-size: 12px;">
 
-		<p:growl id="growl" showDetail="true" showSummary="false" sticky="false" autoUpdate="true" globalOnly="false" />
+		<p:growl id="growl" showDetail="true" showSummary="false" sticky="false" autoUpdate="true" life="5000" globalOnly="false" />
 	
 		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" onerror="PF('statusDialog').hide();" oncomplete="PF('statusDialog').hide();" />
 

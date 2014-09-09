@@ -3,7 +3,6 @@ package br.com.sapweb.brazuca.faces;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
@@ -16,7 +15,6 @@ import br.com.sapweb.brazuca.util.UsuarioUtil;
 import br.com.sapweb.brazuca.util.Utilitarios;
 import br.com.topsys.constant.TSConstant;
 import br.com.topsys.exception.TSApplicationException;
-import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.util.TSCryptoUtil;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
@@ -34,73 +32,56 @@ public class UsuarioFaces extends TSMainFaces {
 	private Integer tabIndex;
 	private boolean flagAlterar;
 	private String senha;
-	
-	
-	@PostConstruct
-	public void init(){
-		
-		this.limpar();
 
+	public UsuarioFaces() {
+
+		this.init();
+	}
+
+	public void init() {
+
+		this.limpar();
 		this.limparPesquisa();
-		
 		this.initCombo();
 
-	}	
-	
+	}
+
 	@Override
 	protected void clearFields() {
 
 		this.tabIndex = 0;
-		
-	}	
 
-	public String limpar(){
-		
+	}
+
+	public String limpar() {
+
 		this.flagAlterar = false;
-		
-		try {
-			
-			this.crudModel = new Usuario();
-			
-			this.getCrudModel().setGrupo(new Grupo());
-			
-			this.getCrudModel().setFlagAtivo(Boolean.TRUE);			
-			
-			this.clearFields();			
-			
-		} catch (Exception e) {
-			
-			throw new TSSystemException(e);
-			
-		}
-		
+
+		this.crudModel = new Usuario();
+
+		this.getCrudModel().setGrupo(new Grupo());
+
+		this.getCrudModel().setFlagAtivo(Boolean.TRUE);
+
+		this.clearFields();
+
 		return null;
 	}
-	
-	public String limparPesquisa(){
-		
+
+	public String limparPesquisa() {
+
 		this.grid = Collections.emptyList();
-		
-		try {
-			
-			this.crudPesquisaModel = new Usuario();
-			
-			this.setCrudPesquisaModel(new Usuario());
-			
-			this.getCrudPesquisaModel().setGrupo(new Grupo());
-			
-			this.getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);			
-			
-			
-		} catch (Exception e) {
-			
-			throw new TSSystemException(e);
-			
-		}
-		
+
+		this.crudPesquisaModel = new Usuario();
+
+		this.setCrudPesquisaModel(new Usuario());
+
+		this.getCrudPesquisaModel().setGrupo(new Grupo());
+
+		this.getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
+
 		return null;
 	}
-	
 
 	private void initCombo() {
 
@@ -127,17 +108,17 @@ public class UsuarioFaces extends TSMainFaces {
 		super.setDefaultMessage(false);
 
 		if (!this.validaSenhas()) {
-			
+
 			return null;
 
 		}
-		
+
 		this.crudModel.setSenha(TSCryptoUtil.gerarHash(this.crudModel.getSenha(), TSConstant.CRIPTOGRAFIA_MD5));
 
 		new UsuarioDAO().inserir(this.getCrudModel());
 
 		this.limpar();
-		
+
 		this.setDefaultMessage(Boolean.TRUE);
 
 		return null;
@@ -147,7 +128,7 @@ public class UsuarioFaces extends TSMainFaces {
 	protected String find() {
 
 		this.tabIndex = 1;
-		
+
 		this.grid = new UsuarioDAO().pesquisar(this.getCrudPesquisaModel());
 
 		TSFacesUtil.gerarResultadoLista(this.grid);
@@ -161,12 +142,12 @@ public class UsuarioFaces extends TSMainFaces {
 		this.crudModel = new UsuarioDAO().obter(this.crudModel);
 
 		this.setSenha(this.crudModel.getSenha());
-		
+
 		this.tabIndex = 0;
-		
+
 		this.flagAlterar = true;
-		
-		return null;		
+
+		return null;
 
 	}
 
@@ -190,24 +171,24 @@ public class UsuarioFaces extends TSMainFaces {
 		new UsuarioDAO().alterar(this.crudModel);
 
 		this.limpar();
-		
+
 		this.setDefaultMessage(Boolean.TRUE);
 
 		return null;
 	}
-	
+
 	@Override
 	protected String delete() throws TSApplicationException {
-		
+
 		new UsuarioDAO().excluir(this.crudModel);
-				
+
 		this.grid = new UsuarioDAO().pesquisar(this.crudPesquisaModel);
-			
+
 		this.tabIndex = 1;
-		
+
 		return null;
-		
-	}	
+
+	}
 
 	public Usuario getCrudModel() {
 		return crudModel;
