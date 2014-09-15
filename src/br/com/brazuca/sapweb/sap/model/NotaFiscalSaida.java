@@ -30,6 +30,7 @@ public class NotaFiscalSaida extends DocumentoAB implements Serializable {
     private String enderecoEntregaFormatado;
     private String tipoResumo;
     private String tipo;
+    private Long tipoEnvio;
     
     public NotaFiscalSaida() {
     }
@@ -199,6 +200,14 @@ public class NotaFiscalSaida extends DocumentoAB implements Serializable {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	public Long getTipoEnvio() {
+		return tipoEnvio;
+	}
+
+	public void setTipoEnvio(Long tipoEnvio) {
+		this.tipoEnvio = tipoEnvio;
 	}
 
    
