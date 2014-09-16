@@ -1,6 +1,7 @@
 package br.com.brazuca.sapweb.filter;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -24,9 +25,11 @@ public class FilterWeb implements Filter {
 	}
 
 	@Override
-	public void init(FilterConfig arg0) throws ServletException {
+	public void init(FilterConfig filterConfig) throws ServletException {
+
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
@@ -34,14 +37,14 @@ public class FilterWeb implements Filter {
 
 		HttpServletResponse resp = (HttpServletResponse) response;
 
-		Object sessao = request.getServletContext().getAttribute("initSessao");
+		HashMap sessoes = (HashMap) request.getServletContext().getAttribute("sessoesAtivas");
 
-		if (sessao != null) {
+		if (!sessoes.containsKey(r.getSession().getId())) {
 
+			sessoes.put(r.getSession().getId(), r.getSession());
+			
 			r.getSession().removeAttribute(Constantes.USUARIO_CONECTADO);
 			r.getSession().removeAttribute(Constantes.EMPRESA);
-
-			request.getServletContext().setAttribute("initSessao", null);
 		}
 
 		String uri = r.getRequestURI();
@@ -60,7 +63,7 @@ public class FilterWeb implements Filter {
 			}
 
 		} else if (uri.contains("/login.xhtml") && !TSUtil.isEmpty(r.getSession().getAttribute(Constantes.USUARIO_CONECTADO))) {
-			
+
 			r.getSession().removeAttribute(Constantes.AUTENTICACAO_FACES);
 			r.getSession().removeAttribute(Constantes.USUARIO_CONECTADO);
 
