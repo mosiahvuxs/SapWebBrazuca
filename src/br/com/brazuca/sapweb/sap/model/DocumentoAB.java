@@ -28,7 +28,8 @@ public abstract class DocumentoAB implements Serializable {
     private Status status;
     private Timestamp dataImportacao;
     private Timestamp dataExportacao;
-    private Date dataLancamento; 
+    private Date dataLancamento;
+    private Date dataEntrega;
     private Date dataCriacao;
     private Timestamp dataAtualizacao;
     private String criadoPor;
@@ -234,6 +235,14 @@ public abstract class DocumentoAB implements Serializable {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+
+	public Date getDataEntrega() {
+		return dataEntrega;
+	}
+
+	public void setDataEntrega(Date dataEntrega) {
+		this.dataEntrega = dataEntrega;
 	} 
        
 }

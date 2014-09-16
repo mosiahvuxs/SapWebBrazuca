@@ -6,7 +6,7 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 public class PedidoVenda extends DocumentoAB{
-
+	
 	private Long interfaceId;
     private Long serial;
     private Long serialInicial;
