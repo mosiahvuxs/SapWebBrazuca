@@ -1,7 +1,7 @@
 package br.com.brazuca.sapweb.sap.model;
 
 @SuppressWarnings("serial")
-public class PedidoVendaLinha extends DocumentoLinhaAB{
+public class PedidoVendaLinha extends DocumentoLinhaAB {
 
 	private Long interfaceId;
 	private PedidoVenda pedidoVenda;
@@ -21,6 +21,5 @@ public class PedidoVendaLinha extends DocumentoLinhaAB{
 	public void setPedidoVenda(PedidoVenda pedidoVenda) {
 		this.pedidoVenda = pedidoVenda;
 	}
-	
-	
+
 }

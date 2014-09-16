@@ -6,36 +6,42 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
 @XmlRootElement
-public class Empresa implements Serializable{
-	
+public class Empresa implements Serializable {
+
 	private Long id;
-	
+
 	private String descricao;
-	
+
 	private Boolean flagAtivo;
-	
+
 	private String jndi;
-	
+
 	private String servidor;
-	
+
 	private String dbInstancia;
-	
+
 	private String dbUsuario;
-	
+
 	private String dbSenha;
-	
+
 	private String appUsuario;
-	
+
 	private String appSenha;
-	
+
 	private String servidorLicenca;
-	
+
 	private String portaLicenca;
-	
+
 	private String cnpj;
-	
-	public Empresa(){
-		
+
+	public Empresa() {
+
+	}
+
+	public Empresa(Long id, String jndi) {
+
+		this.id = id;
+		this.jndi = jndi;
 	}
 
 	public Empresa(Boolean flagAtivo) {
@@ -149,7 +155,5 @@ public class Empresa implements Serializable{
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
-	
-	
 
 }

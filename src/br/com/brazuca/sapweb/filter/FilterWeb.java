@@ -43,6 +43,7 @@ public class FilterWeb implements Filter {
 
 			sessoes.put(r.getSession().getId(), r.getSession());
 			
+			r.getSession().removeAttribute(Constantes.AUTENTICACAO_FACES);
 			r.getSession().removeAttribute(Constantes.USUARIO_CONECTADO);
 			r.getSession().removeAttribute(Constantes.EMPRESA);
 		}
@@ -66,6 +67,7 @@ public class FilterWeb implements Filter {
 
 			r.getSession().removeAttribute(Constantes.AUTENTICACAO_FACES);
 			r.getSession().removeAttribute(Constantes.USUARIO_CONECTADO);
+			r.getSession().removeAttribute(Constantes.EMPRESA);
 
 		}
 

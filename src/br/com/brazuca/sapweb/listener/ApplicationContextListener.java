@@ -14,6 +14,8 @@ public class ApplicationContextListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
 		
+		System.getProperties().put("org.apache.el.parser.COERCE_TO_ZERO", "false");
+		
 		ServletContext context = event.getServletContext();
 
         HashMap sessoesAtivas = new HashMap();
