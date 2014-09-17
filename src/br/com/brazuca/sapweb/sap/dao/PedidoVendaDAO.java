@@ -115,4 +115,108 @@ public class PedidoVendaDAO {
 		return broker.getCollectionBean(PedidoVenda.class, "id", "dataLancamento", "dataVencimento", "dataDocumento", "cliente.id", "cliente.nome", "cliente.identificadorFederal", "cliente.endereco.logradouro", "cliente.enderecoDestinatario.logradouro", "vendedor.id", "vendedor.nome", "valor", "observacao", "tipoEnvio", "idExterno", "condicaoPagamento.id", "tipoResumo", "tipo");
 	}
 
+	public Long getQuantidadeLinhas(PedidoVenda model) {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(model.getEmpresa().getJndi());
+
+		StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM ORDR AS PVENDA WITH(NOLOCK) INNER JOIN OCRD AS CLIENTE WITH(NOLOCK) ON (CLIENTE.CARDCODE = PVENDA.CARDCODE) INNER JOIN OSLP AS VENDEDOR WITH(NOLOCK) ON (VENDEDOR.SLPCODE = PVENDA.SLPCODE) WHERE 1 = 1");
+
+		if (!TSUtil.isEmpty(TSUtil.tratarLong(model.getId()))) {
+
+			sql.append(" AND PVENDA.DOCENTRY = ?");
+		}
+
+		if (!TSUtil.isEmpty(model.getCliente()) && !TSUtil.isEmpty(model.getCliente().getNome())) {
+
+			sql.append(" AND CLIENTE.CARDNAME LIKE ?");
+		}
+
+		if (!TSUtil.isEmpty(model.getDataVencimento())) {
+
+			sql.append(" AND PVENDA.DOCDUEDATE >= CONVERT(DATETIME, ?, 103) ");
+
+		}
+
+		if (!TSUtil.isEmpty(model.getDataVencimentoFinal())) {
+
+			sql.append(" AND PVENDA.DOCDUEDATE <= CONVERT(DATETIME, ?, 103) ");
+
+		}
+
+		if (!TSUtil.isEmpty(model.getDataDocumento())) {
+
+			sql.append(" AND PVENDA.TAXDATE >= CONVERT(DATETIME, ?, 103) ");
+
+		}
+
+		if (!TSUtil.isEmpty(model.getDataDocumentoFinal())) {
+
+			sql.append(" AND PVENDA.TAXDATE <= CONVERT(DATETIME, ?, 103) ");
+
+		}
+
+		if (!TSUtil.isEmpty(model.getDataLancamento())) {
+
+			sql.append(" AND PVENDA.DOCDATE >= CONVERT(DATETIME, ?, 103) ");
+
+		}
+
+		if (!TSUtil.isEmpty(model.getDataLancamentoFinal())) {
+
+			sql.append(" AND PVENDA.DOCDATE <= CONVERT(DATETIME, ?, 103) ");
+
+		}
+
+		broker.setSQL(sql.toString());
+
+		if (!TSUtil.isEmpty(TSUtil.tratarLong(model.getId()))) {
+
+			broker.set(model.getId());
+		}
+
+		if (!TSUtil.isEmpty(model.getCliente()) && !TSUtil.isEmpty(model.getCliente().getNome())) {
+
+			broker.set("%" + model.getCliente().getNome() + "%");
+		}
+
+		if (!TSUtil.isEmpty(model.getDataVencimento())) {
+
+			broker.set(TSParseUtil.dateToString(model.getDataVencimento(), TSDateUtil.DD_MM_YYYY));
+
+		}
+
+		if (!TSUtil.isEmpty(model.getDataVencimentoFinal())) {
+
+			broker.set(TSParseUtil.dateToString(model.getDataVencimentoFinal(), TSDateUtil.DD_MM_YYYY));
+
+		}
+
+		if (!TSUtil.isEmpty(model.getDataDocumento())) {
+
+			broker.set(TSParseUtil.dateToString(model.getDataDocumento(), TSDateUtil.DD_MM_YYYY));
+
+		}
+
+		if (!TSUtil.isEmpty(model.getDataDocumentoFinal())) {
+
+			broker.set(TSParseUtil.dateToString(model.getDataDocumentoFinal(), TSDateUtil.DD_MM_YYYY));
+
+		}
+
+		if (!TSUtil.isEmpty(model.getDataLancamento())) {
+
+			broker.set(TSParseUtil.dateToString(model.getDataLancamento(), TSDateUtil.DD_MM_YYYY));
+
+		}
+
+		if (!TSUtil.isEmpty(model.getDataLancamentoFinal())) {
+
+			broker.set(TSParseUtil.dateToString(model.getDataLancamentoFinal(), TSDateUtil.DD_MM_YYYY));
+
+		}
+
+		return (Long) broker.getObject();
+
+	}
+
 }

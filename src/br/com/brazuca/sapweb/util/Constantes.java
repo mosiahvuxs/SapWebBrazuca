@@ -14,7 +14,8 @@ public final class Constantes {
 	public static final String EMPRESA = "empresa";
 
 	public static final String JNDI_SAP_SERVICO = "java:comp/env/jdbc/ServicoSapBrazucaDS";
-	public static final String JNDI_SAP_WEB_BRAZUCA = "java:comp/env/jdbc/SapWebBrazucaDS";
+	public static final String JNDI_SAP_WEB_BRAZUCA_POSTGRESQL = "java:comp/env/jdbc/SapWebBrazucaDS";
+	public static final String JNDI_SAP_WEB_BRAZUCA_SQL_SERVER_MATRIZ = "java:comp/env/jdbc/SAPBrazucaDS";
 
 	public static final String URL_RESTFUL_BRAZUCA = TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("L") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("D") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("H") ? Constantes.URL_RESTFUL_BRAZUCA_DESENV : Constantes.URL_RESTFUL_BRAZUCA_PROD;
 	public static final String URL_RESTFUL_BRAZUCA_DESENV = "http://localhost:8085/ServicoSapBrazuca/";
@@ -26,6 +27,6 @@ public final class Constantes {
 	public static final String MIME_TYPE_HTML = "text/html";
 	public static final String MIME_TYPE_PDF = "application/pdf";
 
-	public static final String SMTP_SERVER = "mailing.grupoatarde.com.br";	
+	public static final String SMTP_SERVER = "mailing.grupoatarde.com.br";
 
 }

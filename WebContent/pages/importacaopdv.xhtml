@@ -87,7 +87,8 @@
 				
 				<p:fieldset legend="Resultado"  style="width: 97%">
 
-					<p:dataTable var="pdv" id="pdvs" rowIndexVar="index" value="#{mbean.pedidosVenda}" emptyMessage="Nenhum P.D.V encontrado">
+					<p:dataTable var="pdv" id="pdvs" rowIndexVar="index" value="#{mbean.pedidosVenda}" paginator="true" rows="20" emptyMessage="Nenhum P.D.V encontrado">
+						
 						<f:facet name="header">
 							Pedidos de Vendas
 						</f:facet>
