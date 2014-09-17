@@ -9,7 +9,7 @@
 	
 	<h:head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<title>BRAZUCA WEB</title>
+		<title>Brazuca-SAPWeb</title>
 		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/geral.css" />
 		<script type="text/javascript" src="#{request.contextPath}/resources/js/funcoes.js"  />
 		<script type="text/javascript" src="#{request.contextPath}/resources/js/locale-primefaces.js" />
@@ -39,11 +39,11 @@
 			<p:layoutUnit position="south" size="35">
 				<h:panelGrid columns="5" width="100%" style="height: 100%;" columnClasses="colunaInformativo40, colunaInformativo20, colunaInformativo20, colunaInformativo10, colunaInformativoVermelho10">
 					<h:column>
-						<h:outputText value="SapWeb" />
+						<h:outputText value="Brazuca-SAPWeb" />
 					</h:column>
 
 					<h:column>
-						<h:outputText value="#{autenticacaoFaces.usuario.nome}" />
+						<h:outputText value="#{sessionScope.usuario.nome}" />
 					</h:column>
 
 					<h:column>
