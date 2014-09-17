@@ -64,6 +64,8 @@ public class PedidoVendaDAO {
 
 		}
 
+		sql.append(" ORDER BY PVENDA.TAXDATE");
+
 		broker.setSQL(sql.toString());
 
 		if (!TSUtil.isEmpty(TSUtil.tratarLong(model.getId()))) {

@@ -42,8 +42,8 @@
 							<h:panelGrid columns="2">
 								<p:outputLabel for="dtLacamentoInicial" value="Data Inicial" style="font-weight: bold;"/>
 								<p:outputLabel for="dtLacamentoFinal" value="Data Final" style="font-weight: bold;"/>
-								<p:calendar id="dtLacamentoInicial" pattern="dd/mm/yyyy" size="15" value="#{mbeanModel.dataLancamento}"/>
-								<p:calendar id="dtLacamentoFinal" pattern="dd/mm/yyyy" size="15" value="#{mbeanModel.dataLancamentoFinal}"/>
+								<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataLancamento}"/>
+								<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataLancamentoFinal}"/>
 							</h:panelGrid>
 							
 						</p:fieldset>
@@ -53,8 +53,8 @@
 							<h:panelGrid columns="2">
 								<p:outputLabel for="dtEntregaInicial" value="Data Inicial" style="font-weight: bold;"/>
 								<p:outputLabel for="dtEntregaFinal" value="Data Final" style="font-weight: bold;"/>
-								<p:calendar id="dtEntregaInicial" pattern="dd/mm/yyyy" size="15" value="#{mbeanModel.dataVencimento}"/>
-								<p:calendar id="dtEntregaFinal" pattern="dd/mm/yyyy" size="15" value="#{mbeanModel.dataVencimentoFinal}"/>
+								<p:calendar navigator="true" readonlyInput="true" id="dtEntregaInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataVencimento}"/>
+								<p:calendar navigator="true" readonlyInput="true" id="dtEntregaFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataVencimentoFinal}"/>
 							</h:panelGrid>
 							
 						</p:fieldset>
@@ -64,8 +64,8 @@
 							<h:panelGrid columns="2">
 								<p:outputLabel for="dtDocumentoInicial" value="Data Inicial" style="font-weight: bold;"/>
 								<p:outputLabel for="dtDocumentoFinal" value="Data Final" style="font-weight: bold;"/>
-								<p:calendar id="dtDocumentoInicial" pattern="dd/mm/yyyy" size="15" value="#{mbeanModel.dataDocumento}"/>
-								<p:calendar id="dtDocumentoFinal" pattern="dd/mm/yyyy" size="15" value="#{mbeanModel.dataDocumentoFinal}"/>
+								<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataDocumento}"/>
+								<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataDocumentoFinal}"/>
 							</h:panelGrid>
 							
 						</p:fieldset>
@@ -87,7 +87,7 @@
 				
 				<p:fieldset legend="Resultado"  style="width: 97%">
 
-					<p:dataTable var="pdv" id="pdvs" rowIndexVar="index" value="#{mbean.pedidosVenda}" paginator="true" rows="20" emptyMessage="Nenhum P.D.V encontrado">
+					<p:dataTable var="pdv" id="pdvs" rowIndexVar="index" value="#{mbean.pedidosVenda}" paginator="true" paginatorAlwaysVisible="false" rows="20" emptyMessage="Nenhum P.D.V encontrado">
 						
 						<f:facet name="header">
 							Pedidos de Vendas
@@ -96,7 +96,7 @@
 							<f:facet name="header">
 								<p:outputLabel value="Todos" for="todos" />
 								<div align="center">
-									<h:selectBooleanCheckbox id="todos" value="#{mbean.todos}">
+									<h:selectBooleanCheckbox id="todos" value="#{mbean.todos}" rendered="#{!empty mbean.pedidosVenda}">
 										<f:ajax event="change" listener="#{mbean.setarTodos}" execute="@this" render="pdvs"/>
 									</h:selectBooleanCheckbox>
 								</div>
