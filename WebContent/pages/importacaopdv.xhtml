@@ -29,7 +29,7 @@
 						<p:fieldset legend="Cliente">
 							<h:panelGrid columns="1">
 								<p:outputLabel for="cliente" value="Nome:" style="font-weight: bold;"/>
-								<p:inputText id="cliente" value="#{mbeanModel.cliente.nome}" maxlength="50" style="width: 300px;"/>
+								<p:inputText id="cliente" value="#{mbeanModel.cliente.nome}" maxlength="50" style="width: 440px;"/>
 							</h:panelGrid>
 						</p:fieldset>
 					
@@ -79,7 +79,7 @@
 				<h:panelGrid columns="3">
 					<p:commandButton action="#{mbean.pesquisar}" value="Pesquisar" icon="pesquisar" style="height:28px; width: 105px;" update="@form"/>
 					<p:commandButton action="#{mbean.limpar}" update="@form" value="Nova Pesquisa" icon="novo" style="height:28px; width: 130px;"/>
-					<p:commandButton value="Importar" icon="salvar" style="height:28px; width: 105px;" rendered="#{!empty mbean.pedidosVenda}"/>
+					<p:commandButton action="#{mbean.salvar}" update="@form" value="Importar" icon="salvar" style="height:28px; width: 105px;" rendered="#{!empty mbean.pedidosVenda}"/>
 					<h:panelGroup rendered="#{empty mbean.pedidosVenda}"/>
 				</h:panelGrid>
 				

@@ -7,10 +7,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.brazuca.sapweb.sap.dao.PedidoVendaDAO;
+import br.com.brazuca.sapweb.sap.dao.PedidoVendaLinhaDAO;
 import br.com.brazuca.sapweb.sap.model.Empresa;
 import br.com.brazuca.sapweb.sap.model.ParceiroNegocio;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.brazuca.sapweb.util.Constantes;
+import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
 import br.com.topsys.web.util.TSFacesUtil;
@@ -78,6 +80,48 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 			item.setSelecionado(this.todos);
 		}
 
+	}
+
+	public String salvar() {
+
+		List<PedidoVenda> pedidosSelecionados = new ArrayList<PedidoVenda>();
+
+		for (PedidoVenda item : this.pedidosVenda) {
+
+			if (!TSUtil.isEmpty(item.isSelecionado()) && item.isSelecionado()) {
+				
+				item.setEmpresa(this.pedidoVenda.getEmpresa());
+
+				item.setLinhas(new PedidoVendaLinhaDAO().pesquisar(item));
+
+				pedidosSelecionados.add(item);
+
+			}
+		}
+
+		if (!TSUtil.isEmpty(pedidosSelecionados)) {
+
+			try {
+
+				new br.com.brazuca.sapweb.dao.PedidoVendaDAO().inserir(pedidosSelecionados);
+
+				this.limpar();
+
+				super.addInfoMessage("Importação realizada com sucesso.");
+
+			} catch (TSApplicationException e) {
+
+				super.addErrorMessage("Não foi possível realizar a operação. Entre em contato com a T.I");
+
+				e.printStackTrace();
+			}
+
+		} else {
+
+			super.addErrorMessage("Para realizar a operação selecione algum Pedido de Venda.");
+		}
+
+		return null;
 	}
 
 	public PedidoVenda getPedidoVenda() {

@@ -14,7 +14,7 @@ public class PedidoVendaLinhaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(model.getEmpresa().getJndi());
 
-		StringBuilder sql = new StringBuilder("SELECT LINHA.DOCENTRY, LINHA.ITEMCODE AS ITEM_ID, ITEM.CODEBARS AS ITEM_CODIDO_BARRAS, LINHA.OPENQTY AS QUANTIDADE, LINHA.TOTALSUMSY AS VALOR, LINHA.PRICE AS VALOR_UNITARIO, LINHA.VATGROUP AS CODIGO_IMPOSTO, LINHA.LINENUM AS NUMERO FROM RDR1 AS LINHA WITH(NOLOCK) INNER JOIN OITM AS ITEM WITH(NOLOCK) ON (ITEM.ITEMCODE = LINHA.ITEMCODE) WHERE 1 = 1 LINHA.DOCENTRY = ? ORDER BY LINHA.LINENUM");
+		StringBuilder sql = new StringBuilder("SELECT LINHA.ITEMCODE AS ITEM_ID, ITEM.CODEBARS AS ITEM_CODIDO_BARRAS, LINHA.OPENQTY AS QUANTIDADE, LINHA.TOTALSUMSY AS VALOR, LINHA.PRICE AS VALOR_UNITARIO, LINHA.VATGROUP AS CODIGO_IMPOSTO, LINHA.LINENUM AS NUMERO FROM RDR1 AS LINHA WITH(NOLOCK) INNER JOIN OITM AS ITEM WITH(NOLOCK) ON (ITEM.ITEMCODE = LINHA.ITEMCODE) WHERE LINHA.DOCENTRY = ?");
 
 		broker.setSQL(sql.toString());
 
@@ -22,7 +22,7 @@ public class PedidoVendaLinhaDAO {
 
 		return broker.getCollectionBean(PedidoVendaLinha.class,
 
-		"pedidoVenda.id", "id", "codigoBarras", "quantidade", "valor", "valorUnitario", "codigoImposto.id", "numero");
+		"item.id", "codigoBarras", "quantidade", "valor", "valorUnitario", "codigoImposto.id", "numero");
 	}
 
 }

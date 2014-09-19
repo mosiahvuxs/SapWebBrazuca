@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.brazuca.sapweb.sap.model;
 
 import java.io.Serializable;
@@ -11,49 +7,45 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import br.com.brazuca.sapweb.adapter.TimestampAdapter;
 
-/**
- *
- * @author mroland
- */
 @SuppressWarnings("serial")
 public class Vendedor implements Serializable {
 
-    private Long id;
-    private String nome;
-    private Integer tipoIdentificador; 
-    private String identificador;
-    private Empresa empresa;
-    private GrupoComissao grupoComissao;
-    private String mensagemErro;
-    private VendedorEndereco endereco;
-    private Timestamp dataAtualizacao;
-    
-    public Vendedor(){
-    	
-    }
+	private Long id;
+	private String nome;
+	private Integer tipoIdentificador;
+	private String identificador;
+	private Empresa empresa;
+	private GrupoComissao grupoComissao;
+	private String mensagemErro;
+	private VendedorEndereco endereco;
+	private Timestamp dataAtualizacao;
 
-    public Vendedor(Empresa empresa) {
+	public Vendedor() {
 
-    	this.empresa = empresa;
-    	
+	}
+
+	public Vendedor(Empresa empresa) {
+
+		this.empresa = empresa;
+
 	}
 
 	public Long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
 	public Empresa getEmpresa() {
 		return empresa;
 	}
@@ -102,7 +94,7 @@ public class Vendedor implements Serializable {
 		this.tipoIdentificador = tipoIdentificador;
 	}
 
-	@XmlJavaTypeAdapter( TimestampAdapter.class)		
+	@XmlJavaTypeAdapter(TimestampAdapter.class)
 	public Timestamp getDataAtualizacao() {
 		return dataAtualizacao;
 	}
@@ -110,8 +102,5 @@ public class Vendedor implements Serializable {
 	public void setDataAtualizacao(Timestamp dataAtualizacao) {
 		this.dataAtualizacao = dataAtualizacao;
 	}
-	
-	
-	
-    
+
 }

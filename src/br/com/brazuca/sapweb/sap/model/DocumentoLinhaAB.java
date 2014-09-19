@@ -8,7 +8,7 @@ public abstract class DocumentoLinhaAB implements Serializable {
 
 	private Long id;
 	private Item item;
-	private Double quantidade;
+	private BigDecimal quantidade;
 	private BigDecimal valorUnitario;
 	private CodigoImposto codigoImposto;
 	private Integer numero;
@@ -28,14 +28,6 @@ public abstract class DocumentoLinhaAB implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Double getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(Double quantidade) {
-		this.quantidade = quantidade;
 	}
 
 	public BigDecimal getValor() {
@@ -140,6 +132,14 @@ public abstract class DocumentoLinhaAB implements Serializable {
 
 	public void setCodigoBarras(String codigoBarras) {
 		this.codigoBarras = codigoBarras;
+	}
+
+	public BigDecimal getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(BigDecimal quantidade) {
+		this.quantidade = quantidade;
 	}
 
 }
