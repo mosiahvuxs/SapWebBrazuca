@@ -13,8 +13,11 @@ public class PedidoVenda implements Serializable {
 	private Long id;
 	private Long codigo;
 	private Date dataLancamento;
+	private Date dataLancamentoFinal;
 	private Date dataVencimento;
+	private Date dataVencimentoFinal;
 	private Date dataDocumento;
+	private Date dataDocumentoFinal;
 	private BigDecimal valorTotal;
 	private String observacao;
 	private Long tipoEnvio;
@@ -155,6 +158,30 @@ public class PedidoVenda implements Serializable {
 
 	public void setLinhasPedidoVenda(List<PedidoVendaLinha> linhasPedidoVenda) {
 		this.linhasPedidoVenda = linhasPedidoVenda;
+	}
+
+	public Date getDataLancamentoFinal() {
+		return dataLancamentoFinal;
+	}
+
+	public void setDataLancamentoFinal(Date dataLancamentoFinal) {
+		this.dataLancamentoFinal = dataLancamentoFinal;
+	}
+
+	public Date getDataVencimentoFinal() {
+		return dataVencimentoFinal;
+	}
+
+	public void setDataVencimentoFinal(Date dataVencimentoFinal) {
+		this.dataVencimentoFinal = dataVencimentoFinal;
+	}
+
+	public Date getDataDocumentoFinal() {
+		return dataDocumentoFinal;
+	}
+
+	public void setDataDocumentoFinal(Date dataDocumentoFinal) {
+		this.dataDocumentoFinal = dataDocumentoFinal;
 	}
 
 }
