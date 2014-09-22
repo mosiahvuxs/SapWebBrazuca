@@ -62,5 +62,21 @@ public class ItemEstruturadoDAO {
 		broker.endTransaction();
 
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ItemEstruturado> pesquisar(ItemEstruturado model) {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("SELECT ID, ESTRUTURA_ID, CODIGO_BARRAS, ITEM_ID, QUANTIDADE, DATA_IMPORTACAO FROM PUBLIC.ITEM_ESTRUTURADOS WHERE CODIGO_BARRAS = ?");
+
+		broker.setSQL(sql.toString());
+		
+		broker.set(model.getItem().getCodigoBarras());
+
+		return broker.getCollectionBean(ItemEstruturado.class, "estruturaId", "item.codigoBarras", "item.id", "item.quantidade");
+	}
 
 }

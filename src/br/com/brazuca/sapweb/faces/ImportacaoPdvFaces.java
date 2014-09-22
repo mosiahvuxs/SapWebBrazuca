@@ -72,7 +72,7 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 
 			for (PedidoVenda pdv : pedidos) {
 
-				if (TSUtil.isEmpty(notaFiscalSaidaDAO.pesquisarPorPedidoVenda(pdv, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_MATRIZ)) && TSUtil.isEmpty(notaFiscalSaidaDAO.pesquisarPorPedidoVenda(pdv, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_LOCAL))) {
+				if (TSUtil.isEmpty(notaFiscalSaidaDAO.pesquisarPorPedidoVenda(pdv, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_MATRIZ)) && TSUtil.isEmpty(notaFiscalSaidaDAO.pesquisarPorPedidoVenda(pdv, null))) {
 
 					this.pedidosVenda.add(pdv);
 				}

@@ -8,6 +8,7 @@ import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSUtil;
 
 public class NotaFiscalSaidaLinhaDAO {
 
@@ -22,7 +23,7 @@ public class NotaFiscalSaidaLinhaDAO {
 		model.getCodigoImposto().getId(), model.getCodigoBarras(), model.getPedidoVendaLinha().getNumero(), model.getPedidoVendaLinha().getPedidoVenda().getId());
 
 		broker.execute();
-		
+
 		broker.endTransaction();
 
 	}
@@ -36,10 +37,19 @@ public class NotaFiscalSaidaLinhaDAO {
 
 		return broker.getCollectionBean(NotaFiscalSaidaLinha.class, "id", "notaFiscalSaida.id", "item.id", "quantidade", "valorUnitario", "valor", "codigoImposto.id", "codigoBarras", "pedidoVendaLinha.numero", "pedidoVendaLinha.pedidoVenda.id");
 	}
-	
-	public NotaFiscalSaidaLinha pesquisarPorPedidoVenda(PedidoVenda model, String jndi) {
 
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
+	public NotaFiscalSaidaLinha pesquisarPorPedidoVenda(PedidoVenda model, String jndi) {
+		
+		TSDataBaseBrokerIf broker = null;
+
+		if (!TSUtil.isEmpty(TSUtil.tratarString(jndi))) {
+
+			broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
+
+		} else {
+
+			broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		}
 
 		broker.setPropertySQL("notafiscalsaidalinhadao.pesquisarPorPedidoVenda", model.getId());
 
