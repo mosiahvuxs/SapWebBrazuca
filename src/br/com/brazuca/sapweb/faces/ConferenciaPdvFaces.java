@@ -7,10 +7,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.brazuca.sapweb.dao.PedidoVendaDAO;
-import br.com.brazuca.sapweb.dao.PedidoVendaLinhaDAO;
-import br.com.brazuca.sapweb.model.Cliente;
-import br.com.brazuca.sapweb.model.PedidoVenda;
+import br.com.brazuca.sapweb.sap.model.ParceiroNegocio;
+import br.com.brazuca.sapweb.sap.model.PedidoVenda;
+import br.com.brazuca.sapweb.sap.model.PedidoVendaLinha;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
 import br.com.topsys.web.util.TSFacesUtil;
 
@@ -22,6 +23,8 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 	private PedidoVenda pedidoVendaPesquisa;
 	private PedidoVenda pedidoVenda;
 	private List<PedidoVenda> pedidos;
+	private String codigoBarras;
+	private Integer quantidade;
 
 	public ConferenciaPdvFaces() {
 
@@ -33,24 +36,42 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		this.pedidoVenda = new PedidoVenda();
 
 		this.pedidoVendaPesquisa = new PedidoVenda();
-		this.pedidoVendaPesquisa.setCliente(new Cliente());
+		this.pedidoVendaPesquisa.setCliente(new ParceiroNegocio());
 
 		this.pedidos = new ArrayList<PedidoVenda>();
+
+		this.quantidade = 1;
 	}
 
 	public String pesquisar() {
 
-		this.pedidos = new PedidoVendaDAO().pesquisar(this.pedidoVenda);
+		if (this.validaCamposPesquisa()) {
 
-		TSFacesUtil.gerarResultadoLista(this.pedidos);
+			this.pedidos = new PedidoVendaDAO().pesquisar(this.pedidoVenda);
+
+			TSFacesUtil.gerarResultadoLista(this.pedidos);
+
+		}
 
 		return null;
 	}
 
 	public void pesquisarLinhas() {
 
-		this.pedidoVenda.setLinhasPedidoVenda(new PedidoVendaLinhaDAO().pesquisar(this.pedidoVenda));
+		this.pedidoVenda.setLinhas(new br.com.brazuca.sapweb.dao.PedidoVendaLinhaDAO().pesquisar(this.pedidoVenda));
 
+	}
+
+	private boolean validaCamposPesquisa() {
+
+		if (TSUtil.isEmpty(TSUtil.tratarLong(this.pedidoVendaPesquisa.getId())) && TSUtil.isEmpty(TSUtil.tratarString(this.pedidoVendaPesquisa.getCliente().getNome())) && TSUtil.isEmpty(this.pedidoVendaPesquisa.getDataDocumento()) && TSUtil.isEmpty(this.pedidoVendaPesquisa.getDataDocumentoFinal()) && TSUtil.isEmpty(this.pedidoVendaPesquisa.getDataLancamento()) && TSUtil.isEmpty(this.pedidoVendaPesquisa.getDataLancamentoFinal()) && TSUtil.isEmpty(this.pedidoVendaPesquisa.getDataVencimento()) && TSUtil.isEmpty(this.pedidoVendaPesquisa.getDataVencimentoFinal())) {
+
+			super.addErrorMessage("É necessário preencher algum dos campos para realizar a Pesquisa.");
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -60,6 +81,11 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		super.setDefaultMessage(false);
 
 		return null;
+	}
+
+	public void remover(PedidoVendaLinha model) {
+
+		this.pedidoVenda.getLinhas().remove(model);
 	}
 
 	public PedidoVenda getPedidoVenda() {
@@ -84,6 +110,22 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 	public void setPedidoVendaPesquisa(PedidoVenda pedidoVendaPesquisa) {
 		this.pedidoVendaPesquisa = pedidoVendaPesquisa;
+	}
+
+	public String getCodigoBarras() {
+		return codigoBarras;
+	}
+
+	public void setCodigoBarras(String codigoBarras) {
+		this.codigoBarras = codigoBarras;
+	}
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
 	}
 
 }

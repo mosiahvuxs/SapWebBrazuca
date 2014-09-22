@@ -2,6 +2,7 @@ package br.com.brazuca.sapweb.dao;
 
 import java.util.List;
 
+import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.brazuca.sapweb.sap.model.PedidoVendaLinha;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
@@ -13,24 +14,24 @@ public class PedidoVendaLinhaDAO {
 
 		broker.setPropertySQL("pedidovendalinhadao.inserir",
 
-		model.getItem().getId(), model.getCodigoBarras(), model.getQuantidade(), model.getValor(), model.getValorUnitario(), model.getCodigoImposto().getId(), model.getNumero(), model.getPedidoVenda().getId());
+		model.getItem().getId(), model.getCodigoBarras(), model.getQuantidade(), model.getValor(), model.getValorUnitario(), model.getCodigoImposto().getId(), model.getNumero(), model.getPedidoVenda().getId(), model.getItem().getDescricao());
 
 		broker.execute();
 
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<br.com.brazuca.sapweb.model.PedidoVendaLinha> pesquisar(br.com.brazuca.sapweb.model.PedidoVenda model) {
+	public List<PedidoVendaLinha> pesquisar(PedidoVenda model) {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		StringBuilder sql = new StringBuilder("SELECT ID, ITEM_ID, CODIGO_BARRAS, QUANTIDADE, VALOR, VALOR_UNITARIO, CODIGO_IMPOSTO, NUMERO, PEDIDO_VENDA_ID FROM PUBLIC.PEDIDO_VENDAS_LINHAS WHERE 1 = 1 AND PEDIDO_VENDA_ID = ?");
+		StringBuilder sql = new StringBuilder("SELECT ID, DESCRICAO, ITEM_ID, CODIGO_BARRAS, QUANTIDADE, VALOR, VALOR_UNITARIO, CODIGO_IMPOSTO, NUMERO, PEDIDO_VENDA_ID FROM PUBLIC.PEDIDO_VENDAS_LINHAS WHERE 1 = 1 AND PEDIDO_VENDA_ID = ?");
 
 		broker.setSQL(sql.toString());
 
-		broker.set(model.getId());
+		broker.set(model.getSerial());
 
-		return broker.getCollectionBean(br.com.brazuca.sapweb.model.PedidoVendaLinha.class, "id", "item.id", "item.codigoBarras", "item.quantidade", "valor", "valorUnitario", "codigoImposto", "numero", "pedidoVenda.id");
+		return broker.getCollectionBean(PedidoVendaLinha.class, "id", "item.descricao", "item.id", "codigoBarras", "quantidade", "valor", "valorUnitario", "codigoImposto.id", "numero", "pedidoVenda.id");
 	}
 
 }

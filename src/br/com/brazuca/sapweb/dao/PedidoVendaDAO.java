@@ -14,6 +14,8 @@ public class PedidoVendaDAO {
 	public void inserir(PedidoVenda model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		
+		this.excluir(model, broker);
 
 		broker.beginTransaction();
 
@@ -47,6 +49,8 @@ public class PedidoVendaDAO {
 
 		for (PedidoVenda model : pedidos) {
 
+			this.excluir(model, broker);
+
 			Long id = broker.getSequenceNextValue("pedido_vendas_id_seq");
 
 			broker.setPropertySQL("pedidovendadao.inserir",
@@ -71,13 +75,13 @@ public class PedidoVendaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<br.com.brazuca.sapweb.model.PedidoVenda> pesquisar(br.com.brazuca.sapweb.model.PedidoVenda model) {
+	public List<PedidoVenda> pesquisar(PedidoVenda model) {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		StringBuilder sql = new StringBuilder("SELECT ID, DATA_LANCAMENTO, DATA_VENCIMENTO, DATA_DOCUMENTO, CLIENTE_ID, CLIENTE_NOME, CLIENTE_IDENTIFICADOR_EXTERIOR, ENDERECO_COBRANCA, ENDERECO_DESTINO, VENDEDOR_ID, VENDEDOR_NOME, VALOR_TOTAL, OBSERVACAO, TIPO_ENVIO, ID_EXTERNO, CONDICAO_PAGAMENTO, TIPO_RESUMO, TIPO, DATA_IMPORTACAO, EMPRESA_ID, CODIGO_SAP FROM PUBLIC.PEDIDO_VENDAS WHERE 1 = 1");
+		StringBuilder sql = new StringBuilder("SELECT ID, CODIGO_SAP, DATA_LANCAMENTO, DATA_VENCIMENTO, DATA_DOCUMENTO, CLIENTE_ID, CLIENTE_NOME, CLIENTE_IDENTIFICADOR_EXTERIOR, ENDERECO_COBRANCA, ENDERECO_DESTINO, VENDEDOR_ID, VENDEDOR_NOME, VALOR_TOTAL, OBSERVACAO, TIPO_ENVIO, ID_EXTERNO, CONDICAO_PAGAMENTO, TIPO_RESUMO, TIPO, DATA_IMPORTACAO, EMPRESA_ID, CODIGO_SAP FROM PUBLIC.PEDIDO_VENDAS WHERE 1 = 1");
 
-		if (!TSUtil.isEmpty(TSUtil.tratarLong(model.getCodigo()))) {
+		if (!TSUtil.isEmpty(TSUtil.tratarLong(model.getId()))) {
 
 			sql.append(" AND CODIGO_SAP = ?");
 		}
@@ -123,7 +127,7 @@ public class PedidoVendaDAO {
 
 		}
 
-		sql.append(" ORDER BY CLIENTE_NOME");
+		sql.append(" ORDER BY CLIENTE_NOME, DESCRICAO");
 
 		broker.setSQL(sql.toString());
 
@@ -173,7 +177,15 @@ public class PedidoVendaDAO {
 
 		}
 
-		return broker.getCollectionBean(PedidoVenda.class, "id", "dataLancamento", "dataVencimento", "dataDocumento", "cliente.id", "cliente.nome", "cliente.identificadorFederal", "cliente.endereco.logradouro", "cliente.enderecoDestinatario.logradouro", "vendedor.id", "vendedor.nome", "valor", "observacao", "tipoEnvio", "idExterno", "condicaoPagamento.id", "tipoResumo", "tipo");
+		return broker.getCollectionBean(PedidoVenda.class, "serial", "id", "dataLancamento", "dataVencimento", "dataDocumento", "cliente.id", "cliente.nome", "cliente.identificadorFederal", "cliente.endereco.logradouro", "cliente.enderecoDestinatario.logradouro", "vendedor.id", "vendedor.nome", "valor", "observacao", "tipoEnvio", "idExterno", "condicaoPagamento.id", "tipoResumo", "tipo");
+	}
+
+	public void excluir(PedidoVenda model, TSDataBaseBrokerIf broker) throws TSApplicationException {
+
+		broker.setPropertySQL("pedidovendadao.excluir", model.getId());
+
+		broker.execute();
+
 	}
 
 }

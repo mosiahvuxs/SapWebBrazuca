@@ -6,6 +6,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.brazuca.sapweb.dao.NotaFiscalSaidaLinhaDAO;
 import br.com.brazuca.sapweb.sap.dao.PedidoVendaDAO;
 import br.com.brazuca.sapweb.sap.dao.PedidoVendaLinhaDAO;
 import br.com.brazuca.sapweb.sap.model.Empresa;
@@ -65,7 +66,17 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 
 		if (this.validaCamposPesquisa()) {
 
-			this.pedidosVenda = new PedidoVendaDAO().pesquisar(this.pedidoVenda);
+			List<PedidoVenda> pedidos = new PedidoVendaDAO().pesquisar(this.pedidoVenda);
+
+			NotaFiscalSaidaLinhaDAO notaFiscalSaidaDAO = new NotaFiscalSaidaLinhaDAO();
+
+			for (PedidoVenda pdv : pedidos) {
+
+				if (TSUtil.isEmpty(notaFiscalSaidaDAO.pesquisarPorPedidoVenda(pdv, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_MATRIZ)) && TSUtil.isEmpty(notaFiscalSaidaDAO.pesquisarPorPedidoVenda(pdv, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_LOCAL))) {
+
+					this.pedidosVenda.add(pdv);
+				}
+			}
 
 			TSFacesUtil.gerarResultadoLista(this.pedidosVenda);
 		}
@@ -89,13 +100,16 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 		for (PedidoVenda item : this.pedidosVenda) {
 
 			if (!TSUtil.isEmpty(item.isSelecionado()) && item.isSelecionado()) {
-				
-				item.setEmpresa(this.pedidoVenda.getEmpresa());
 
 				item.setLinhas(new PedidoVendaLinhaDAO().pesquisar(item));
 
-				pedidosSelecionados.add(item);
+				if (!TSUtil.isEmpty(item.getLinhas())) {
 
+					item.setEmpresa(this.pedidoVenda.getEmpresa());
+
+					pedidosSelecionados.add(item);
+
+				}
 			}
 		}
 
@@ -118,7 +132,11 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 
 		} else {
 
-			super.addErrorMessage("Para realizar a operação selecione algum Pedido de Venda.");
+			if (TSUtil.isEmpty(TSFacesUtil.getFacesContext().getMessages())) {
+
+				super.addErrorMessage("Para realizar a operação selecione algum Pedido de Venda.");
+			}
+
 		}
 
 		return null;

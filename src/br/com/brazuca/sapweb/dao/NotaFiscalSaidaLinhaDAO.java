@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
+import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
@@ -34,6 +35,15 @@ public class NotaFiscalSaidaLinhaDAO {
 		broker.setPropertySQL("notafiscalsaidalinhadao.pesquisar", model.getId());
 
 		return broker.getCollectionBean(NotaFiscalSaidaLinha.class, "id", "notaFiscalSaida.id", "item.id", "quantidade", "valorUnitario", "valor", "codigoImposto.id", "codigoBarras", "pedidoVendaLinha.numero", "pedidoVendaLinha.pedidoVenda.id");
+	}
+	
+	public NotaFiscalSaidaLinha pesquisarPorPedidoVenda(PedidoVenda model, String jndi) {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
+
+		broker.setPropertySQL("notafiscalsaidalinhadao.pesquisarPorPedidoVenda", model.getId());
+
+		return (NotaFiscalSaidaLinha) broker.getObjectBean(NotaFiscalSaidaLinha.class, "id", "notaFiscalSaida.id", "item.id", "quantidade", "valorUnitario", "valor", "codigoImposto.id", "codigoBarras", "pedidoVendaLinha.numero", "pedidoVendaLinha.pedidoVenda.id");
 	}
 
 }
