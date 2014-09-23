@@ -75,7 +75,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 	}
 
 	public void pesquisarLinhas() {
-		
+
 		this.codigoBarras = "";
 
 		this.pedidoVenda.setLinhas(new br.com.brazuca.sapweb.dao.PedidoVendaLinhaDAO().pesquisar(this.pedidoVenda));
@@ -102,7 +102,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		}
 
 	}
-	
+
 	private boolean setarQuantidadePedidoVendaLinha(String codigoBarras) {
 
 		boolean existe = false;
@@ -111,11 +111,11 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 			if (linha.getCodigoBarras().equals(codigoBarras)) {
 
+				existe = true;
+
 				if (linha.getQuantidadeLiberada().intValueExact() < linha.getQuantidade().intValueExact()) {
 
 					linha.setQuantidadeLiberada(new BigDecimal(linha.getQuantidadeLiberada().intValueExact() + this.quantidade.intValue()));
-
-					existe = true;
 
 				} else {
 
@@ -134,34 +134,34 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 		List<ItemEstruturado> itens = new ItemEstruturadoDAO().pesquisar(this.codigoBarras);
 
+		List<ItemEstruturado> itensAux = new ArrayList<ItemEstruturado>();
+
 		if (!TSUtil.isEmpty(itens)) {
 
-			if (itens.size() == this.pedidoVenda.getLinhas().size()) {
+			for (ItemEstruturado model : itens) {
 
-				for (ItemEstruturado model : itens) {
+				for (PedidoVendaLinha pdvLinha : this.pedidoVenda.getLinhas()) {
 
-					for (PedidoVendaLinha pdvLinha : this.pedidoVenda.getLinhas()) {
+					if (model.getItem().getId().equals(pdvLinha.getItem().getId())) {
 
-						if (model.getItem().getId().equals(pdvLinha.getItem().getId())) {
+						existe = true;
 
-							existe = true;
+						if (pdvLinha.getQuantidadeLiberada().intValueExact() < pdvLinha.getQuantidade().intValueExact()) {
 
-							if (pdvLinha.getQuantidadeLiberada().intValueExact() < pdvLinha.getQuantidade().intValueExact()) {
+							pdvLinha.setQuantidadeLiberada(new BigDecimal(pdvLinha.getQuantidadeLiberada().intValueExact() + this.quantidade.intValue()));
 
-								pdvLinha.setQuantidadeLiberada(new BigDecimal(pdvLinha.getQuantidadeLiberada().intValueExact() + this.quantidade.intValue()));
+						} else {
 
-							} else {
-
-								super.addErrorMessage("A quantidade máxima já foi atingida para o Item " + pdvLinha.getItem().getDescricao() + ".");
-							}
-
+							super.addErrorMessage("A quantidade máxima já foi atingida para o Item " + pdvLinha.getItem().getDescricao() + ".");
 						}
+
+						if (!itensAux.contains(model)) {
+
+							itensAux.add(model);
+						}
+
 					}
 				}
-
-			} else {
-
-				super.addErrorMessage("O código de barras informado contém Itens que não constam no Pedido.");
 			}
 
 		}
@@ -169,11 +169,16 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		if (!existe) {
 
 			super.addErrorMessage("Não existem itens associados ao código de barras informado.");
+
+		} else {
+
+			if (itens.size() != itensAux.size()) {
+				
+				super.addErrorMessage("O código de barras informado contém itens estruturados que não estão no Pedido de Venda.");
+			}
 		}
 
 	}
-
-	
 
 	@Override
 	protected String insert() throws TSApplicationException {

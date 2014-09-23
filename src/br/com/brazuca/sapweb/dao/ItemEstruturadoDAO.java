@@ -62,7 +62,7 @@ public class ItemEstruturadoDAO {
 		broker.endTransaction();
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<ItemEstruturado> pesquisar(String codigoBarras) {
 
@@ -73,10 +73,10 @@ public class ItemEstruturadoDAO {
 		sql.append("SELECT ID, ESTRUTURA_ID, CODIGO_BARRAS, ITEM_ID, QUANTIDADE, DATA_IMPORTACAO FROM PUBLIC.ITEM_ESTRUTURADOS WHERE CODIGO_BARRAS = ?");
 
 		broker.setSQL(sql.toString());
-		
+
 		broker.set(codigoBarras);
 
-		return broker.getCollectionBean(ItemEstruturado.class, "estruturaId", "item.codigoBarras", "item.id", "item.quantidade");
+		return broker.getCollectionBean(ItemEstruturado.class, "id", "estruturaId", "item.codigoBarras", "item.id", "item.quantidade", "dataImportacao");
 	}
 
 }

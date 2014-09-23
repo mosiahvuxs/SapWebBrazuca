@@ -131,15 +131,13 @@
 			
 			<p:dialog focus="formDialog:codigoBarras" onShow="updateForm()" position="center" showEffect="fade" height="500" appendTo="@(body)" header="Conferência de Itens" modal="true" widgetVar="dlgConferencia">
 				
-				<h:form id="formDialog">
+				<h:form id="formDialog" onkeydown="if(event.keyCode == 13) setarQuantidadeItens();">
 				
 				<p:remoteCommand action="#{mbean.pesquisarLinhas}"  name="updateForm" update="@form"/>
 				
-				<p:remoteCommand id="buttonHidden" name="setarQuantidadeItens" update="@form" process="@form"/>
+				<p:remoteCommand id="buttonHidden" name="setarQuantidadeItens" action="#{mbean.setarQuantidadeItens}" update="@form" process="@form"/>
 				
 				<p:hotkey bind="ESC" handler="PF('dlgConferencia').hide();"/>
-				
-				<p:hotkey bind="(ENTER)" handler="setarQuantidadeItens();"/>
 				
 				<h:panelGrid columns="4">
 					
@@ -165,7 +163,7 @@
 					<p:outputLabel for="codigoBarras" value="Código de Barras" style="font-weight: bold;"/>
 					<p:outputLabel for="quantidade" value="Quantidade" style="font-weight: bold;"/>
 					<p:inputText id="codigoBarras" style="width: 400px; font-weight: bold;" tabindex="1" value="#{mbean.codigoBarras}"/>
-					<p:spinner min="0" max="10" value="1" size="8" maxlength="10" id="quantidade" tabindex="2"/>
+					<p:spinner min="0" max="10" value="#{mbean.quantidade}" size="8" maxlength="10" id="quantidade" tabindex="2"/>
 				</h:panelGrid>
 				
 				<br/>
@@ -210,7 +208,7 @@
 				
 				<div align="center">
 					<h:panelGrid style="margin-left: -2px;" columns="2">
-						<p:commandButton id="salvar" value="Salvar" icon="salvar"/>
+						<p:commandButton id="salvar" value="Gerar Nota" icon="salvar"/>
 						<p:commandButton id="sair" type="button" value="Sair" icon="cancelar" onclick="PF('dlgConferencia').hide();"/>
 					</h:panelGrid>
 				</div>
