@@ -127,7 +127,7 @@ public class PedidoVendaDAO {
 
 		}
 
-		sql.append(" ORDER BY CLIENTE_NOME, DESCRICAO");
+		sql.append(" ORDER BY CLIENTE_NOME");
 
 		broker.setSQL(sql.toString());
 

@@ -92,7 +92,7 @@
 						</f:facet>
 						<p:column headerText="Conferir">
 							<div align="center">
-								<p:commandLink action="#{mbean.pesquisarLinhas}" onclick="PF('dlgConferencia').show();" type="button">
+								<p:commandLink onclick="PF('dlgConferencia').show();" type="button">
 									<h:graphicImage value="/resources/images/edit.png"/>
 									<f:setPropertyActionListener target="#{conferenciaPdvFaces.pedidoVenda}" value="#{pdv}"/>
 								</p:commandLink>
@@ -133,9 +133,13 @@
 				
 				<h:form id="formDialog">
 				
-				<p:remoteCommand name="updateForm" update="@form"/>
+				<p:remoteCommand action="#{mbean.pesquisarLinhas}"  name="updateForm" update="@form"/>
+				
+				<p:remoteCommand id="buttonHidden" name="setarQuantidadeItens" update="@form" process="@form"/>
 				
 				<p:hotkey bind="ESC" handler="PF('dlgConferencia').hide();"/>
+				
+				<p:hotkey bind="(ENTER)" handler="setarQuantidadeItens();"/>
 				
 				<h:panelGrid columns="4">
 					
@@ -206,8 +210,8 @@
 				
 				<div align="center">
 					<h:panelGrid style="margin-left: -2px;" columns="2">
-						<p:commandButton value="Salvar" icon="salvar"/>
-						<p:commandButton type="button" value="Sair" icon="cancelar" onclick="PF('dlgConferencia').hide();"/>
+						<p:commandButton id="salvar" value="Salvar" icon="salvar"/>
+						<p:commandButton id="sair" type="button" value="Sair" icon="cancelar" onclick="PF('dlgConferencia').hide();"/>
 					</h:panelGrid>
 				</div>
 				

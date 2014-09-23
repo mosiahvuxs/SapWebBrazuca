@@ -2,6 +2,7 @@ package br.com.brazuca.sapweb.dao;
 
 import java.util.List;
 
+import br.com.brazuca.sapweb.model.Item;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.brazuca.sapweb.sap.model.PedidoVendaLinha;
 import br.com.topsys.database.TSDataBaseBrokerIf;
@@ -32,6 +33,19 @@ public class PedidoVendaLinhaDAO {
 		broker.set(model.getSerial());
 
 		return broker.getCollectionBean(PedidoVendaLinha.class, "id", "item.descricao", "item.id", "codigoBarras", "quantidade", "valor", "valorUnitario", "codigoImposto.id", "numero", "pedidoVenda.id");
+	}
+	
+	public PedidoVendaLinha obter(Item model) {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		StringBuilder sql = new StringBuilder("SELECT ID, DESCRICAO, ITEM_ID, CODIGO_BARRAS, QUANTIDADE, VALOR, VALOR_UNITARIO, CODIGO_IMPOSTO, NUMERO, PEDIDO_VENDA_ID FROM PUBLIC.PEDIDO_VENDAS_LINHAS WHERE CODIGO_BARRAS = ? LIMIT 1");
+
+		broker.setSQL(sql.toString());
+
+		broker.set(model.getId());
+
+		return (PedidoVendaLinha) broker.getObjectBean(PedidoVendaLinha.class, "id", "item.descricao", "item.id", "codigoBarras", "quantidade", "valor", "valorUnitario", "codigoImposto.id", "numero", "pedidoVenda.id");
 	}
 
 }

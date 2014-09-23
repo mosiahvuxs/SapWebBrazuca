@@ -1,12 +1,15 @@
 package br.com.brazuca.sapweb.faces;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.brazuca.sapweb.dao.ItemEstruturadoDAO;
 import br.com.brazuca.sapweb.dao.PedidoVendaDAO;
+import br.com.brazuca.sapweb.model.ItemEstruturado;
 import br.com.brazuca.sapweb.sap.model.ParceiroNegocio;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.brazuca.sapweb.sap.model.PedidoVendaLinha;
@@ -25,6 +28,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 	private List<PedidoVenda> pedidos;
 	private String codigoBarras;
 	private Integer quantidade;
+	private boolean inserir;
 
 	public ConferenciaPdvFaces() {
 
@@ -41,25 +45,8 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		this.pedidos = new ArrayList<PedidoVenda>();
 
 		this.quantidade = 1;
-	}
 
-	public String pesquisar() {
-
-		if (this.validaCamposPesquisa()) {
-
-			this.pedidos = new PedidoVendaDAO().pesquisar(this.pedidoVenda);
-
-			TSFacesUtil.gerarResultadoLista(this.pedidos);
-
-		}
-
-		return null;
-	}
-
-	public void pesquisarLinhas() {
-
-		this.pedidoVenda.setLinhas(new br.com.brazuca.sapweb.dao.PedidoVendaLinhaDAO().pesquisar(this.pedidoVenda));
-
+		this.inserir = false;
 	}
 
 	private boolean validaCamposPesquisa() {
@@ -73,6 +60,120 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 		return true;
 	}
+
+	public String pesquisar() {
+
+		if (this.validaCamposPesquisa()) {
+
+			this.pedidos = new PedidoVendaDAO().pesquisar(this.pedidoVendaPesquisa);
+
+			TSFacesUtil.gerarResultadoLista(this.pedidos);
+
+		}
+
+		return null;
+	}
+
+	public void pesquisarLinhas() {
+		
+		this.codigoBarras = "";
+
+		this.pedidoVenda.setLinhas(new br.com.brazuca.sapweb.dao.PedidoVendaLinhaDAO().pesquisar(this.pedidoVenda));
+
+		if (TSUtil.isEmpty(this.pedidoVenda.getLinhas())) {
+
+			super.addErrorMessage("Não vai ser possível fazer a conferência do Pedido, pois não existem itens.");
+		}
+
+	}
+
+	public void setarQuantidadeItens() {
+
+		if (!TSUtil.isEmpty(TSUtil.tratarString(this.codigoBarras))) {
+
+			if (!this.setarQuantidadePedidoVendaLinha(this.codigoBarras)) {
+
+				this.verificarItemEstruturado(this.codigoBarras);
+			}
+
+		} else {
+
+			super.addErrorMessage("Insira o código de barras para realizar a operação.");
+		}
+
+	}
+	
+	private boolean setarQuantidadePedidoVendaLinha(String codigoBarras) {
+
+		boolean existe = false;
+
+		for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
+
+			if (linha.getCodigoBarras().equals(codigoBarras)) {
+
+				if (linha.getQuantidadeLiberada().intValueExact() < linha.getQuantidade().intValueExact()) {
+
+					linha.setQuantidadeLiberada(new BigDecimal(linha.getQuantidadeLiberada().intValueExact() + this.quantidade.intValue()));
+
+					existe = true;
+
+				} else {
+
+					super.addErrorMessage("A quantidade máxima já foi atingida para o Item " + linha.getItem().getDescricao() + ".");
+				}
+
+			}
+		}
+
+		return existe;
+	}
+
+	private void verificarItemEstruturado(String codigoBarras) {
+
+		boolean existe = false;
+
+		List<ItemEstruturado> itens = new ItemEstruturadoDAO().pesquisar(this.codigoBarras);
+
+		if (!TSUtil.isEmpty(itens)) {
+
+			if (itens.size() == this.pedidoVenda.getLinhas().size()) {
+
+				for (ItemEstruturado model : itens) {
+
+					for (PedidoVendaLinha pdvLinha : this.pedidoVenda.getLinhas()) {
+
+						if (model.getItem().getId().equals(pdvLinha.getItem().getId())) {
+
+							existe = true;
+
+							if (pdvLinha.getQuantidadeLiberada().intValueExact() < pdvLinha.getQuantidade().intValueExact()) {
+
+								pdvLinha.setQuantidadeLiberada(new BigDecimal(pdvLinha.getQuantidadeLiberada().intValueExact() + this.quantidade.intValue()));
+
+							} else {
+
+								super.addErrorMessage("A quantidade máxima já foi atingida para o Item " + pdvLinha.getItem().getDescricao() + ".");
+							}
+
+						}
+					}
+				}
+
+			} else {
+
+				super.addErrorMessage("O código de barras informado contém Itens que não constam no Pedido.");
+			}
+
+		}
+
+		if (!existe) {
+
+			super.addErrorMessage("Não existem itens associados ao código de barras informado.");
+		}
+
+	}
+
+	
 
 	@Override
 	protected String insert() throws TSApplicationException {
@@ -126,6 +227,14 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public boolean isInserir() {
+		return inserir;
+	}
+
+	public void setInserir(boolean inserir) {
+		this.inserir = inserir;
 	}
 
 }

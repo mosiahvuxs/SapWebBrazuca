@@ -64,7 +64,7 @@ public class ItemEstruturadoDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ItemEstruturado> pesquisar(ItemEstruturado model) {
+	public List<ItemEstruturado> pesquisar(String codigoBarras) {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
@@ -74,7 +74,7 @@ public class ItemEstruturadoDAO {
 
 		broker.setSQL(sql.toString());
 		
-		broker.set(model.getItem().getCodigoBarras());
+		broker.set(codigoBarras);
 
 		return broker.getCollectionBean(ItemEstruturado.class, "estruturaId", "item.codigoBarras", "item.id", "item.quantidade");
 	}
