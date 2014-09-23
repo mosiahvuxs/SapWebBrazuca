@@ -9,6 +9,7 @@ import javax.faces.bean.ViewScoped;
 
 import br.com.brazuca.sapweb.dao.ItemEstruturadoDAO;
 import br.com.brazuca.sapweb.dao.PedidoVendaDAO;
+import br.com.brazuca.sapweb.dao.PedidoVendaLinhaDAO;
 import br.com.brazuca.sapweb.model.ItemEstruturado;
 import br.com.brazuca.sapweb.sap.model.ParceiroNegocio;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
@@ -25,6 +26,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 	private PedidoVenda pedidoVendaPesquisa;
 	private PedidoVenda pedidoVenda;
+	private PedidoVendaLinha pedidoVendaLinha;
 	private List<PedidoVenda> pedidos;
 	private String codigoBarras;
 	private Integer quantidade;
@@ -41,6 +43,8 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 		this.pedidoVendaPesquisa = new PedidoVenda();
 		this.pedidoVendaPesquisa.setCliente(new ParceiroNegocio());
+		
+		this.pedidoVendaLinha = new PedidoVendaLinha();
 
 		this.pedidos = new ArrayList<PedidoVenda>();
 
@@ -77,6 +81,8 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 	public void pesquisarLinhas() {
 
 		this.codigoBarras = "";
+
+		this.quantidade = 1;
 
 		this.pedidoVenda.setLinhas(new br.com.brazuca.sapweb.dao.PedidoVendaLinhaDAO().pesquisar(this.pedidoVenda));
 
@@ -188,10 +194,21 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 		return null;
 	}
+	
+	@Override
+	protected String delete() throws TSApplicationException {
+		
+		super.setClearFields(false);
+		
+		super.setDefaultMessage(false);
+		
+		new PedidoVendaLinhaDAO().excluir(this.pedidoVendaLinha);
 
-	public void remover(PedidoVendaLinha model) {
-
-		this.pedidoVenda.getLinhas().remove(model);
+		this.pedidoVenda.getLinhas().remove(this.pedidoVendaLinha);
+		
+		TSFacesUtil.addInfoMessage("Registro removido com sucesso.");
+		
+		return null;
 	}
 
 	public PedidoVenda getPedidoVenda() {
@@ -240,6 +257,14 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 	public void setInserir(boolean inserir) {
 		this.inserir = inserir;
+	}
+
+	public PedidoVendaLinha getPedidoVendaLinha() {
+		return pedidoVendaLinha;
+	}
+
+	public void setPedidoVendaLinha(PedidoVendaLinha pedidoVendaLinha) {
+		this.pedidoVendaLinha = pedidoVendaLinha;
 	}
 
 }

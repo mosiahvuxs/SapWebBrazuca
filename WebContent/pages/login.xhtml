@@ -17,7 +17,11 @@
 
 	<p:layout fullPage="true">
 
-		<p:layoutUnit position="north" size="100">
+		<p:layoutUnit position="north" resizable="true">
+			
+			<div align="center">
+				<h:graphicImage value="/resources/images/logo.png"/>
+			</div>
 			
 		</p:layoutUnit>
 
@@ -31,7 +35,7 @@
 				
 				<div align="center">
 
-					<p:panel id="panelLogin" header="Brazuca-SAPWeb" style="width: 280px; text-align: left">
+					<p:panel id="panelLogin" header="Autenticação" style="width: 280px; text-align: left">
 
 						<h:panelGrid style="width: 245px;" columns="2" columnClasses="coluna30, coluna70">
 							<p:outputLabel for="login" value="Login:" />

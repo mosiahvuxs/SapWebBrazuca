@@ -139,6 +139,8 @@
 				
 				<p:hotkey bind="ESC" handler="PF('dlgConferencia').hide();"/>
 				
+				<p:hotkey bind="CTRL+B" handler="alert('Deseja realmente salvar ?');"/>
+				
 				<h:panelGrid columns="4">
 					
 					<p:outputLabel for="cliente" value="Cliente" style="font-weight: bold;"/>
@@ -163,7 +165,7 @@
 					<p:outputLabel for="codigoBarras" value="Código de Barras" style="font-weight: bold;"/>
 					<p:outputLabel for="quantidade" value="Quantidade" style="font-weight: bold;"/>
 					<p:inputText id="codigoBarras" style="width: 400px; font-weight: bold;" tabindex="1" value="#{mbean.codigoBarras}"/>
-					<p:spinner min="0" max="10" value="#{mbean.quantidade}" size="8" maxlength="10" id="quantidade" tabindex="2"/>
+					<p:spinner min="1" value="#{mbean.quantidade}" size="8" maxlength="19" id="quantidade" tabindex="2"/>
 				</h:panelGrid>
 				
 				<br/>
@@ -194,9 +196,11 @@
 						</p:column>
 						<p:column headerText="Remover" style="width: 50px;">
 							<div align="center">
-								<p:commandLink action="#{mbean.remover(linha)}" process="@this" update="gridItens">
+								<p:commandLink type="button" icon="delete16" id="excluir" onclick="PF('cdExcluir').show()" global="false">
 									<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+									<f:setPropertyActionListener target="#{mbean.pedidoVendaLinha}" value="#{linha}" />
 								</p:commandLink>
+								
 							</div>
 						</p:column>
 						
@@ -208,10 +212,17 @@
 				
 				<div align="center">
 					<h:panelGrid style="margin-left: -2px;" columns="2">
-						<p:commandButton id="salvar" value="Gerar Nota" icon="salvar"/>
+						<p:commandButton id="salvar" value="Salvar" icon="salvar"/>
 						<p:commandButton id="sair" type="button" value="Sair" icon="cancelar" onclick="PF('dlgConferencia').hide();"/>
 					</h:panelGrid>
 				</div>
+				
+				<p:confirmDialog message="Deseja realmente remover o Item ?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdExcluir">
+	    
+				    <p:commandButton value="Sim" onclick="PF('cdExcluir').hide();" action="#{mbean.deleteEvent}" update="@form" process="@this" />
+				    <p:commandButton value="Não" onclick="PF('cdExcluir').hide();" />
+				    
+			  	</p:confirmDialog>
 				
 				</h:form>
 					

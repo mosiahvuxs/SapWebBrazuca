@@ -48,4 +48,13 @@ public class PedidoVendaLinhaDAO {
 		return (PedidoVendaLinha) broker.getObjectBean(PedidoVendaLinha.class, "id", "item.descricao", "item.id", "codigoBarras", "quantidade", "valor", "valorUnitario", "codigoImposto.id", "numero", "pedidoVenda.id");
 	}
 
+	public void excluir(PedidoVendaLinha model) throws TSApplicationException {
+		
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setPropertySQL("pedidovendalinhadao.excluir", model.getId());
+
+		broker.execute();
+
+	}
 }
