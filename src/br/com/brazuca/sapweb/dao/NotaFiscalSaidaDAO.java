@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
+import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
@@ -14,7 +15,7 @@ import br.com.topsys.util.TSUtil;
 
 public class NotaFiscalSaidaDAO {
 
-	public void inserir(NotaFiscalSaida model) throws TSApplicationException {
+	public void inserir(NotaFiscalSaida model, PedidoVenda pedidoVenda) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
@@ -30,7 +31,7 @@ public class NotaFiscalSaidaDAO {
 		model.getIdExterno(), model.getEmpresa().getId(), model.getCliente().getId(),
 		model.getVendedor().getId(), model.getCliente().getEnderecoDestinatario().getLogradouro(), model.getCliente().getEndereco().getLogradouro(), 
 		model.getCliente().getIdentificadorFederal(), model.getObservacao(), model.getTipoResumo(), 
-		model.getTipo(), model.getTipoEnvio());
+		model.getTipo(), model.getTipoEnvio(), model.getStatus().getId());
 
 		broker.execute();
 
@@ -42,6 +43,8 @@ public class NotaFiscalSaidaDAO {
 
 			notaFiscalSaidaLinhaDAO.inserir(linha, broker);
 		}
+		
+		new PedidoVendaDAO().excluir(pedidoVenda, broker);
 
 		broker.endTransaction();
 	}

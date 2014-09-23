@@ -34,6 +34,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 	private String codigoBarras;
 	private Integer quantidade;
 	private Empresa empresa;
+	private String mensagem;
 
 	public ConferenciaPdvFaces() {
 
@@ -51,6 +52,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 		this.empresa = new Empresa(Utilitarios.getEmpresaConectada().getId(), Utilitarios.getEmpresaConectada().getJndi());
 
+		this.mensagem = null;
 	}
 
 	private boolean validaCamposPesquisa() {
@@ -81,7 +83,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 	public void pesquisarLinhas() {
 
 		this.codigoBarras = "";
-		
+
 		this.quantidade = 1;
 
 		this.pedidoVenda.setLinhas(new br.com.brazuca.sapweb.dao.PedidoVendaLinhaDAO().pesquisar(this.pedidoVenda, null));
@@ -193,6 +195,8 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 		super.setDefaultMessage(false);
 
+		this.mensagem = null;
+
 		List<PedidoVendaLinha> linhas = new ArrayList<PedidoVendaLinha>();
 
 		for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
@@ -205,18 +209,27 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 		if (!TSUtil.isEmpty(linhas)) {
 
-			this.pedidoVenda.setLinhas(linhas);
+			new NotaFiscalSaidaBusiness().inserir(this.pedidoVenda, linhas);
 
-			new NotaFiscalSaidaBusiness().inserir(this.pedidoVenda);
-
-			super.setDefaultMessage(true);
+			this.mensagem = "Operação realizada com sucesso";
 
 		} else {
 
-			super.addErrorMessage("Para realizar a operação é necessário que um dos Itens do Pedido nº " + this.pedidoVenda.getId() + " tenha a Quantidade Liberada maior que Zero.");
+			this.mensagem = "Para realizar a operação é necessário que um dos Itens do Pedido nº " + this.pedidoVenda.getId() + " tenha a Quantidade Liberada maior que Zero.";
 		}
 
 		return null;
+	}
+
+	public void remoteCommand() {
+
+		if (!TSUtil.isEmpty(this.mensagem)) {
+
+			TSFacesUtil.addInfoMessage(this.mensagem);
+		}
+
+		this.limpar();
+
 	}
 
 	@Override
@@ -289,6 +302,14 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
+	}
+
+	public String getMensagem() {
+		return mensagem;
+	}
+
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
 	}
 
 }

@@ -33,8 +33,6 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 
 	public void limpar() {
 
-		this.empresa = (Empresa) TSFacesUtil.getObjectInSession(Constantes.EMPRESA);
-
 		this.pedidoVendaPesquisa = new PedidoVenda();
 		this.pedidoVendaPesquisa.setCliente(new ParceiroNegocio());
 
