@@ -90,7 +90,7 @@
 						<f:facet name="header">
 							Pedidos de Venda
 						</f:facet>
-						<p:column headerText="Conferir">
+						<p:column headerText="Conferir" style="width: 20px;">
 							<div align="center">
 								<p:commandLink onclick="PF('dlgConferencia').show();" type="button">
 									<h:graphicImage value="/resources/images/edit.png"/>
@@ -98,24 +98,24 @@
 								</p:commandLink>
 							</div>
 						</p:column>
-						<p:column headerText="Cliente">
+						<p:column headerText="Cliente" style="width: 300px;">
 							<div align="center">
 								<h:outputText value="#{pdv.cliente.nome}" style="font-weight: bold;" />
 							</div>
 						</p:column>
-						<p:column headerText="Nº do Pedido">
+						<p:column headerText="Nº do Pedido" style="width: 80px;">
 							<div align="center">
 								<h:outputText value="#{pdv.id}" style="font-weight: bold;" />
 							</div>
 						</p:column>
-						<p:column headerText="Data de Lançamento">
+						<p:column headerText="Data de Lançamento" style="width: 100px;">
 							<div align="center">
 								<h:outputText value="#{pdv.dataLancamento}" style="font-weight: bold;">
 									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 								</h:outputText>
 							</div>
 						</p:column>
-						<p:column headerText="Data Documento">
+						<p:column headerText="Data Documento" style="width: 100px;">
 							<div align="center">
 								<h:outputText value="#{pdv.dataDocumento}" style="font-weight: bold;">
 									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />

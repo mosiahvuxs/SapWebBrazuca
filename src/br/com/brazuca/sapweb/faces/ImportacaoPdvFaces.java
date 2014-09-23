@@ -63,6 +63,8 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 	}
 
 	public String pesquisar() {
+		
+		this.pedidosVenda = new ArrayList<PedidoVenda>();
 
 		if (this.validaCamposPesquisa()) {
 
@@ -101,11 +103,11 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 
 			if (!TSUtil.isEmpty(item.isSelecionado()) && item.isSelecionado()) {
 
+				item.setEmpresa(this.pedidoVenda.getEmpresa());
+
 				item.setLinhas(new PedidoVendaLinhaDAO().pesquisar(item));
 
 				if (!TSUtil.isEmpty(item.getLinhas())) {
-
-					item.setEmpresa(this.pedidoVenda.getEmpresa());
 
 					pedidosSelecionados.add(item);
 

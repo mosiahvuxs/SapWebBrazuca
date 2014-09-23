@@ -113,9 +113,11 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 				existe = true;
 
-				if (linha.getQuantidadeLiberada().intValueExact() < linha.getQuantidade().intValueExact()) {
+				BigDecimal qtd = new BigDecimal(linha.getQuantidadeLiberada().intValueExact() + this.quantidade.intValue());
 
-					linha.setQuantidadeLiberada(new BigDecimal(linha.getQuantidadeLiberada().intValueExact() + this.quantidade.intValue()));
+				if (qtd.intValueExact() < linha.getQuantidade().intValueExact()) {
+
+					linha.setQuantidadeLiberada(new BigDecimal(qtd.intValueExact()));
 
 				} else {
 
@@ -140,19 +142,21 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 			for (ItemEstruturado model : itens) {
 
-				for (PedidoVendaLinha pdvLinha : this.pedidoVenda.getLinhas()) {
+				for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
 
-					if (model.getItem().getId().equals(pdvLinha.getItem().getId())) {
+					if (model.getItem().getId().equals(linha.getItem().getId())) {
 
 						existe = true;
 
-						if (pdvLinha.getQuantidadeLiberada().intValueExact() < pdvLinha.getQuantidade().intValueExact()) {
+						BigDecimal qtd = new BigDecimal(linha.getQuantidadeLiberada().intValueExact() + this.quantidade.intValue());
 
-							pdvLinha.setQuantidadeLiberada(new BigDecimal(pdvLinha.getQuantidadeLiberada().intValueExact() + this.quantidade.intValue()));
+						if (qtd.intValueExact() < linha.getQuantidade().intValueExact()) {
+
+							linha.setQuantidadeLiberada(new BigDecimal(qtd.intValueExact()));
 
 						} else {
 
-							super.addErrorMessage("A quantidade máxima já foi atingida para o Item " + pdvLinha.getItem().getDescricao() + ".");
+							super.addErrorMessage("A quantidade máxima já foi atingida para o Item " + linha.getItem().getDescricao() + ".");
 						}
 
 						if (!itensAux.contains(model)) {
@@ -173,7 +177,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		} else {
 
 			if (itens.size() != itensAux.size()) {
-				
+
 				super.addErrorMessage("O código de barras informado contém itens estruturados que não estão no Pedido de Venda.");
 			}
 		}
