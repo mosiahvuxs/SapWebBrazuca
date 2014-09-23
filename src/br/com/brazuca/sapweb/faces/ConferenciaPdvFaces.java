@@ -113,11 +113,9 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 				existe = true;
 
-				BigDecimal qtd = new BigDecimal(linha.getQuantidadeLiberada().intValueExact() + this.quantidade.intValue());
+				if (this.quantidade.intValue() <= linha.getQuantidade().intValueExact()) {
 
-				if (qtd.intValueExact() < linha.getQuantidade().intValueExact()) {
-
-					linha.setQuantidadeLiberada(new BigDecimal(qtd.intValueExact()));
+					linha.setQuantidadeLiberada(new BigDecimal(this.quantidade.intValue()));
 
 				} else {
 
@@ -148,11 +146,9 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 						existe = true;
 
-						BigDecimal qtd = new BigDecimal(linha.getQuantidadeLiberada().intValueExact() + this.quantidade.intValue());
+						if (this.quantidade.intValue() <= linha.getQuantidade().intValueExact()) {
 
-						if (qtd.intValueExact() < linha.getQuantidade().intValueExact()) {
-
-							linha.setQuantidadeLiberada(new BigDecimal(qtd.intValueExact()));
+							linha.setQuantidadeLiberada(new BigDecimal(this.quantidade.intValue()));
 
 						} else {
 
