@@ -26,35 +26,53 @@ public class PedidoVendaLinhaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		StringBuilder sql = new StringBuilder("SELECT ID, DESCRICAO, ITEM_ID, CODIGO_BARRAS, QUANTIDADE, VALOR, VALOR_UNITARIO, CODIGO_IMPOSTO, NUMERO, PEDIDO_VENDA_ID FROM PUBLIC.PEDIDO_VENDAS_LINHAS WHERE 1 = 1 AND PEDIDO_VENDA_ID = ? ORDER BY DESCRICAO");
+		StringBuilder sql = new StringBuilder("SELECT ID, DESCRICAO, ITEM_ID, CODIGO_BARRAS, QUANTIDADE, VALOR, VALOR_UNITARIO, CODIGO_IMPOSTO, NUMERO, PEDIDO_VENDA_ID, QUANTIDADE_LIBERADA FROM PUBLIC.PEDIDO_VENDAS_LINHAS WHERE 1 = 1 AND PEDIDO_VENDA_ID = ? ORDER BY DESCRICAO");
 
 		broker.setSQL(sql.toString());
 
 		broker.set(model.getSerial());
 
-		return broker.getCollectionBean(PedidoVendaLinha.class, "id", "item.descricao", "item.id", "codigoBarras", "quantidade", "valor", "valorUnitario", "codigoImposto.id", "numero", "pedidoVenda.id");
+		return broker.getCollectionBean(PedidoVendaLinha.class, "id", "item.descricao", "item.id", "codigoBarras", "quantidade", "valor", "valorUnitario", "codigoImposto.id", "numero", "pedidoVenda.id", "quantidadeLiberada");
 	}
-	
+
 	public PedidoVendaLinha obter(Item model) {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		StringBuilder sql = new StringBuilder("SELECT ID, DESCRICAO, ITEM_ID, CODIGO_BARRAS, QUANTIDADE, VALOR, VALOR_UNITARIO, CODIGO_IMPOSTO, NUMERO, PEDIDO_VENDA_ID FROM PUBLIC.PEDIDO_VENDAS_LINHAS WHERE CODIGO_BARRAS = ? LIMIT 1");
+		StringBuilder sql = new StringBuilder("SELECT ID, DESCRICAO, ITEM_ID, CODIGO_BARRAS, QUANTIDADE, VALOR, VALOR_UNITARIO, CODIGO_IMPOSTO, NUMERO, PEDIDO_VENDA_ID, QUANTIDADE_LIBERADA FROM PUBLIC.PEDIDO_VENDAS_LINHAS WHERE CODIGO_BARRAS = ? LIMIT 1");
 
 		broker.setSQL(sql.toString());
 
 		broker.set(model.getId());
 
-		return (PedidoVendaLinha) broker.getObjectBean(PedidoVendaLinha.class, "id", "item.descricao", "item.id", "codigoBarras", "quantidade", "valor", "valorUnitario", "codigoImposto.id", "numero", "pedidoVenda.id");
+		return (PedidoVendaLinha) broker.getObjectBean(PedidoVendaLinha.class, "id", "item.descricao", "item.id", "codigoBarras", "quantidade", "valor", "valorUnitario", "codigoImposto.id", "numero", "pedidoVenda.id", "quantidadeLiberada");
 	}
 
 	public void excluir(PedidoVendaLinha model) throws TSApplicationException {
-		
+
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
 		broker.setPropertySQL("pedidovendalinhadao.excluir", model.getId());
 
 		broker.execute();
+
+	}
+
+	public void alterar(List<PedidoVendaLinha> linhas) throws TSApplicationException {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.beginTransaction();
+
+		for (PedidoVendaLinha model : linhas) {
+
+			broker.setPropertySQL("pedidovendalinhadao.alterar", model.getQuantidadeLiberada(), model.getId());
+
+			broker.execute();
+
+		}
+
+		broker.endTransaction();
 
 	}
 }

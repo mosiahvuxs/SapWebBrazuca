@@ -43,7 +43,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 		this.pedidoVendaPesquisa = new PedidoVenda();
 		this.pedidoVendaPesquisa.setCliente(new ParceiroNegocio());
-		
+
 		this.pedidoVendaLinha = new PedidoVendaLinha();
 
 		this.pedidos = new ArrayList<PedidoVenda>();
@@ -187,27 +187,49 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 	}
 
 	@Override
-	protected String insert() throws TSApplicationException {
+	protected String update() throws TSApplicationException {
 
 		super.setClearFields(false);
+
 		super.setDefaultMessage(false);
+
+		List<PedidoVendaLinha> linhas = new ArrayList<PedidoVendaLinha>();
+		
+		for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
+
+			if (linha.getQuantidadeLiberada().intValueExact() > 0) {
+
+				linhas.add(linha);
+			}
+		}
+
+		if (!TSUtil.isEmpty(linhas)) {
+			
+			new PedidoVendaLinhaDAO().alterar(linhas);
+			
+			super.setDefaultMessage(true);
+			
+		} else {
+
+			super.addErrorMessage("Para realizar a operação é necessário que um dos Itens tenha a Quantidade Liberada maior que Zero.");
+		}
 
 		return null;
 	}
-	
+
 	@Override
 	protected String delete() throws TSApplicationException {
-		
+
 		super.setClearFields(false);
-		
+
 		super.setDefaultMessage(false);
-		
+
 		new PedidoVendaLinhaDAO().excluir(this.pedidoVendaLinha);
 
 		this.pedidoVenda.getLinhas().remove(this.pedidoVendaLinha);
-		
+
 		TSFacesUtil.addInfoMessage("Registro removido com sucesso.");
-		
+
 		return null;
 	}
 
