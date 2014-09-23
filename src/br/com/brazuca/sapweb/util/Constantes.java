@@ -30,4 +30,7 @@ public final class Constantes {
 
 	public static final String SMTP_SERVER = "mailing.grupoatarde.com.br";
 
+	public static final String FILTRO_QUERY_PDV = " AND EXISTS (SELECT 1 FROM PEDIDO_VENDAS_LINHAS PDVL WHERE PDVL.PEDIDO_VENDA_ID = PV.ID AND PDVL.QUANTIDADE_LIBERADA > 0)";
+	public static final String FILTRO_QUERY_PDV_LINHA = " AND QUANTIDADE_LIBERADA > 0";
+
 }

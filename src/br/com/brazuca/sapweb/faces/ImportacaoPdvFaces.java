@@ -13,6 +13,7 @@ import br.com.brazuca.sapweb.sap.model.Empresa;
 import br.com.brazuca.sapweb.sap.model.ParceiroNegocio;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.brazuca.sapweb.util.Constantes;
+import br.com.brazuca.sapweb.util.Utilitarios;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
@@ -37,10 +38,7 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 
 		this.pedidoVenda = new PedidoVenda();
 		this.pedidoVenda.setCliente(new ParceiroNegocio());
-
-		br.com.brazuca.sapweb.model.Empresa empresa = (br.com.brazuca.sapweb.model.Empresa) TSFacesUtil.getObjectInSession(Constantes.EMPRESA);
-		this.pedidoVenda.setEmpresa(new Empresa(empresa.getId(), empresa.getJndi()));
-
+		this.pedidoVenda.setEmpresa(new Empresa(Utilitarios.getEmpresaConectada().getId(), Utilitarios.getEmpresaConectada().getJndi()));
 		this.pedidosVenda = new ArrayList<PedidoVenda>();
 		this.todos = false;
 	}
@@ -63,7 +61,7 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 	}
 
 	public String pesquisar() {
-		
+
 		this.pedidosVenda = new ArrayList<PedidoVenda>();
 
 		if (this.validaCamposPesquisa()) {
@@ -134,10 +132,7 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 
 		} else {
 
-			if (TSUtil.isEmpty(TSFacesUtil.getFacesContext().getMessages())) {
-
-				super.addErrorMessage("Para realizar a operação selecione algum Pedido de Venda.");
-			}
+			super.addErrorMessage("Para realizar a operação selecione algum Pedido de Venda.");
 
 		}
 

@@ -7,13 +7,16 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.brazuca.sapweb.business.NotaFiscalSaidaBusiness;
 import br.com.brazuca.sapweb.dao.ItemEstruturadoDAO;
 import br.com.brazuca.sapweb.dao.PedidoVendaDAO;
 import br.com.brazuca.sapweb.dao.PedidoVendaLinhaDAO;
 import br.com.brazuca.sapweb.model.ItemEstruturado;
+import br.com.brazuca.sapweb.sap.model.Empresa;
 import br.com.brazuca.sapweb.sap.model.ParceiroNegocio;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.brazuca.sapweb.sap.model.PedidoVendaLinha;
+import br.com.brazuca.sapweb.util.Utilitarios;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
@@ -30,7 +33,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 	private List<PedidoVenda> pedidos;
 	private String codigoBarras;
 	private Integer quantidade;
-	private boolean inserir;
+	private Empresa empresa;
 
 	public ConferenciaPdvFaces() {
 
@@ -40,17 +43,14 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 	public void limpar() {
 
 		this.pedidoVenda = new PedidoVenda();
-
 		this.pedidoVendaPesquisa = new PedidoVenda();
 		this.pedidoVendaPesquisa.setCliente(new ParceiroNegocio());
-
 		this.pedidoVendaLinha = new PedidoVendaLinha();
-
 		this.pedidos = new ArrayList<PedidoVenda>();
-
 		this.quantidade = 1;
 
-		this.inserir = false;
+		this.empresa = new Empresa(Utilitarios.getEmpresaConectada().getId(), Utilitarios.getEmpresaConectada().getJndi());
+
 	}
 
 	private boolean validaCamposPesquisa() {
@@ -69,7 +69,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 		if (this.validaCamposPesquisa()) {
 
-			this.pedidos = new PedidoVendaDAO().pesquisar(this.pedidoVendaPesquisa);
+			this.pedidos = new PedidoVendaDAO().pesquisar(this.pedidoVendaPesquisa, null);
 
 			TSFacesUtil.gerarResultadoLista(this.pedidos);
 
@@ -81,10 +81,10 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 	public void pesquisarLinhas() {
 
 		this.codigoBarras = "";
-
+		
 		this.quantidade = 1;
 
-		this.pedidoVenda.setLinhas(new br.com.brazuca.sapweb.dao.PedidoVendaLinhaDAO().pesquisar(this.pedidoVenda));
+		this.pedidoVenda.setLinhas(new br.com.brazuca.sapweb.dao.PedidoVendaLinhaDAO().pesquisar(this.pedidoVenda, null));
 
 		if (TSUtil.isEmpty(this.pedidoVenda.getLinhas())) {
 
@@ -187,14 +187,14 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 	}
 
 	@Override
-	protected String update() throws TSApplicationException {
+	protected String insert() throws TSApplicationException {
 
 		super.setClearFields(false);
 
 		super.setDefaultMessage(false);
 
 		List<PedidoVendaLinha> linhas = new ArrayList<PedidoVendaLinha>();
-		
+
 		for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
 
 			if (linha.getQuantidadeLiberada().intValueExact() > 0) {
@@ -204,14 +204,16 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		}
 
 		if (!TSUtil.isEmpty(linhas)) {
-			
-			new PedidoVendaLinhaDAO().alterar(linhas);
-			
+
+			this.pedidoVenda.setLinhas(linhas);
+
+			new NotaFiscalSaidaBusiness().inserir(this.pedidoVenda);
+
 			super.setDefaultMessage(true);
-			
+
 		} else {
 
-			super.addErrorMessage("Para realizar a operação é necessário que um dos Itens tenha a Quantidade Liberada maior que Zero.");
+			super.addErrorMessage("Para realizar a operação é necessário que um dos Itens do Pedido nº " + this.pedidoVenda.getId() + " tenha a Quantidade Liberada maior que Zero.");
 		}
 
 		return null;
@@ -273,20 +275,20 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		this.quantidade = quantidade;
 	}
 
-	public boolean isInserir() {
-		return inserir;
-	}
-
-	public void setInserir(boolean inserir) {
-		this.inserir = inserir;
-	}
-
 	public PedidoVendaLinha getPedidoVendaLinha() {
 		return pedidoVendaLinha;
 	}
 
 	public void setPedidoVendaLinha(PedidoVendaLinha pedidoVendaLinha) {
 		this.pedidoVendaLinha = pedidoVendaLinha;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 }

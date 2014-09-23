@@ -4,14 +4,14 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui">
 	
-	<ui:param name="mbean" value="#{importacaoPdvFaces}"/>
-	<ui:param name="mbeanModel" value="#{importacaoPdvFaces.pedidoVenda}"/>
+	<ui:param name="mbean" value="#{exportacaoPdvFaces}"/>
+	<ui:param name="mbeanPesquisaModel" value="#{exportacaoPdvFaces.pedidoVendaPesquisa}"/>
 	
 	<p:tabView prependId="false">
 	
-		<p:tab title="Importação">
+		<p:tab title="Exportação">
 			
-			<h:form id="form">
+			<h:form prependId="false">
 		
 				<br/>
 				
@@ -22,14 +22,14 @@
 						<p:fieldset legend="Pedido">
 							<h:panelGrid columns="1">
 								<p:outputLabel for="numeroPedido" value="Número" style="font-weight: bold;"/>
-								<p:inputText style="width: 197px;" id="numeroPedido" value="#{mbeanModel.id}" onkeypress="Mascara(this, Integer)" onblur="Mascara(this, Integer)" maxlength="10"/>
+								<p:inputText style="width: 197px;" id="numeroPedido" value="#{mbeanPesquisaModel.id}" onkeypress="Mascara(this, Integer)" onblur="Mascara(this, Integer)" maxlength="10"/>
 							</h:panelGrid>
 						</p:fieldset>
 						
 						<p:fieldset legend="Cliente">
 							<h:panelGrid columns="1">
 								<p:outputLabel for="cliente" value="Nome:" style="font-weight: bold;"/>
-								<p:inputText id="cliente" value="#{mbeanModel.cliente.nome}" maxlength="50" style="width: 440px;"/>
+								<p:inputText id="cliente" value="#{mbeanPesquisaModel.cliente.nome}" maxlength="50" style="width: 440px;"/>
 							</h:panelGrid>
 						</p:fieldset>
 					
@@ -42,8 +42,8 @@
 							<h:panelGrid columns="2">
 								<p:outputLabel for="dtLacamentoInicial" value="Data Inicial" style="font-weight: bold;"/>
 								<p:outputLabel for="dtLacamentoFinal" value="Data Final" style="font-weight: bold;"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataLancamento}"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataLancamentoFinal}"/>
+								<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanPesquisaModel.dataLancamento}"/>
+								<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanPesquisaModel.dataLancamentoFinal}"/>
 							</h:panelGrid>
 							
 						</p:fieldset>
@@ -53,8 +53,8 @@
 							<h:panelGrid columns="2">
 								<p:outputLabel for="dtEntregaInicial" value="Data Inicial" style="font-weight: bold;"/>
 								<p:outputLabel for="dtEntregaFinal" value="Data Final" style="font-weight: bold;"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtEntregaInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataVencimento}"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtEntregaFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataVencimentoFinal}"/>
+								<p:calendar navigator="true" readonlyInput="true" id="dtEntregaInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanPesquisaModel.dataVencimento}"/>
+								<p:calendar navigator="true" readonlyInput="true" id="dtEntregaFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanPesquisaModel.dataVencimentoFinal}"/>
 							</h:panelGrid>
 							
 						</p:fieldset>
@@ -64,8 +64,8 @@
 							<h:panelGrid columns="2">
 								<p:outputLabel for="dtDocumentoInicial" value="Data Inicial" style="font-weight: bold;"/>
 								<p:outputLabel for="dtDocumentoFinal" value="Data Final" style="font-weight: bold;"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataDocumento}"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataDocumentoFinal}"/>
+								<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanPesquisaModel.dataDocumento}"/>
+								<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanPesquisaModel.dataDocumentoFinal}"/>
 							</h:panelGrid>
 							
 						</p:fieldset>
@@ -79,24 +79,23 @@
 				<h:panelGrid columns="3">
 					<p:commandButton action="#{mbean.pesquisar}" value="Pesquisar" icon="pesquisar" style="height:28px; width: 105px;" update="@form"/>
 					<p:commandButton action="sucesso" update="@form" value="Nova Pesquisa" icon="novo" style="height:28px; width: 130px;"/>
-					<p:commandButton action="#{mbean.salvar}" update="@form" value="Importar" icon="salvar" style="height:28px; width: 105px;" rendered="#{!empty mbean.pedidosVenda}"/>
-					<h:panelGroup rendered="#{empty mbean.pedidosVenda}"/>
+					<p:commandButton onclick="PF('cdInserir').show();" value="Exportar" icon="salvar" style="height:28px; width: 105px;" rendered="#{!empty mbean.pedidos}"/>
+					<h:panelGroup rendered="#{empty mbean.pedidos}"/>
 				</h:panelGrid>
 				
 				<br/>
 				
-				<p:fieldset legend="Resultado"  style="width: 97%">
+				<p:fieldset legend="Resultado" style="width: 97%">
 
-					<p:dataTable var="pdv" id="pdvs" rowIndexVar="index" value="#{mbean.pedidosVenda}" paginator="true" paginatorAlwaysVisible="false" rows="20" emptyMessage="Nenhum P.D.V encontrado">
-						
+					<p:dataTable var="pdv" id="pdvs" rowIndexVar="index" value="#{mbean.pedidos}" paginator="true" paginatorAlwaysVisible="false" rows="20" emptyMessage="Nenhum P.D.V encontrado">
 						<f:facet name="header">
-							Pedidos de Vendas
+							Pedidos de Venda
 						</f:facet>
 						<p:column headerText="Selecione" style="width: 60px;">
 							<f:facet name="header">
 								<p:outputLabel value="Todos" for="todos" />
 								<div align="center">
-									<h:selectBooleanCheckbox id="todos" value="#{mbean.todos}" rendered="#{!empty mbean.pedidosVenda}">
+									<h:selectBooleanCheckbox id="todos" value="#{mbean.todos}" rendered="#{!empty mbean.pedidos}">
 										<f:ajax event="change" listener="#{mbean.setarTodos}" execute="@this" render="pdvs"/>
 									</h:selectBooleanCheckbox>
 								</div>
@@ -131,13 +130,18 @@
 						</p:column>
 						
 					</p:dataTable>
-
+					
 				</p:fieldset>
 				
+				<p:confirmDialog message="Deseja realmente exportar o(s) Pedido(s)?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdInserir">
+	    			<p:commandButton value="Sim" onclick="PF('cdInserir').hide();" action="#{mbean.insertEvent}" update="@form" process="@this" />
+				    <p:commandButton value="Não" onclick="PF('cdInserir').hide();" />
+			  	</p:confirmDialog>
+				
 			</h:form>
-			
+					
 		</p:tab>
 		
 	</p:tabView>
-	
+		
 </ui:composition>

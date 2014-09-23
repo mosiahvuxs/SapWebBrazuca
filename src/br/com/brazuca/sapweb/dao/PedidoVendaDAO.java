@@ -14,7 +14,7 @@ public class PedidoVendaDAO {
 	public void inserir(PedidoVenda model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
-		
+
 		this.excluir(model, broker);
 
 		broker.beginTransaction();
@@ -75,59 +75,64 @@ public class PedidoVendaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<PedidoVenda> pesquisar(PedidoVenda model) {
+	public List<PedidoVenda> pesquisar(PedidoVenda model, String filtro) {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		StringBuilder sql = new StringBuilder("SELECT ID, CODIGO_SAP, DATA_LANCAMENTO, DATA_VENCIMENTO, DATA_DOCUMENTO, CLIENTE_ID, CLIENTE_NOME, CLIENTE_IDENTIFICADOR_EXTERIOR, ENDERECO_COBRANCA, ENDERECO_DESTINO, VENDEDOR_ID, VENDEDOR_NOME, VALOR_TOTAL, OBSERVACAO, TIPO_ENVIO, ID_EXTERNO, CONDICAO_PAGAMENTO, TIPO_RESUMO, TIPO, DATA_IMPORTACAO, EMPRESA_ID, CODIGO_SAP FROM PUBLIC.PEDIDO_VENDAS WHERE 1 = 1");
+		StringBuilder sql = new StringBuilder("SELECT PV.EMPRESA_ID, PV.ID, PV.CODIGO_SAP, PV.DATA_LANCAMENTO, PV.DATA_VENCIMENTO, PV.DATA_DOCUMENTO, PV.CLIENTE_ID, PV.CLIENTE_NOME, PV.CLIENTE_IDENTIFICADOR_EXTERIOR, PV.ENDERECO_COBRANCA, PV.ENDERECO_DESTINO, PV.VENDEDOR_ID, PV.VENDEDOR_NOME, PV.VALOR_TOTAL, PV.OBSERVACAO, PV.TIPO_ENVIO, PV.ID_EXTERNO, PV.CONDICAO_PAGAMENTO, PV.TIPO_RESUMO, PV.TIPO, PV.DATA_IMPORTACAO, PV.EMPRESA_ID, PV.CODIGO_SAP FROM PUBLIC.PEDIDO_VENDAS PV WHERE 1 = 1");
 
 		if (!TSUtil.isEmpty(TSUtil.tratarLong(model.getId()))) {
 
-			sql.append(" AND CODIGO_SAP = ?");
+			sql.append(" AND PV.CODIGO_SAP = ?");
 		}
 
 		if (!TSUtil.isEmpty(model.getCliente()) && !TSUtil.isEmpty(model.getCliente().getNome())) {
 
-			sql.append(" AND SEM_ACENTOS(CLIENTE_NOME) ILIKE SEM_ACENTOS(?)");
+			sql.append(" AND SEM_ACENTOS(PV.CLIENTE_NOME) ILIKE SEM_ACENTOS(?)");
 		}
 
 		if (!TSUtil.isEmpty(model.getDataVencimento())) {
 
-			sql.append(" AND DATA_VENCIMENTO >= ?");
+			sql.append(" AND PV.DATA_VENCIMENTO >= ?");
 
 		}
 
 		if (!TSUtil.isEmpty(model.getDataVencimentoFinal())) {
 
-			sql.append(" AND DATA_VENCIMENTO <= ?");
+			sql.append(" AND PV.DATA_VENCIMENTO <= ?");
 
 		}
 
 		if (!TSUtil.isEmpty(model.getDataDocumento())) {
 
-			sql.append(" AND DATA_DOCUMENTO >= ?");
+			sql.append(" AND PV.DATA_DOCUMENTO >= ?");
 
 		}
 
 		if (!TSUtil.isEmpty(model.getDataDocumentoFinal())) {
 
-			sql.append(" AND DATA_DOCUMENTO <= ?");
+			sql.append(" AND PV.DATA_DOCUMENTO <= ?");
 
 		}
 
 		if (!TSUtil.isEmpty(model.getDataLancamento())) {
 
-			sql.append(" AND DATA_LANCAMENTO >= ?");
+			sql.append(" AND PV.DATA_LANCAMENTO >= ?");
 
 		}
 
 		if (!TSUtil.isEmpty(model.getDataLancamentoFinal())) {
 
-			sql.append(" AND DATA_LANCAMENTO <= ?");
+			sql.append(" AND PV.DATA_LANCAMENTO <= ?");
 
 		}
 
-		sql.append(" ORDER BY CLIENTE_NOME");
+		if (!TSUtil.isEmpty(filtro)) {
+
+			sql.append(filtro);
+		}
+
+		sql.append(" ORDER BY PV.CLIENTE_NOME");
 
 		broker.setSQL(sql.toString());
 
@@ -177,7 +182,7 @@ public class PedidoVendaDAO {
 
 		}
 
-		return broker.getCollectionBean(PedidoVenda.class, "serial", "id", "dataLancamento", "dataVencimento", "dataDocumento", "cliente.id", "cliente.nome", "cliente.identificadorFederal", "cliente.endereco.logradouro", "cliente.enderecoDestinatario.logradouro", "vendedor.id", "vendedor.nome", "valor", "observacao", "tipoEnvio", "idExterno", "condicaoPagamento.id", "tipoResumo", "tipo");
+		return broker.getCollectionBean(PedidoVenda.class, "empresa.id", "serial", "id", "dataLancamento", "dataVencimento", "dataDocumento", "cliente.id", "cliente.nome", "cliente.identificadorFederal", "cliente.endereco.logradouro", "cliente.enderecoDestinatario.logradouro", "vendedor.id", "vendedor.nome", "valor", "observacao", "tipoEnvio", "idExterno", "condicaoPagamento.id", "tipoResumo", "tipo");
 	}
 
 	public void excluir(PedidoVenda model, TSDataBaseBrokerIf broker) throws TSApplicationException {

@@ -79,7 +79,7 @@
 				
 				<h:panelGrid columns="2">
 					<p:commandButton action="#{mbean.pesquisar}" value="Pesquisar" icon="pesquisar" style="height:28px; width: 105px;" update="@form"/>
-					<p:commandButton action="#{mbean.limpar}" update="@form" value="Nova Pesquisa" icon="novo" style="height:28px; width: 130px;"/>
+					<p:commandButton action="sucesso" update="@form" value="Nova Pesquisa" icon="novo" style="height:28px; width: 130px;"/>
 				</h:panelGrid>
 				
 				<br/>
@@ -212,16 +212,19 @@
 				
 				<div align="center">
 					<h:panelGrid style="margin-left: -2px;" columns="2">
-						<p:commandButton id="salvar" value="Salvar" icon="salvar"/>
+						<p:commandButton id="salvar" value="Salvar" icon="salvar" action="#{mbean.insertEvent}"/>
 						<p:commandButton id="sair" type="button" value="Sair" icon="cancelar" onclick="PF('dlgConferencia').hide();"/>
 					</h:panelGrid>
 				</div>
 				
-				<p:confirmDialog message="Deseja realmente remover o Item ?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdExcluir">
-	    
-				    <p:commandButton value="Sim" onclick="PF('cdExcluir').hide();" action="#{mbean.deleteEvent}" update="@form" process="@this" />
+				<p:confirmDialog message="Deseja realmente Salvar?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdInserir">
+	    			<p:commandButton value="Sim" onclick="PF('cdInserir').hide();" action="#{mbean.insertEvent}" ajax="false"/>
+				    <p:commandButton value="Não" onclick="PF('cdInserir').hide();" />
+			  	</p:confirmDialog>
+				
+				<p:confirmDialog message="Deseja realmente remover o Item?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdExcluir">
+	    			<p:commandButton value="Sim" onclick="PF('cdExcluir').hide();" action="#{mbean.deleteEvent}" update="@form" process="@this" />
 				    <p:commandButton value="Não" onclick="PF('cdExcluir').hide();" />
-				    
 			  	</p:confirmDialog>
 				
 				</h:form>

@@ -8,6 +8,7 @@ import br.com.brazuca.sapweb.sap.model.PedidoVendaLinha;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSUtil;
 
 public class PedidoVendaLinhaDAO {
 
@@ -22,12 +23,19 @@ public class PedidoVendaLinhaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<PedidoVendaLinha> pesquisar(PedidoVenda model) {
+	public List<PedidoVendaLinha> pesquisar(PedidoVenda model, String filtro) {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		StringBuilder sql = new StringBuilder("SELECT ID, DESCRICAO, ITEM_ID, CODIGO_BARRAS, QUANTIDADE, VALOR, VALOR_UNITARIO, CODIGO_IMPOSTO, NUMERO, PEDIDO_VENDA_ID, QUANTIDADE_LIBERADA FROM PUBLIC.PEDIDO_VENDAS_LINHAS WHERE 1 = 1 AND PEDIDO_VENDA_ID = ? ORDER BY DESCRICAO");
+		StringBuilder sql = new StringBuilder("SELECT ID, DESCRICAO, ITEM_ID, CODIGO_BARRAS, QUANTIDADE, VALOR, VALOR_UNITARIO, CODIGO_IMPOSTO, NUMERO, PEDIDO_VENDA_ID, QUANTIDADE_LIBERADA FROM PUBLIC.PEDIDO_VENDAS_LINHAS WHERE 1 = 1 AND PEDIDO_VENDA_ID = ?");
 
+		if(!TSUtil.isEmpty(filtro)){
+			
+			sql.append(filtro);
+		}
+		
+		sql.append(" ORDER BY DESCRICAO");
+		
 		broker.setSQL(sql.toString());
 
 		broker.set(model.getSerial());

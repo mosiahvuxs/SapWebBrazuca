@@ -11,10 +11,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import br.com.brazuca.sapweb.model.Empresa;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.util.TSCryptoUtil;
 import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
 
 public final class Utilitarios {
 
@@ -235,6 +237,10 @@ public final class Utilitarios {
 		}
 
 		return String.valueOf(n);
+	}
+
+	public static Empresa getEmpresaConectada() {
+		return (Empresa) TSFacesUtil.getObjectInSession(Constantes.EMPRESA);
 	}
 
 }

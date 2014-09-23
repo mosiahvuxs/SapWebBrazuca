@@ -14,8 +14,6 @@ public class NotaFiscalSaidaLinhaDAO {
 
 	public void inserir(NotaFiscalSaidaLinha model, TSDataBaseBrokerIf broker) throws TSApplicationException {
 
-		broker.beginTransaction();
-
 		broker.setPropertySQL("notafiscalsaidalinhadao.inserir",
 
 		model.getNotaFiscalSaida().getId(), model.getItem().getId(), model.getQuantidade(), model.getValorUnitario(), model.getValor(),
@@ -23,8 +21,6 @@ public class NotaFiscalSaidaLinhaDAO {
 		model.getCodigoImposto().getId(), model.getCodigoBarras(), model.getPedidoVendaLinha().getNumero(), model.getPedidoVendaLinha().getPedidoVenda().getId());
 
 		broker.execute();
-
-		broker.endTransaction();
 
 	}
 
