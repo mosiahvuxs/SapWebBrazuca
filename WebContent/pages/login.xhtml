@@ -13,20 +13,20 @@
 	<link rel="shortcut icon" href="#{request.contextPath}/resources/images/favicon.ico" />
 </h:head>
 
-<h:body onload="javascript:document.getElementById('login').focus();">
+<h:body onload="javascript:document.getElementById('login').focus();" style="font-size: 12px;">
 
 	<p:layout fullPage="true">
-
+	
 		<p:layoutUnit position="north" resizable="true">
 			
 			<div align="center">
-				<h:graphicImage value="/resources/images/logo.png"/>
+				<h:graphicImage value="/resources/images/logo_brazuca.png" alt=""/>
 			</div>
 			
 		</p:layoutUnit>
 
 		<p:layoutUnit position="center">
-
+		
 			<h:form id="formLogin" prependId="false">
 				
 				<p:growl id="msgLogin" globalOnly="false" showDetail="true" showSummary="false" />
@@ -35,7 +35,7 @@
 				
 				<div align="center">
 
-					<p:panel id="panelLogin" header="Autenticação" style="width: 280px; text-align: left">
+					<p:panel id="panelLogin" header="Autenticação" style="width: 305px; text-align: left">
 
 						<h:panelGrid style="width: 245px;" columns="2" columnClasses="coluna30, coluna70">
 							<p:outputLabel for="login" value="Login:" />
@@ -47,12 +47,11 @@
 								<f:selectItem itemLabel="Selecione" />
 								<f:selectItems value="#{autenticacaoFaces.empresas}" />
 							</p:selectOneMenu>
-
 						</h:panelGrid>
 
 						<br />
 
-						<div align="right" style="width: 100%; margin-left: -3px;">
+						<div align="right" style="width: 100%; margin-left: -30px;">
 							<p:commandButton ajax="false" title="Acessar o SapWeb" id="btnAcessar" value="Autenticar" style="height: 35px;width: 135px" icon="cadeado" action="#{autenticacaoFaces.login}" />
 						</div>
 
@@ -64,10 +63,10 @@
 			
 		</p:layoutUnit>
 
-		<p:layoutUnit position="south" size="35">
+		<p:layoutUnit position="south" size="31">
 			<h:panelGrid columns="1" width="100%" style="height: 100%" columnClasses="colunaInformativo100">
 				<h:column>
-					<h:outputText value="SapWeb - Brazuca" />
+					<h:outputText value="Brazuca-SAPWeb" />
 				</h:column>
 			</h:panelGrid>
 		</p:layoutUnit>
