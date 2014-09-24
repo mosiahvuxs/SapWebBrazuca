@@ -1,6 +1,7 @@
 package br.com.brazuca.sapweb.faces;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -215,6 +216,8 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
 
 			if (linha.getQuantidadeLiberada().intValueExact() > 0) {
+
+				linha.setValor(linha.getValorUnitario().multiply(linha.getQuantidadeLiberada()).setScale(2, RoundingMode.HALF_UP));
 
 				linhas.add(linha);
 			}
