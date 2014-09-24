@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui">
 	
 	<ui:param name="mbean" value="#{exportacaoPdvFaces}"/>
-	<ui:param name="mbeanPesquisaModel" value="#{exportacaoPdvFaces.pedidoVendaPesquisa}"/>
+	<ui:param name="mbeanPesquisaModel" value="#{exportacaoPdvFaces.notaFiscalSaida}"/>
 	
 	<p:tabView prependId="false">
 	
@@ -79,15 +79,15 @@
 				<h:panelGrid columns="3">
 					<p:commandButton action="#{mbean.pesquisar}" value="Pesquisar" icon="pesquisar" style="height:28px; width: 105px;" update="@form"/>
 					<p:commandButton action="sucesso" update="@form" value="Nova Pesquisa" icon="novo" style="height:28px; width: 130px;"/>
-					<p:commandButton onclick="PF('cdInserir').show();" value="Exportar" icon="salvar" style="height:28px; width: 105px;" rendered="#{!empty mbean.pedidos}"/>
-					<h:panelGroup rendered="#{empty mbean.pedidos}"/>
+					<p:commandButton onclick="PF('cdInserir').show();" value="Exportar" icon="salvar" style="height:28px; width: 105px;" rendered="#{!empty mbean.notas}"/>
+					<h:panelGroup rendered="#{empty mbean.notas}"/>
 				</h:panelGrid>
 				
 				<br/>
 				
 				<p:fieldset legend="Resultado" style="width: 97%">
 
-					<p:dataTable var="pdv" id="pdvs" rowIndexVar="index" value="#{mbean.pedidos}" paginator="true" paginatorAlwaysVisible="false" rows="20" emptyMessage="Nenhum P.D.V encontrado">
+					<p:dataTable var="pdv" id="pdvs" rowIndexVar="index" value="#{mbean.notas}" paginator="true" paginatorAlwaysVisible="false" rows="20" emptyMessage="Nenhum P.D.V encontrado">
 						<f:facet name="header">
 							Pedidos de Venda
 						</f:facet>
@@ -95,7 +95,7 @@
 							<f:facet name="header">
 								<p:outputLabel value="Todos" for="todos" />
 								<div align="center">
-									<h:selectBooleanCheckbox id="todos" value="#{mbean.todos}" rendered="#{!empty mbean.pedidos}">
+									<h:selectBooleanCheckbox id="todos" value="#{mbean.todos}" rendered="#{!empty mbean.notas}">
 										<f:ajax event="change" listener="#{mbean.setarTodos}" execute="@this" render="pdvs"/>
 									</h:selectBooleanCheckbox>
 								</div>
