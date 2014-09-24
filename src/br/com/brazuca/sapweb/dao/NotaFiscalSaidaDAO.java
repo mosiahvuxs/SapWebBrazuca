@@ -5,7 +5,6 @@ import java.util.List;
 
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
-import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
@@ -15,7 +14,7 @@ import br.com.topsys.util.TSUtil;
 
 public class NotaFiscalSaidaDAO {
 
-	public void inserir(NotaFiscalSaida model, PedidoVenda pedidoVenda) throws TSApplicationException {
+	public void inserir(NotaFiscalSaida model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
@@ -25,7 +24,7 @@ public class NotaFiscalSaidaDAO {
 
 		broker.setPropertySQL("notafiscalsaidadao.inserir",
 
-		model.getId(), model.getDataLancamento(), model.getDataDocumento(), model.getDataVencimento(), model.getCondicaoPagamento().getId(), model.getValor(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getCliente().getNome(), model.getVendedor().getNome(), model.getIdExterno(), model.getEmpresa().getId(), model.getCliente().getId(), model.getVendedor().getId(), model.getCliente().getEnderecoDestinatario().getLogradouro(), model.getCliente().getEndereco().getLogradouro(), model.getCliente().getIdentificadorFederal(), model.getObservacao(), model.getTipoResumo(), model.getTipo(), model.getTipoEnvio(), model.getStatus().getId());
+		model.getId(), model.getDataLancamento(), model.getDataDocumento(), model.getDataVencimento(), model.getCondicaoPagamento().getId(), model.getValor(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getCliente().getNome(), model.getVendedor().getNome(), model.getIdExterno(), model.getEmpresa().getId(), model.getCliente().getId(), model.getVendedor().getId(), model.getCliente().getEnderecoDestinatario().getLogradouro(), model.getCliente().getEndereco().getLogradouro(), model.getCliente().getIdentificadorFederal(), model.getObservacao(), model.getTipoResumo(), model.getTipo(), model.getTipoEnvio(), model.getStatus().getId(), model.getPedidoVenda().getId());
 
 		broker.execute();
 
@@ -38,7 +37,7 @@ public class NotaFiscalSaidaDAO {
 			notaFiscalSaidaLinhaDAO.inserir(linha, broker);
 		}
 
-		new PedidoVendaDAO().excluir(pedidoVenda, broker);
+		new PedidoVendaDAO().excluir(model.getPedidoVenda(), broker);
 
 		broker.endTransaction();
 	}
@@ -53,7 +52,7 @@ public class NotaFiscalSaidaDAO {
 
 			model.setId(broker.getSequenceNextValue("notafiscalsaida_id_seq"));
 
-			broker.setPropertySQL("notafiscalsaidadao.inserir", model.getId(), model.getDataLancamento(), model.getDataDocumento(), model.getDataVencimento(), model.getCondicaoPagamento().getId(), model.getValor(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getCondicaoPagamento().getId(), model.getValor(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getCliente().getNome(), model.getVendedor().getNome(), model.getIdExterno(), model.getEmpresa().getId(), model.getCliente().getId(), model.getVendedor().getId(), model.getEnderecoEntregaFormatado(), model.getEnderecoCobrancaFormatado(), model.getCliente().getIdentificadorFederal(), model.getObservacao(), model.getTipoResumo(), model.getTipo(), model.getTipoEnvio());
+			broker.setPropertySQL("notafiscalsaidadao.inserir", model.getId(), model.getDataLancamento(), model.getDataDocumento(), model.getDataVencimento(), model.getCondicaoPagamento().getId(), model.getValor(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getCondicaoPagamento().getId(), model.getValor(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getCliente().getNome(), model.getVendedor().getNome(), model.getIdExterno(), model.getEmpresa().getId(), model.getCliente().getId(), model.getVendedor().getId(), model.getEnderecoEntregaFormatado(), model.getEnderecoCobrancaFormatado(), model.getCliente().getIdentificadorFederal(), model.getObservacao(), model.getTipoResumo(), model.getTipo(), model.getTipoEnvio(), model.getPedidoVenda().getId());
 
 			broker.execute();
 
@@ -75,11 +74,11 @@ public class NotaFiscalSaidaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		StringBuilder sql = new StringBuilder("SELECT ID, DATA_LANCAMENTO, DATA_DOCUMENTO, DATA_VENCIMENTO, CONDICAO_PAGAMENTO_ID, VALOR, DATA_EXPORTACAO, DATA_IMPORTACAO, DATA_ATUALIZACAO, CLIENTE_NOME, VENDEDOR_NOME, ID_EXTERNO, EMPRESA_ID, CLIENTE_ID, VENDEDOR_ID, ENDERECO_ENTREGA, ENDERECO_COBRANCA, CLIENTE_IDENTIFICADOR_FEDERAL, OBSERVACAO, TIPO_RESUMO, TIPO, TIPO_ENVIO FROM PUBLIC.NOTAFISCALSAIDA WHERE 1 = 1");
+		StringBuilder sql = new StringBuilder("SELECT PEDIDO_VENDA_ID, ID, DATA_LANCAMENTO, DATA_DOCUMENTO, DATA_VENCIMENTO, CONDICAO_PAGAMENTO_ID, VALOR, DATA_EXPORTACAO, DATA_IMPORTACAO, DATA_ATUALIZACAO, CLIENTE_NOME, VENDEDOR_NOME, ID_EXTERNO, EMPRESA_ID, CLIENTE_ID, VENDEDOR_ID, ENDERECO_ENTREGA, ENDERECO_COBRANCA, CLIENTE_IDENTIFICADOR_FEDERAL, OBSERVACAO, TIPO_RESUMO, TIPO, TIPO_ENVIO FROM PUBLIC.NOTAFISCALSAIDA WHERE 1 = 1");
 
 		if (!TSUtil.isEmpty(model.getId())) {
 
-			sql.append(" AND EXISTS (SELECT 1 FROM PUBLIC.NOTAFISCALSAIDA_LINHAS NSL WHERE NSL.PEDIDO_VENDA_ID = ?)");
+			sql.append(" AND PEDIDO_VENDA_ID = ?");
 		}
 
 		if (!TSUtil.isEmpty(model.getCliente()) && !TSUtil.isEmpty(model.getCliente().getNome())) {
@@ -173,9 +172,9 @@ public class NotaFiscalSaidaDAO {
 
 		}
 
-		return broker.getCollectionBean(NotaFiscalSaida.class, "id", "dataLancamento", "dataDocumento", "dataVencimento", "condicaoPagamento.id", "valor", "dataExportacao", "dataImportacao", "dataAtualizacao", "cliente.nome", "vendedor.nome", "idExterno", "empresa.id", "cliente.id", "vendedor.id", "enderecoEntregaFormatado", "enderecoCobrancaFormatado", "cliente.identificadorFederal", "observacao", "tipoResumo", "tipo", "tipoEnvio");
+		return broker.getCollectionBean(NotaFiscalSaida.class, "pedidoVenda.id", "id", "dataLancamento", "dataDocumento", "dataVencimento", "condicaoPagamento.id", "valor", "dataExportacao", "dataImportacao", "dataAtualizacao", "cliente.nome", "vendedor.nome", "idExterno", "empresa.id", "cliente.id", "vendedor.id", "enderecoEntregaFormatado", "enderecoCobrancaFormatado", "cliente.identificadorFederal", "observacao", "tipoResumo", "tipo", "tipoEnvio");
 	}
-	
+
 	public void excluir(NotaFiscalSaida model, TSDataBaseBrokerIf broker) throws TSApplicationException {
 
 		broker.setPropertySQL("notafiscalsaidadao.excluir", model.getId());

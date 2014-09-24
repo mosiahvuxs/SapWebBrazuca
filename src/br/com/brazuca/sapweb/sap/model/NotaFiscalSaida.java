@@ -32,6 +32,7 @@ public class NotaFiscalSaida extends DocumentoAB implements Serializable {
     private String tipo;
     private Long tipoEnvio;
     private boolean selecionado;
+    private PedidoVenda pedidoVenda;
     
     public NotaFiscalSaida() {
     }
@@ -217,6 +218,14 @@ public class NotaFiscalSaida extends DocumentoAB implements Serializable {
 
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
+	}
+
+	public PedidoVenda getPedidoVenda() {
+		return pedidoVenda;
+	}
+
+	public void setPedidoVenda(PedidoVenda pedidoVenda) {
+		this.pedidoVenda = pedidoVenda;
 	}
 
    

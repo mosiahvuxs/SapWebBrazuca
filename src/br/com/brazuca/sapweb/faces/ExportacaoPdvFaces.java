@@ -10,7 +10,10 @@ import br.com.brazuca.sapweb.dao.HistoricoNotaFiscalSaidaDAO;
 import br.com.brazuca.sapweb.dao.NotaFiscalSaidaDAO;
 import br.com.brazuca.sapweb.dao.NotaFiscalSaidaLinhaDAO;
 import br.com.brazuca.sapweb.restful.NotaFiscalSaidaRestful;
+import br.com.brazuca.sapweb.sap.model.HistoricoNotaFiscalSaida;
+import br.com.brazuca.sapweb.sap.model.HistoricoNotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
+import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.sap.model.ParceiroNegocio;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
@@ -85,12 +88,20 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 			HistoricoNotaFiscalSaidaDAO historicoNotaFiscalSaidaDAO = new HistoricoNotaFiscalSaidaDAO();
 
 			for (NotaFiscalSaida notaFiscal : notasFiscais) {
-
+				
 				NotaFiscalSaida model = new NotaFiscalSaidaRestful().inserirLote(notaFiscal);
 
 				if (TSUtil.isEmpty(model.getMensagemErro())) {
+					
+					HistoricoNotaFiscalSaida historicoNotaFiscalSaida = new HistoricoNotaFiscalSaida(notaFiscal);
+					historicoNotaFiscalSaida.setLinhas(new ArrayList<HistoricoNotaFiscalSaidaLinha>());
+					
+					for (NotaFiscalSaidaLinha linha : historicoNotaFiscalSaida.getNotaFiscalSaida().getLinhas()) {
+						
+						historicoNotaFiscalSaida.getLinhas().add(new HistoricoNotaFiscalSaidaLinha(linha));
+					}
 
-					historicoNotaFiscalSaidaDAO.inserir(notaFiscal);
+					historicoNotaFiscalSaidaDAO.inserir(historicoNotaFiscalSaida);
 
 					TSFacesUtil.addInfoMessage("Pedido número: " + notaFiscal.getLinhas().get(0).getPedidoVendaLinha().getPedidoVenda().getId() + " exportado com sucesso.");
 

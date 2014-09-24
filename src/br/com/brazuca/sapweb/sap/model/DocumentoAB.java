@@ -7,7 +7,6 @@ package br.com.brazuca.sapweb.sap.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -23,22 +22,22 @@ public abstract class DocumentoAB implements Serializable {
 
 	private Long id;
 	private String idExterno;
-	private Date dataDocumento;
-	private Date dataDocumentoFinal;
+	private Timestamp dataDocumento;
+	private Timestamp dataDocumentoFinal;
 	private String mensagemErro;
 	private Status status;
 	private Timestamp dataImportacao;
 	private Timestamp dataExportacao;
-	private Date dataLancamento;
-	private Date dataLancamentoFinal;
-	private Date dataCriacao;
+	private Timestamp dataLancamento;
+	private Timestamp dataLancamentoFinal;
+	private Timestamp dataCriacao;
 	private Timestamp dataAtualizacao;
 	private String criadoPor;
 	private String atualizadoPor;
 	private Vendedor vendedor;
 	private Origem origem;
-	private Date dataVencimento;
-	private Date dataVencimentoFinal;
+	private Timestamp dataVencimento;
+	private Timestamp dataVencimentoFinal;
 	private CondicaoPagamento condicaoPagamento;
 	private Sequencia sequencia;
 	private ParcelaNotaFiscalSaida parcelaNotaFiscalSaida;
@@ -49,11 +48,11 @@ public abstract class DocumentoAB implements Serializable {
 	private String tipo;
 	private Long tipoEnvio;
 
-	public Date getDataDocumento() {
+	public Timestamp getDataDocumento() {
 		return dataDocumento;
 	}
 
-	public void setDataDocumento(Date dataDocumento) {
+	public void setDataDocumento(Timestamp dataDocumento) {
 		this.dataDocumento = dataDocumento;
 	}
 
@@ -73,11 +72,11 @@ public abstract class DocumentoAB implements Serializable {
 		this.idExterno = idExterno;
 	}
 
-	public Date getDataLancamento() {
+	public Timestamp getDataLancamento() {
 		return dataLancamento;
 	}
 
-	public void setDataLancamento(Date dataLancamento) {
+	public void setDataLancamento(Timestamp dataLancamento) {
 		this.dataLancamento = dataLancamento;
 	}
 
@@ -153,11 +152,11 @@ public abstract class DocumentoAB implements Serializable {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
-	public Date getDataCriacao() {
+	public Timestamp getDataCriacao() {
 		return dataCriacao;
 	}
 
-	public void setDataCriacao(Date dataCriacao) {
+	public void setDataCriacao(Timestamp dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 
@@ -186,11 +185,11 @@ public abstract class DocumentoAB implements Serializable {
 		this.origem = origem;
 	}
 
-	public Date getDataVencimento() {
+	public Timestamp getDataVencimento() {
 		return dataVencimento;
 	}
 
-	public void setDataVencimento(Date dataVencimento) {
+	public void setDataVencimento(Timestamp dataVencimento) {
 		this.dataVencimento = dataVencimento;
 	}
 
@@ -242,27 +241,27 @@ public abstract class DocumentoAB implements Serializable {
 		this.observacao = observacao;
 	}
 
-	public Date getDataDocumentoFinal() {
+	public Timestamp getDataDocumentoFinal() {
 		return dataDocumentoFinal;
 	}
 
-	public void setDataDocumentoFinal(Date dataDocumentoFinal) {
+	public void setDataDocumentoFinal(Timestamp dataDocumentoFinal) {
 		this.dataDocumentoFinal = dataDocumentoFinal;
 	}
 
-	public Date getDataLancamentoFinal() {
+	public Timestamp getDataLancamentoFinal() {
 		return dataLancamentoFinal;
 	}
 
-	public void setDataLancamentoFinal(Date dataLancamentoFinal) {
+	public void setDataLancamentoFinal(Timestamp dataLancamentoFinal) {
 		this.dataLancamentoFinal = dataLancamentoFinal;
 	}
 
-	public Date getDataVencimentoFinal() {
+	public Timestamp getDataVencimentoFinal() {
 		return dataVencimentoFinal;
 	}
 
-	public void setDataVencimentoFinal(Date dataVencimentoFinal) {
+	public void setDataVencimentoFinal(Timestamp dataVencimentoFinal) {
 		this.dataVencimentoFinal = dataVencimentoFinal;
 	}
 

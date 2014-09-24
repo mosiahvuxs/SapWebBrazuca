@@ -2,6 +2,7 @@ package br.com.brazuca.sapweb.dao;
 
 import java.util.List;
 
+import br.com.brazuca.sapweb.sap.model.HistoricoNotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
@@ -12,11 +13,11 @@ import br.com.topsys.util.TSUtil;
 
 public class HistoricoNotaFiscalSaidaLinhaDAO {
 
-	public void inserir(NotaFiscalSaidaLinha model, TSDataBaseBrokerIf broker) throws TSApplicationException {
+	public void inserir(HistoricoNotaFiscalSaidaLinha model, TSDataBaseBrokerIf broker) throws TSApplicationException {
 
 		broker.setPropertySQL("historiconotafiscalsaidalinhadao.inserir",
 
-		model.getNotaFiscalSaida().getId(), model.getItem().getId(), model.getQuantidade(), model.getValorUnitario(), model.getValor(),
+		model.getId(), model.getItem().getId(), model.getQuantidade(), model.getValorUnitario(), model.getValor(),
 
 		model.getCodigoImposto().getId(), model.getCodigoBarras(), model.getPedidoVendaLinha().getNumero(), model.getPedidoVendaLinha().getPedidoVenda().getId());
 

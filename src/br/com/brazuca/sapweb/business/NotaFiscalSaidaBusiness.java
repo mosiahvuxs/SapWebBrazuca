@@ -18,6 +18,7 @@ public class NotaFiscalSaidaBusiness {
 
 		NotaFiscalSaida notaFiscal = new NotaFiscalSaida();
 
+		notaFiscal.setPedidoVenda(model);
 		notaFiscal.setDataLancamento(model.getDataLancamento());
 		notaFiscal.setDataDocumento(model.getDataDocumento());
 		notaFiscal.setDataVencimento(model.getDataVencimento());
@@ -52,6 +53,6 @@ public class NotaFiscalSaidaBusiness {
 
 		}
 
-		new NotaFiscalSaidaDAO().inserir(notaFiscal, model);
+		new NotaFiscalSaidaDAO().inserir(notaFiscal);
 	}
 }
