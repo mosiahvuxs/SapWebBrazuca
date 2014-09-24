@@ -146,26 +146,17 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 		if (!TSUtil.isEmpty(itens)) {
 
-			for (ItemEstruturado model : itens) {
+			for (ItemEstruturado itemEstruturado : itens) {
 
 				for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
 
-					if (model.getItem().getId().equals(linha.getItem().getId())) {
+					if (itemEstruturado.getItem().getId().equals(linha.getItem().getId())) {
 
 						existe = true;
 
-						if (this.quantidade.intValue() <= linha.getQuantidade().intValueExact()) {
+						if (!itensAux.contains(itemEstruturado)) {
 
-							linha.setQuantidadeLiberada(new BigDecimal(this.quantidade.intValue()));
-
-						} else {
-
-							super.addErrorMessage("A quantidade máxima já foi atingida para o Item " + linha.getItem().getDescricao() + ".");
-						}
-
-						if (!itensAux.contains(model)) {
-
-							itensAux.add(model);
+							itensAux.add(itemEstruturado);
 						}
 
 					}
@@ -183,6 +174,28 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 			if (itens.size() != itensAux.size()) {
 
 				super.addErrorMessage("O código de barras informado contém itens estruturados que não estão no Pedido de Venda.");
+
+			} else {
+
+				for (ItemEstruturado itemEstruturado : itens) {
+
+					for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
+
+						if (itemEstruturado.getItem().getId().equals(linha.getItem().getId())) {
+
+							if (this.quantidade.intValue() <= linha.getQuantidade().intValueExact()) {
+
+								linha.setQuantidadeLiberada(new BigDecimal(itemEstruturado.getItem().getQuantidade().intValueExact() + this.quantidade.intValue()));
+
+							} else {
+
+								super.addErrorMessage("A quantidade máxima já foi atingida para o Item " + linha.getItem().getDescricao() + ".");
+							}
+
+						}
+					}
+				}
+
 			}
 		}
 

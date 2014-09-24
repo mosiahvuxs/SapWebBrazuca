@@ -8,7 +8,7 @@ import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
 
-public class HitoricoNotaFiscalSaidaDAO {
+public class HistoricoNotaFiscalSaidaDAO {
 
 	public void inserir(NotaFiscalSaida model) throws TSApplicationException {
 
