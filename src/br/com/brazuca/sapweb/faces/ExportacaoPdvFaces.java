@@ -13,8 +13,9 @@ import br.com.brazuca.sapweb.dao.NotaFiscalSaidaLinhaDAO;
 import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaida;
 import br.com.brazuca.sapweb.restful.NotaFiscalSaidaRestful;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
-import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.sap.model.ParceiroNegocio;
+import br.com.brazuca.sapweb.sap.model.Status;
+import br.com.brazuca.sapweb.util.Constantes;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
@@ -45,11 +46,27 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 
 	}
 
+	private boolean validaCamposPesquisa() {
+
+		if (TSUtil.isEmpty(TSUtil.tratarLong(this.notaFiscalSaida.getId())) && TSUtil.isEmpty(TSUtil.tratarString(this.notaFiscalSaida.getCliente().getNome())) && TSUtil.isEmpty(this.notaFiscalSaida.getDataDocumento()) && TSUtil.isEmpty(this.notaFiscalSaida.getDataDocumentoFinal()) && TSUtil.isEmpty(this.notaFiscalSaida.getDataLancamento()) && TSUtil.isEmpty(this.notaFiscalSaida.getDataLancamentoFinal()) && TSUtil.isEmpty(this.notaFiscalSaida.getDataVencimento()) && TSUtil.isEmpty(this.notaFiscalSaida.getDataVencimentoFinal())) {
+
+			super.addErrorMessage("É necessário preencher algum dos campos para realizar a Pesquisa.");
+
+			return false;
+		}
+
+		return true;
+	}
+
 	public String pesquisar() {
 
-		this.notas = new NotaFiscalSaidaDAO().pesquisar(this.notaFiscalSaida);
+		if (this.validaCamposPesquisa()) {
 
-		TSFacesUtil.gerarResultadoLista(this.notas);
+			this.notas = new NotaFiscalSaidaDAO().pesquisar(this.notaFiscalSaida);
+
+			TSFacesUtil.gerarResultadoLista(this.notas);
+
+		}
 
 		return null;
 	}
@@ -65,7 +82,7 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 
 	@Override
 	protected String insert() throws TSApplicationException {
-		
+
 		super.setClearFields(false);
 		super.setDefaultMessage(false);
 
@@ -91,27 +108,22 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 			HistoricoNotaFiscalSaidaDAO historicoNotaFiscalSaidaDAO = new HistoricoNotaFiscalSaidaDAO();
 
 			for (NotaFiscalSaida notaFiscal : notasFiscais) {
-				
+
 				notaFiscal.setDataCriacao(new Timestamp(System.currentTimeMillis()));
-				
+
 				NotaFiscalSaida model = new NotaFiscalSaidaRestful().inserirLote(notaFiscal);
 
 				if (TSUtil.isEmpty(model.getMensagemErro())) {
-					
-					HistoricoNotaFiscalSaida historicoNotaFiscalSaida = new HistoricoNotaFiscalSaida(notaFiscal);
-					
-					for (NotaFiscalSaidaLinha linha : historicoNotaFiscalSaida.getNotaFiscalSaida().getLinhas()) {
-						
-						historicoNotaFiscalSaida.getNotaFiscalSaida().getLinhas().add(linha);
-					}
 
-					historicoNotaFiscalSaidaDAO.inserir(historicoNotaFiscalSaida);
+					notaFiscal.setStatus(new Status(Constantes.ID_STATUS_PROCESSADO));
 
-					TSFacesUtil.addInfoMessage("Pedido número: " + notaFiscal.getLinhas().get(0).getPedidoVendaLinha().getPedidoVenda().getId() + " exportado com sucesso.");
+					historicoNotaFiscalSaidaDAO.inserir(new HistoricoNotaFiscalSaida(notaFiscal));
+
+					TSFacesUtil.addInfoMessage("Pedido com número : " + notaFiscal.getPedidoVenda().getId() + " exportado com sucesso.");
 
 				} else {
 
-					TSFacesUtil.addErrorMessage("Não foi possível exportar o Pedido número : " + notaFiscal.getLinhas().get(0).getPedidoVendaLinha().getPedidoVenda().getId() + ". " + model.getMensagemErro());
+					TSFacesUtil.addErrorMessage("Não foi possível exportar o Pedido número : " + notaFiscal.getPedidoVenda().getId() + ". " + model.getMensagemErro());
 				}
 			}
 

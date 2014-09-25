@@ -17,9 +17,9 @@ public class HistoricoNotaFiscalSaidaLinhaDAO {
 
 		broker.setPropertySQL("historiconotafiscalsaidalinhadao.inserir",
 
-		model.getId(), model.getItem().getId(), model.getQuantidade(), model.getValorUnitario(), model.getValor(),
+		model.getHistoricoNotaFiscalSaida().getId(), model.getNotaFiscalSaidaLinha().getItem().getId(), model.getNotaFiscalSaidaLinha().getQuantidade(), model.getNotaFiscalSaidaLinha().getValorUnitario(), model.getNotaFiscalSaidaLinha().getValor(),
 
-		model.getCodigoImposto().getId(), model.getCodigoBarras(), model.getPedidoVendaLinha().getNumero(), model.getPedidoVendaLinha().getPedidoVenda().getId());
+		model.getNotaFiscalSaidaLinha().getCodigoImposto().getId(), model.getNotaFiscalSaidaLinha().getCodigoBarras(), model.getNotaFiscalSaidaLinha().getPedidoVendaLinha().getNumero(), model.getNotaFiscalSaidaLinha().getPedidoVendaLinha().getPedidoVenda().getId());
 
 		broker.execute();
 
@@ -36,7 +36,7 @@ public class HistoricoNotaFiscalSaidaLinhaDAO {
 	}
 
 	public NotaFiscalSaidaLinha pesquisarPorPedidoVenda(PedidoVenda model, String jndi) {
-		
+
 		TSDataBaseBrokerIf broker = null;
 
 		if (!TSUtil.isEmpty(TSUtil.tratarString(jndi))) {

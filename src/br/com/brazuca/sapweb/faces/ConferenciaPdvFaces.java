@@ -36,6 +36,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 	private Integer quantidade;
 	private Empresa empresa;
 	private String mensagem;
+	private boolean limparCampos;
 
 	public ConferenciaPdvFaces() {
 
@@ -54,6 +55,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		this.empresa = new Empresa(Utilitarios.getEmpresaConectada().getId(), Utilitarios.getEmpresaConectada().getJndi());
 
 		this.mensagem = null;
+		this.limparCampos = false;
 	}
 
 	private boolean validaCamposPesquisa() {
@@ -187,7 +189,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 					for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
 
 						if (itemEstruturado.getItem().getId().equals(linha.getItem().getId())) {
-							
+
 							Integer quantidadeTotal = itemEstruturado.getItem().getQuantidade().intValue() * this.quantidade.intValue();
 
 							BigDecimal quantidadeFinal = new BigDecimal(linha.getQuantidadeLiberada().intValueExact() + quantidadeTotal.intValue());
@@ -219,6 +221,8 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 		this.mensagem = null;
 
+		this.limparCampos = false;
+
 		List<PedidoVendaLinha> linhas = new ArrayList<PedidoVendaLinha>();
 
 		for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
@@ -234,6 +238,10 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		if (!TSUtil.isEmpty(linhas)) {
 
 			new NotaFiscalSaidaBusiness().inserir(this.pedidoVenda, linhas);
+
+			this.limparCampos = true;
+
+			this.pedidos.remove(this.pedidoVenda);
 
 			this.mensagem = "Operação realizada com sucesso";
 
@@ -252,7 +260,11 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 			TSFacesUtil.addInfoMessage(this.mensagem);
 		}
 
-		this.limpar();
+		if (this.limparCampos) {
+
+			this.pedidoVenda = new PedidoVenda();
+			this.pedidoVendaPesquisa = new PedidoVenda();
+		}
 
 	}
 
@@ -334,6 +346,14 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
+	}
+
+	public boolean isLimparCampos() {
+		return limparCampos;
+	}
+
+	public void setLimparCampos(boolean limparCampos) {
+		this.limparCampos = limparCampos;
 	}
 
 }

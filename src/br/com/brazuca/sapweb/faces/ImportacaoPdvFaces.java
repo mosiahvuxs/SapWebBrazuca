@@ -6,9 +6,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import br.com.brazuca.sapweb.dao.ItemEstruturadoDAO;
+import br.com.brazuca.sapweb.business.ItemEstruturadoBusiness;
 import br.com.brazuca.sapweb.dao.NotaFiscalSaidaLinhaDAO;
-import br.com.brazuca.sapweb.model.ItemEstruturado;
 import br.com.brazuca.sapweb.sap.dao.PedidoVendaDAO;
 import br.com.brazuca.sapweb.sap.dao.PedidoVendaLinhaDAO;
 import br.com.brazuca.sapweb.sap.model.Empresa;
@@ -97,7 +96,11 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 
 	}
 
-	public String salvar() {
+	@Override
+	protected String insert() throws TSApplicationException {
+
+		super.setClearFields(false);
+		super.setDefaultMessage(false);
 
 		List<PedidoVenda> pedidosSelecionados = new ArrayList<PedidoVenda>();
 
@@ -125,7 +128,7 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 
 				if (this.importarItensEstruturados) {
 
-					this.executarImportacaoItensEstruturados();
+					new ItemEstruturadoBusiness().importar();
 				}
 
 				this.limpar();
@@ -146,22 +149,6 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 		}
 
 		return null;
-	}
-
-	private void executarImportacaoItensEstruturados() throws TSApplicationException {
-
-		ItemEstruturadoDAO itemEstruturadoDAO = new ItemEstruturadoDAO();
-
-		itemEstruturadoDAO.excluirTodosRegistros();
-
-		List<ItemEstruturado> itens = itemEstruturadoDAO.pesquisarSqlServerMatriz(new ItemEstruturado());
-
-		if (!TSUtil.isEmpty(itens)) {
-
-			itemEstruturadoDAO.inserirRotina(itens);
-
-		}
-
 	}
 
 	public PedidoVenda getPedidoVenda() {

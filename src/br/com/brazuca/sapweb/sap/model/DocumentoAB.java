@@ -48,7 +48,7 @@ public abstract class DocumentoAB implements Serializable {
 	private String tipo;
 	private Long tipoEnvio;
 
-	@XmlJavaTypeAdapter(TimestampAdapter.class)	
+	@XmlJavaTypeAdapter(TimestampAdapter.class)
 	public Timestamp getDataDocumento() {
 		return dataDocumento;
 	}
@@ -73,7 +73,7 @@ public abstract class DocumentoAB implements Serializable {
 		this.idExterno = idExterno;
 	}
 
-	@XmlJavaTypeAdapter(TimestampAdapter.class)	
+	@XmlJavaTypeAdapter(TimestampAdapter.class)
 	public Timestamp getDataLancamento() {
 		return dataLancamento;
 	}
@@ -96,28 +96,6 @@ public abstract class DocumentoAB implements Serializable {
 
 	public void setCriadoPor(String criadoPor) {
 		this.criadoPor = criadoPor;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final DocumentoAB other = (DocumentoAB) obj;
-		if ((this.idExterno == null) ? (other.idExterno != null) : !this.idExterno.equals(other.idExterno)) {
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		int hash = 5;
-		hash = 97 * hash + (this.idExterno != null ? this.idExterno.hashCode() : 0);
-		return hash;
 	}
 
 	public String getMensagemErro() {
@@ -154,7 +132,7 @@ public abstract class DocumentoAB implements Serializable {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
-	@XmlJavaTypeAdapter(TimestampAdapter.class)	
+	@XmlJavaTypeAdapter(TimestampAdapter.class)
 	public Timestamp getDataCriacao() {
 		return dataCriacao;
 	}
@@ -188,7 +166,7 @@ public abstract class DocumentoAB implements Serializable {
 		this.origem = origem;
 	}
 
-	@XmlJavaTypeAdapter(TimestampAdapter.class)	
+	@XmlJavaTypeAdapter(TimestampAdapter.class)
 	public Timestamp getDataVencimento() {
 		return dataVencimento;
 	}
@@ -294,5 +272,30 @@ public abstract class DocumentoAB implements Serializable {
 
 	public void setTipoEnvio(Long tipoEnvio) {
 		this.tipoEnvio = tipoEnvio;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DocumentoAB other = (DocumentoAB) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 }

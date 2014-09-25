@@ -46,7 +46,7 @@ public class ItemEstruturadoDAO {
 
 	}
 
-	public void inserirRotina(List<ItemEstruturado> itens) throws TSApplicationException {
+	public void inserir(List<ItemEstruturado> itens) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 

@@ -79,7 +79,7 @@
 				<h:panelGrid columns="3">
 					<p:commandButton action="#{mbean.pesquisar}" value="Pesquisar" icon="pesquisar" style="height:28px; width: 105px;" update="@form"/>
 					<p:commandButton action="sucesso" update="@form" value="Nova Pesquisa" icon="novo" style="height:28px; width: 130px;"/>
-					<p:commandButton action="#{mbean.salvar}" update="@form" value="Importar" icon="salvar" style="height:28px; width: 105px;" rendered="#{!empty mbean.pedidosVenda}"/>
+					<p:commandButton value="Importar" onclick="PF('cdInserir').show();" icon="salvar" style="height:28px; width: 105px;" rendered="#{!empty mbean.pedidosVenda}"/>
 					<h:panelGroup rendered="#{empty mbean.pedidosVenda}"/>
 				</h:panelGrid>
 				
@@ -146,6 +146,11 @@
 					</p:dataTable>
 
 				</p:fieldset>
+				
+				<p:confirmDialog message="Deseja realmente importar o(s) Pedido(s)?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdInserir">
+	    			<p:commandButton value="Sim" onclick="PF('cdInserir').hide();" action="#{mbean.insertEvent}" update="@form" process="@this" />
+				    <p:commandButton value="Não" onclick="PF('cdInserir').hide();" />
+			  	</p:confirmDialog>
 				
 			</h:form>
 			
