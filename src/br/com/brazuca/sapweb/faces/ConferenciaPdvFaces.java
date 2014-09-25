@@ -113,6 +113,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		}
 
 		this.codigoBarras = "";
+		this.quantidade = 1;
 
 	}
 

@@ -74,7 +74,7 @@ public class NotaFiscalSaidaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		StringBuilder sql = new StringBuilder("SELECT PEDIDO_VENDA_ID, ID, DATA_LANCAMENTO, DATA_DOCUMENTO, DATA_VENCIMENTO, CONDICAO_PAGAMENTO_ID, VALOR, DATA_EXPORTACAO, DATA_IMPORTACAO, DATA_ATUALIZACAO, CLIENTE_NOME, VENDEDOR_NOME, ID_EXTERNO, EMPRESA_ID, CLIENTE_ID, VENDEDOR_ID, ENDERECO_ENTREGA, ENDERECO_COBRANCA, CLIENTE_IDENTIFICADOR_FEDERAL, OBSERVACAO, TIPO_RESUMO, TIPO, TIPO_ENVIO FROM PUBLIC.NOTAFISCALSAIDA WHERE 1 = 1");
+		StringBuilder sql = new StringBuilder("SELECT PEDIDO_VENDA_ID, ID, DATA_LANCAMENTO, DATA_DOCUMENTO, CONDICAO_PAGAMENTO_ID, VALOR, DATA_EXPORTACAO, DATA_IMPORTACAO, DATA_ATUALIZACAO, CLIENTE_NOME, VENDEDOR_NOME, ID_EXTERNO, EMPRESA_ID, CLIENTE_ID, VENDEDOR_ID, ENDERECO_ENTREGA, ENDERECO_COBRANCA, CLIENTE_IDENTIFICADOR_FEDERAL, OBSERVACAO, TIPO_RESUMO, TIPO, TIPO_ENVIO FROM PUBLIC.NOTAFISCALSAIDA WHERE 1 = 1");
 
 		if (!TSUtil.isEmpty(model.getId())) {
 
@@ -172,7 +172,7 @@ public class NotaFiscalSaidaDAO {
 
 		}
 
-		return broker.getCollectionBean(NotaFiscalSaida.class, "pedidoVenda.id", "id", "dataLancamento", "dataDocumento", "dataVencimento", "condicaoPagamento.id", "valor", "dataExportacao", "dataImportacao", "dataAtualizacao", "cliente.nome", "vendedor.nome", "idExterno", "empresa.id", "cliente.id", "vendedor.id", "enderecoEntregaFormatado", "enderecoCobrancaFormatado", "cliente.identificadorFederal", "observacao", "tipoResumo", "tipo", "tipoEnvio");
+		return broker.getCollectionBean(NotaFiscalSaida.class, "pedidoVenda.id", "id", "dataLancamento", "dataDocumento", "condicaoPagamento.id", "valor", "dataExportacao", "dataImportacao", "dataAtualizacao", "cliente.nome", "vendedor.nome", "idExterno", "empresa.id", "cliente.id", "vendedor.id", "enderecoEntregaFormatado", "enderecoCobrancaFormatado", "cliente.identificadorFederal", "observacao", "tipoResumo", "tipo", "tipoEnvio");
 	}
 
 	public void excluir(NotaFiscalSaida model, TSDataBaseBrokerIf broker) throws TSApplicationException {

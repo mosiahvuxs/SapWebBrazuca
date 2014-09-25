@@ -34,8 +34,6 @@ public class PedidoVendaLinhaDAO {
 			sql.append(filtro);
 		}
 		
-		sql.append(" ORDER BY DESCRICAO");
-		
 		broker.setSQL(sql.toString());
 
 		broker.set(model.getSerial());
