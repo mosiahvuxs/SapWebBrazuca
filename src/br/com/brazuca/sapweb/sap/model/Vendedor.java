@@ -1,3 +1,7 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.com.brazuca.sapweb.sap.model;
 
 import java.io.Serializable;
@@ -7,6 +11,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import br.com.brazuca.sapweb.adapter.TimestampAdapter;
 
+/**
+ * 
+ * @author mroland
+ */
 @SuppressWarnings("serial")
 public class Vendedor implements Serializable {
 

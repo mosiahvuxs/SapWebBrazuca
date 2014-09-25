@@ -2,8 +2,9 @@ package br.com.brazuca.sapweb.dao;
 
 import java.sql.Timestamp;
 
-import br.com.brazuca.sapweb.sap.model.HistoricoNotaFiscalSaida;
-import br.com.brazuca.sapweb.sap.model.HistoricoNotaFiscalSaidaLinha;
+import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaida;
+import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaidaLinha;
+import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
@@ -20,19 +21,18 @@ public class HistoricoNotaFiscalSaidaDAO {
 
 		broker.setPropertySQL("historiconotafiscalsaidadao.inserir",
 
-		model.getId(), model.getNotaFiscalSaida().getDataLancamento(), model.getNotaFiscalSaida().getDataDocumento(), model.getNotaFiscalSaida().getDataVencimento(), model.getNotaFiscalSaida().getCondicaoPagamento().getId(), model.getNotaFiscalSaida().getValor(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getNotaFiscalSaida().getCliente().getNome(), model.getNotaFiscalSaida().getVendedor().getNome(), model.getNotaFiscalSaida().getIdExterno(), model.getNotaFiscalSaida().getEmpresa().getId(), model.getNotaFiscalSaida().getCliente().getId(), model.getNotaFiscalSaida().getVendedor().getId(), model.getNotaFiscalSaida().getCliente().getEnderecoDestinatario().getLogradouro(), model.getNotaFiscalSaida().getCliente().getEndereco().getLogradouro(), model.getNotaFiscalSaida().getCliente().getIdentificadorFederal(), model.getNotaFiscalSaida().getObservacao(), model.getNotaFiscalSaida().getTipoResumo(), model.getNotaFiscalSaida().getTipo(), model
-				.getNotaFiscalSaida().getTipoEnvio(), model.getNotaFiscalSaida().getStatus().getId(), model.getNotaFiscalSaida().getPedidoVenda().getId());
+		model.getId(), model.getDataLancamento(), model.getDataDocumento(), model.getDataVencimento(), model.getCondicaoPagamento().getId(), model.getValor(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getCliente().getNome(), model.getVendedor().getNome(), model.getIdExterno(), model.getEmpresa().getId(), model.getCliente().getId(), model.getVendedor().getId(), model.getEnderecoEntregaFormatado(), model.getEnderecoCobrancaFormatado(), model.getCliente().getIdentificadorFederal(), model.getObservacao(), model.getTipoResumo(), model.getTipo(), model.getTipoEnvio(), model.getStatus().getId(), model.getPedidoVenda().getId());
 
 		broker.execute();
 
 		HistoricoNotaFiscalSaidaLinhaDAO historicoNotaFiscalSaidaLinhaDAO = new HistoricoNotaFiscalSaidaLinhaDAO();
 
-		for (HistoricoNotaFiscalSaidaLinha linha : model.getLinhas()) {
+		for (NotaFiscalSaidaLinha linha : model.getLinhas()) {
 
-			historicoNotaFiscalSaidaLinhaDAO.inserir(linha, broker);
+			historicoNotaFiscalSaidaLinhaDAO.inserir((HistoricoNotaFiscalSaidaLinha) linha, broker);
 		}
 
-		new NotaFiscalSaidaDAO().excluir(model.getNotaFiscalSaida(), broker);
+		new NotaFiscalSaidaDAO().excluir(model, broker);
 
 		broker.endTransaction();
 	}

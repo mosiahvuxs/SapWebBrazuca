@@ -114,7 +114,7 @@ public class PedidoVendaDAO {
 
 		}
 
-		return broker.getCollectionBean(PedidoVenda.class, "id", "dataLancamento", "dataVencimento", "dataDocumento", "cliente.id", "cliente.nome", "cliente.identificadorFederal", "cliente.endereco.logradouro", "cliente.enderecoDestinatario.logradouro", "vendedor.id", "vendedor.nome", "valor", "observacao", "tipoEnvio", "idExterno", "condicaoPagamento.id", "tipoResumo", "tipo");
+		return broker.getCollectionBean(PedidoVenda.class, "id", "dataLancamento", "dataVencimento", "dataDocumento", "cliente.id", "cliente.nome", "cliente.identificadorFederal", "enderecoCobrancaFormatado", "enderecoEntregaFormatado", "vendedor.id", "vendedor.nome", "valor", "observacao", "tipoEnvio", "idExterno", "condicaoPagamento.id", "tipoResumo", "tipo");
 	}
 
 	public Long getQuantidadeLinhas(PedidoVenda model) {

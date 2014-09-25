@@ -48,6 +48,7 @@ public abstract class DocumentoAB implements Serializable {
 	private String tipo;
 	private Long tipoEnvio;
 
+	@XmlJavaTypeAdapter(TimestampAdapter.class)	
 	public Timestamp getDataDocumento() {
 		return dataDocumento;
 	}
@@ -72,6 +73,7 @@ public abstract class DocumentoAB implements Serializable {
 		this.idExterno = idExterno;
 	}
 
+	@XmlJavaTypeAdapter(TimestampAdapter.class)	
 	public Timestamp getDataLancamento() {
 		return dataLancamento;
 	}
@@ -152,6 +154,7 @@ public abstract class DocumentoAB implements Serializable {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
+	@XmlJavaTypeAdapter(TimestampAdapter.class)	
 	public Timestamp getDataCriacao() {
 		return dataCriacao;
 	}
@@ -185,6 +188,7 @@ public abstract class DocumentoAB implements Serializable {
 		this.origem = origem;
 	}
 
+	@XmlJavaTypeAdapter(TimestampAdapter.class)	
 	public Timestamp getDataVencimento() {
 		return dataVencimento;
 	}
@@ -241,6 +245,7 @@ public abstract class DocumentoAB implements Serializable {
 		this.observacao = observacao;
 	}
 
+	@XmlJavaTypeAdapter(TimestampAdapter.class)
 	public Timestamp getDataDocumentoFinal() {
 		return dataDocumentoFinal;
 	}
@@ -249,6 +254,7 @@ public abstract class DocumentoAB implements Serializable {
 		this.dataDocumentoFinal = dataDocumentoFinal;
 	}
 
+	@XmlJavaTypeAdapter(TimestampAdapter.class)
 	public Timestamp getDataLancamentoFinal() {
 		return dataLancamentoFinal;
 	}
@@ -257,6 +263,7 @@ public abstract class DocumentoAB implements Serializable {
 		this.dataLancamentoFinal = dataLancamentoFinal;
 	}
 
+	@XmlJavaTypeAdapter(TimestampAdapter.class)
 	public Timestamp getDataVencimentoFinal() {
 		return dataVencimentoFinal;
 	}

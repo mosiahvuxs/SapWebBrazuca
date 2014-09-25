@@ -33,6 +33,8 @@ public class NotaFiscalSaidaBusiness {
 		notaFiscal.setTipo(model.getTipo());
 		notaFiscal.setTipoEnvio(model.getTipoEnvio());
 		notaFiscal.setStatus(new Status(Constantes.ID_STATUS_NAO_PROCESSADO));
+		notaFiscal.setEnderecoCobrancaFormatado(model.getEnderecoCobrancaFormatado());
+		notaFiscal.setEnderecoEntregaFormatado(model.getEnderecoEntregaFormatado());
 
 		notaFiscal.setLinhas(new ArrayList<NotaFiscalSaidaLinha>());
 
@@ -41,7 +43,7 @@ public class NotaFiscalSaidaBusiness {
 			NotaFiscalSaidaLinha saidaLinha = new NotaFiscalSaidaLinha();
 
 			saidaLinha.setItem(linha.getItem());
-			saidaLinha.setQuantidade(linha.getQuantidadeLiberada());
+			saidaLinha.setQuantidade(linha.getQuantidadeLiberada().doubleValue());
 			saidaLinha.setValorUnitario(linha.getValorUnitario());
 			saidaLinha.setValor(linha.getValor());
 			saidaLinha.setCodigoImposto(linha.getCodigoImposto());

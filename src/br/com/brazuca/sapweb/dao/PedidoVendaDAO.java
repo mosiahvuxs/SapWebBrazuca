@@ -21,7 +21,7 @@ public class PedidoVendaDAO {
 
 		Long id = broker.getSequenceNextValue("pedido_vendas_id_seq");
 
-		broker.setSQL("pedidovendadao.inserir", id, model.getId(), model.getDataLancamento(), model.getDataVencimento(), model.getDataDocumento(), model.getCliente().getId(), model.getCliente().getNome(), model.getCliente().getIdentificadorFederal(), model.getCliente().getEndereco().getLogradouro(), model.getCliente().getEnderecoDestinatario().getLogradouro(), model.getVendedor().getId(), model.getVendedor().getNome(), model.getValor(), model.getObservacao(), model.getTipoEnvio(), model.getIdExterno(), model.getCondicaoPagamento().getId(), model.getTipoResumo(), model.getTipo());
+		broker.setSQL("pedidovendadao.inserir", id, model.getId(), model.getDataLancamento(), model.getDataVencimento(), model.getDataDocumento(), model.getCliente().getId(), model.getCliente().getNome(), model.getCliente().getIdentificadorFederal(), model.getEnderecoCobrancaFormatado(), model.getEnderecoEntregaFormatado(), model.getVendedor().getId(), model.getVendedor().getNome(), model.getValor(), model.getObservacao(), model.getTipoEnvio(), model.getIdExterno(), model.getCondicaoPagamento().getId(), model.getTipoResumo(), model.getTipo());
 
 		PedidoVendaLinhaDAO pedidoVendaLinhaDAO = new PedidoVendaLinhaDAO();
 
@@ -55,7 +55,7 @@ public class PedidoVendaDAO {
 
 			broker.setPropertySQL("pedidovendadao.inserir",
 
-			id, model.getId(), model.getDataLancamento(), model.getDataVencimento(), model.getDataDocumento(), model.getCliente().getId(), model.getCliente().getNome(), model.getCliente().getIdentificadorFederal(), model.getCliente().getEndereco().getLogradouro(), model.getCliente().getEnderecoDestinatario().getLogradouro(), model.getVendedor().getId(), model.getVendedor().getNome(), model.getValor(), model.getObservacao(), model.getTipoEnvio(), model.getIdExterno(), model.getCondicaoPagamento().getId(), model.getTipoResumo(), model.getTipo(), model.getEmpresa().getId());
+			id, model.getId(), model.getDataLancamento(), model.getDataVencimento(), model.getDataDocumento(), model.getCliente().getId(), model.getCliente().getNome(), model.getCliente().getIdentificadorFederal(), model.getEnderecoCobrancaFormatado(), model.getEnderecoEntregaFormatado(), model.getVendedor().getId(), model.getVendedor().getNome(), model.getValor(), model.getObservacao(), model.getTipoEnvio(), model.getIdExterno(), model.getCondicaoPagamento().getId(), model.getTipoResumo(), model.getTipo(), model.getEmpresa().getId());
 
 			broker.execute();
 
@@ -182,7 +182,7 @@ public class PedidoVendaDAO {
 
 		}
 
-		return broker.getCollectionBean(PedidoVenda.class, "empresa.id", "serial", "id", "dataLancamento", "dataVencimento", "dataDocumento", "cliente.id", "cliente.nome", "cliente.identificadorFederal", "cliente.endereco.logradouro", "cliente.enderecoDestinatario.logradouro", "vendedor.id", "vendedor.nome", "valor", "observacao", "tipoEnvio", "idExterno", "condicaoPagamento.id", "tipoResumo", "tipo");
+		return broker.getCollectionBean(PedidoVenda.class, "empresa.id", "serial", "id", "dataLancamento", "dataVencimento", "dataDocumento", "cliente.id", "cliente.nome", "cliente.identificadorFederal", "enderecoCobrancaFormatado", "enderecoEntregaFormatado", "vendedor.id", "vendedor.nome", "valor", "observacao", "tipoEnvio", "idExterno", "condicaoPagamento.id", "tipoResumo", "tipo");
 	}
 
 	public void excluir(PedidoVenda model, TSDataBaseBrokerIf broker) throws TSApplicationException {

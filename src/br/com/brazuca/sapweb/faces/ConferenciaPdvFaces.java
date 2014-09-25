@@ -110,6 +110,8 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 			super.addErrorMessage("Insira o código de barras para realizar a operação.");
 		}
 
+		this.codigoBarras = "";
+
 	}
 
 	private boolean setarQuantidadePedidoVendaLinha(String codigoBarras) {
@@ -122,9 +124,11 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 				existe = true;
 
-				if (this.quantidade.intValue() <= linha.getQuantidade().intValueExact()) {
+				BigDecimal quantidadeFinal = new BigDecimal(linha.getQuantidadeLiberada().intValueExact() + this.quantidade.intValue());
 
-					linha.setQuantidadeLiberada(new BigDecimal(this.quantidade.intValue()));
+				if (quantidadeFinal.intValue() <= linha.getQuantidade().intValue()) {
+
+					linha.setQuantidadeLiberada(quantidadeFinal);
 
 				} else {
 
@@ -183,10 +187,14 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 					for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
 
 						if (itemEstruturado.getItem().getId().equals(linha.getItem().getId())) {
+							
+							Integer quantidadeTotal = itemEstruturado.getItem().getQuantidade().intValue() * this.quantidade.intValue();
 
-							if (this.quantidade.intValue() <= linha.getQuantidade().intValueExact()) {
+							BigDecimal quantidadeFinal = new BigDecimal(linha.getQuantidadeLiberada().intValueExact() + quantidadeTotal.intValue());
 
-								linha.setQuantidadeLiberada(new BigDecimal(itemEstruturado.getItem().getQuantidade().intValueExact() + this.quantidade.intValue()));
+							if (quantidadeFinal.intValue() <= linha.getQuantidade().intValue()) {
+
+								linha.setQuantidadeLiberada(quantidadeFinal);
 
 							} else {
 

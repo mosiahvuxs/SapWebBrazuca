@@ -22,6 +22,8 @@ public class PedidoVenda extends DocumentoAB {
 	private List<PedidoVendaLinha> linhas;
 	private ParceiroNegocio cliente;
 	private boolean selecionado;
+	private String enderecoCobrancaFormatado;
+	private String enderecoEntregaFormatado;
 
 	public Long getInterfaceId() {
 		return interfaceId;
@@ -141,6 +143,22 @@ public class PedidoVenda extends DocumentoAB {
 
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
+	}
+
+	public String getEnderecoCobrancaFormatado() {
+		return enderecoCobrancaFormatado;
+	}
+
+	public void setEnderecoCobrancaFormatado(String enderecoCobrancaFormatado) {
+		this.enderecoCobrancaFormatado = enderecoCobrancaFormatado;
+	}
+
+	public String getEnderecoEntregaFormatado() {
+		return enderecoEntregaFormatado;
+	}
+
+	public void setEnderecoEntregaFormatado(String enderecoEntregaFormatado) {
+		this.enderecoEntregaFormatado = enderecoEntregaFormatado;
 	}
 
 }

@@ -14,7 +14,8 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class CodigoImposto implements Serializable{
 
-    // tabela OSTC
+    // tabela OSTC(brazil)
+	// tabela OVTG(portugal)
 
     private String id;          //equivalente a code
 

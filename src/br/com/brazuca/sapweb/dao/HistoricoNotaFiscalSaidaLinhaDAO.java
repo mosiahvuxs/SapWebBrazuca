@@ -2,7 +2,7 @@ package br.com.brazuca.sapweb.dao;
 
 import java.util.List;
 
-import br.com.brazuca.sapweb.sap.model.HistoricoNotaFiscalSaidaLinha;
+import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;

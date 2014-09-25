@@ -6,7 +6,9 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.brazuca.sapweb.dao.ItemEstruturadoDAO;
 import br.com.brazuca.sapweb.dao.NotaFiscalSaidaLinhaDAO;
+import br.com.brazuca.sapweb.model.ItemEstruturado;
 import br.com.brazuca.sapweb.sap.dao.PedidoVendaDAO;
 import br.com.brazuca.sapweb.sap.dao.PedidoVendaLinhaDAO;
 import br.com.brazuca.sapweb.sap.model.Empresa;
@@ -27,6 +29,7 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 	private PedidoVenda pedidoVenda;
 	private List<PedidoVenda> pedidosVenda;
 	private boolean todos;
+	private boolean importarItensEstruturados;
 
 	public ImportacaoPdvFaces() {
 
@@ -41,6 +44,7 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 		this.pedidoVenda.setEmpresa(new Empresa(Utilitarios.getEmpresaConectada().getId(), Utilitarios.getEmpresaConectada().getJndi()));
 		this.pedidosVenda = new ArrayList<PedidoVenda>();
 		this.todos = false;
+		this.importarItensEstruturados = false;
 	}
 
 	public void limpar() {
@@ -119,6 +123,11 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 
 				new br.com.brazuca.sapweb.dao.PedidoVendaDAO().inserir(pedidosSelecionados);
 
+				if (this.importarItensEstruturados) {
+
+					this.executarImportacaoItensEstruturados();
+				}
+
 				this.limpar();
 
 				super.addInfoMessage("Importação realizada com sucesso.");
@@ -137,6 +146,22 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 		}
 
 		return null;
+	}
+
+	private void executarImportacaoItensEstruturados() throws TSApplicationException {
+
+		ItemEstruturadoDAO itemEstruturadoDAO = new ItemEstruturadoDAO();
+
+		itemEstruturadoDAO.excluirTodosRegistros();
+
+		List<ItemEstruturado> itens = itemEstruturadoDAO.pesquisarSqlServerMatriz(new ItemEstruturado());
+
+		if (!TSUtil.isEmpty(itens)) {
+
+			itemEstruturadoDAO.inserirRotina(itens);
+
+		}
+
 	}
 
 	public PedidoVenda getPedidoVenda() {
@@ -161,5 +186,13 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 
 	public void setTodos(boolean todos) {
 		this.todos = todos;
+	}
+
+	public boolean isImportarItensEstruturados() {
+		return importarItensEstruturados;
+	}
+
+	public void setImportarItensEstruturados(boolean importarItensEstruturados) {
+		this.importarItensEstruturados = importarItensEstruturados;
 	}
 }

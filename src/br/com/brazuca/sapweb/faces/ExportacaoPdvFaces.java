@@ -9,9 +9,9 @@ import javax.faces.bean.ViewScoped;
 import br.com.brazuca.sapweb.dao.HistoricoNotaFiscalSaidaDAO;
 import br.com.brazuca.sapweb.dao.NotaFiscalSaidaDAO;
 import br.com.brazuca.sapweb.dao.NotaFiscalSaidaLinhaDAO;
+import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaida;
+import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.restful.NotaFiscalSaidaRestful;
-import br.com.brazuca.sapweb.sap.model.HistoricoNotaFiscalSaida;
-import br.com.brazuca.sapweb.sap.model.HistoricoNotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.sap.model.ParceiroNegocio;
@@ -65,6 +65,9 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 
 	@Override
 	protected String insert() throws TSApplicationException {
+		
+		super.setClearFields(false);
+		super.setDefaultMessage(false);
 
 		List<NotaFiscalSaida> notasFiscais = new ArrayList<NotaFiscalSaida>();
 		NotaFiscalSaidaLinhaDAO notaFiscalSaidaLinhaDAO = new NotaFiscalSaidaLinhaDAO();
@@ -93,12 +96,11 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 
 				if (TSUtil.isEmpty(model.getMensagemErro())) {
 					
-					HistoricoNotaFiscalSaida historicoNotaFiscalSaida = new HistoricoNotaFiscalSaida(notaFiscal);
-					historicoNotaFiscalSaida.setLinhas(new ArrayList<HistoricoNotaFiscalSaidaLinha>());
+					HistoricoNotaFiscalSaida historicoNotaFiscalSaida = (HistoricoNotaFiscalSaida) notaFiscal;
 					
-					for (NotaFiscalSaidaLinha linha : historicoNotaFiscalSaida.getNotaFiscalSaida().getLinhas()) {
+					for (NotaFiscalSaidaLinha linha : historicoNotaFiscalSaida.getLinhas()) {
 						
-						historicoNotaFiscalSaida.getLinhas().add(new HistoricoNotaFiscalSaidaLinha(linha));
+						historicoNotaFiscalSaida.getLinhas().add(linha);
 					}
 
 					historicoNotaFiscalSaidaDAO.inserir(historicoNotaFiscalSaida);

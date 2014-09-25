@@ -85,6 +85,19 @@
 				
 				<br/>
 				
+				<p:fieldset legend="Itens Estruturados" rendered="#{!empty mbean.pedidosVenda}" style="width: 17%">
+					
+					<h:panelGrid columns="2">
+						<h:selectBooleanCheckbox id="importarItemEstruturado" value="#{mbean.importarItensEstruturados}"/>
+						<p:outputLabel for="importarItemEstruturado" value="Importar?" style="font-weight: bold;"/>
+					</h:panelGrid>
+					
+				</p:fieldset>
+				
+				<h:panelGrid rendered="#{!empty mbean.pedidosVenda}">
+					<br/>
+				</h:panelGrid>
+				
 				<p:fieldset legend="Resultado"  style="width: 97%">
 
 					<p:dataTable var="pdv" id="pdvs" rowIndexVar="index" value="#{mbean.pedidosVenda}" paginator="true" paginatorAlwaysVisible="false" rows="20" emptyMessage="Nenhum P.D.V encontrado">

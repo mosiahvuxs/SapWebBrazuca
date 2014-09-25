@@ -2,8 +2,6 @@ package br.com.brazuca.sapweb.sap.model;
 
 import java.math.BigDecimal;
 
-import br.com.topsys.util.TSUtil;
-
 @SuppressWarnings("serial")
 public class PedidoVendaLinha extends DocumentoLinhaAB {
 
@@ -28,12 +26,6 @@ public class PedidoVendaLinha extends DocumentoLinhaAB {
 	}
 
 	public BigDecimal getQuantidadeLiberada() {
-
-		if (TSUtil.isEmpty(quantidadeLiberada)) {
-
-			this.quantidadeLiberada = BigDecimal.ZERO;
-		}
-
 		return quantidadeLiberada;
 	}
 

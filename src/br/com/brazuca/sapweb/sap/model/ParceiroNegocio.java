@@ -19,7 +19,6 @@ public class ParceiroNegocio extends PessoaAB implements Serializable {
 
     //tabela OCRD
     private ParceiroNegocioEndereco endereco;
-    private ParceiroNegocioEndereco enderecoDestinatario;
     private List<String> emailsAdicionais;
     private String emailAdicional;
     private ParceiroNegocioContaBanco banco;
@@ -118,14 +117,6 @@ public class ParceiroNegocio extends PessoaAB implements Serializable {
 
 	public void setIdentificadorFederal(String identificadorFederal) {
 		this.identificadorFederal = identificadorFederal;
-	}
-
-	public ParceiroNegocioEndereco getEnderecoDestinatario() {
-		return enderecoDestinatario;
-	}
-
-	public void setEnderecoDestinatario(ParceiroNegocioEndereco enderecoDestinatario) {
-		this.enderecoDestinatario = enderecoDestinatario;
 	}  
 	
     
