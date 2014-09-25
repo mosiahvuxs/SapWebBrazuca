@@ -1,5 +1,6 @@
 package br.com.brazuca.sapweb.faces;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,6 @@ import br.com.brazuca.sapweb.dao.HistoricoNotaFiscalSaidaDAO;
 import br.com.brazuca.sapweb.dao.NotaFiscalSaidaDAO;
 import br.com.brazuca.sapweb.dao.NotaFiscalSaidaLinhaDAO;
 import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaida;
-import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.restful.NotaFiscalSaidaRestful;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
@@ -92,15 +92,17 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 
 			for (NotaFiscalSaida notaFiscal : notasFiscais) {
 				
+				notaFiscal.setDataCriacao(new Timestamp(System.currentTimeMillis()));
+				
 				NotaFiscalSaida model = new NotaFiscalSaidaRestful().inserirLote(notaFiscal);
 
 				if (TSUtil.isEmpty(model.getMensagemErro())) {
 					
-					HistoricoNotaFiscalSaida historicoNotaFiscalSaida = (HistoricoNotaFiscalSaida) notaFiscal;
+					HistoricoNotaFiscalSaida historicoNotaFiscalSaida = new HistoricoNotaFiscalSaida(notaFiscal);
 					
-					for (NotaFiscalSaidaLinha linha : historicoNotaFiscalSaida.getLinhas()) {
+					for (NotaFiscalSaidaLinha linha : historicoNotaFiscalSaida.getNotaFiscalSaida().getLinhas()) {
 						
-						historicoNotaFiscalSaida.getLinhas().add(linha);
+						historicoNotaFiscalSaida.getNotaFiscalSaida().getLinhas().add(linha);
 					}
 
 					historicoNotaFiscalSaidaDAO.inserir(historicoNotaFiscalSaida);

@@ -21,18 +21,19 @@ public class HistoricoNotaFiscalSaidaDAO {
 
 		broker.setPropertySQL("historiconotafiscalsaidadao.inserir",
 
-		model.getId(), model.getDataLancamento(), model.getDataDocumento(), model.getDataVencimento(), model.getCondicaoPagamento().getId(), model.getValor(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getCliente().getNome(), model.getVendedor().getNome(), model.getIdExterno(), model.getEmpresa().getId(), model.getCliente().getId(), model.getVendedor().getId(), model.getEnderecoEntregaFormatado(), model.getEnderecoCobrancaFormatado(), model.getCliente().getIdentificadorFederal(), model.getObservacao(), model.getTipoResumo(), model.getTipo(), model.getTipoEnvio(), model.getStatus().getId(), model.getPedidoVenda().getId());
+		model.getId(), model.getNotaFiscalSaida().getDataLancamento(), model.getNotaFiscalSaida().getDataDocumento(), model.getNotaFiscalSaida().getDataVencimento(), model.getNotaFiscalSaida().getCondicaoPagamento().getId(), model.getNotaFiscalSaida().getValor(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getNotaFiscalSaida().getCliente().getNome(), model.getNotaFiscalSaida().getVendedor().getNome(), model.getNotaFiscalSaida().getIdExterno(), model.getNotaFiscalSaida().getEmpresa().getId(), model.getNotaFiscalSaida().getCliente().getId(), model.getNotaFiscalSaida().getVendedor().getId(), model.getNotaFiscalSaida().getEnderecoEntregaFormatado(), model.getNotaFiscalSaida().getEnderecoCobrancaFormatado(), model.getNotaFiscalSaida().getCliente().getIdentificadorFederal(), model.getNotaFiscalSaida().getObservacao(), model.getNotaFiscalSaida().getTipoResumo(), model.getNotaFiscalSaida().getTipo(), model.getNotaFiscalSaida().getTipoEnvio(),
+				model.getNotaFiscalSaida().getStatus().getId(), model.getNotaFiscalSaida().getPedidoVenda().getId());
 
 		broker.execute();
 
 		HistoricoNotaFiscalSaidaLinhaDAO historicoNotaFiscalSaidaLinhaDAO = new HistoricoNotaFiscalSaidaLinhaDAO();
 
-		for (NotaFiscalSaidaLinha linha : model.getLinhas()) {
+		for (NotaFiscalSaidaLinha linha : model.getNotaFiscalSaida().getLinhas()) {
 
 			historicoNotaFiscalSaidaLinhaDAO.inserir((HistoricoNotaFiscalSaidaLinha) linha, broker);
 		}
 
-		new NotaFiscalSaidaDAO().excluir(model, broker);
+		new NotaFiscalSaidaDAO().excluir(model.getNotaFiscalSaida(), broker);
 
 		broker.endTransaction();
 	}
