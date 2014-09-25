@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="envioPedidoVendaSap" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="12814f74-ee8f-43b6-a4dc-c93496d07d9d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="imagem" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+       H.ID, H.DATA_DOCUMENTO, H.DATA_LANCAMENTO, H.PEDIDO_VENDA_ID, Hl.VALOR,
+       ITEM_ID, QUANTIDADE, VALOR_UNITARIO, CODIGO_IMPOSTO_ID, CODIGO_BARRAS, PEDIDO_VENDA_LINHA_NUMERO, UPPER(H.CLIENTE_NOME) CLIENTE_NOME,
+HL.DESCRICAO, H.DATA_EXPORTACAO
+
+FROM   PUBLIC.HISTORICO_NOTAFISCALSAIDA H, PUBLIC.HISTORICO_NOTAFISCALSAIDA_LINHAS HL
+
+WHERE
+       HL.HISTORICO_NOTAFISCALSAIDA_ID = H.ID
+       AND CAST(H.DATA_EXPORTACAO AS DATE) >= TO_DATE('25/09/2014', 'DD/MM/YYYY')
+
+ORDER BY H.DATA_EXPORTACAO]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="data_documento" class="java.sql.Timestamp"/>
+	<field name="data_lancamento" class="java.sql.Timestamp"/>
+	<field name="pedido_venda_id" class="java.lang.Long"/>
+	<field name="valor" class="java.math.BigDecimal"/>
+	<field name="item_id" class="java.lang.String"/>
+	<field name="quantidade" class="java.math.BigDecimal"/>
+	<field name="valor_unitario" class="java.math.BigDecimal"/>
+	<field name="codigo_imposto_id" class="java.lang.String"/>
+	<field name="codigo_barras" class="java.lang.String"/>
+	<field name="pedido_venda_linha_numero" class="java.lang.Integer"/>
+	<field name="cliente_nome" class="java.lang.String"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="data_exportacao" class="java.sql.Timestamp"/>
+	<variable name="valor_total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="206" splitType="Stretch">
+			<image hAlign="Center" onErrorType="Blank">
+				<reportElement x="170" y="0" width="215" height="132" uuid="16b16557-3a88-4d42-857a-87a7358126e0"/>
+				<imageExpression><![CDATA["logo_brazuca.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="152" width="555" height="34" uuid="6f2ee50e-f783-49a0-9199-e25bfe8c8f58"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="14" isBold="true" isUnderline="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[PEDIDOS DE VENDA ENVIADOS AO SAP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="186" width="78" height="20" uuid="1571c5b6-0ebf-47b6-b4e9-b3ec07c9c089"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATA ENVIO:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="74" y="186" width="114" height="20" uuid="928fc8b8-4d89-4c72-91a6-7197d5613af3"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data_exportacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="112" splitType="Stretch">
+			<textField>
+				<reportElement x="83" y="1" width="126" height="20" isPrintWhenDetailOverflows="true" uuid="94969376-fd3f-4075-92a1-e7a215898963"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pedido_venda_id}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="55" y="21" width="259" height="20" uuid="97fa6ce9-9b92-4d40-a331-ddd0f0ffcc9e"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="1" width="82" height="20" isPrintWhenDetailOverflows="true" uuid="7d805918-c29d-4b7a-aa92-7152f268d10b"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº DO PEDIDO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="21" width="59" height="20" uuid="640961e8-e501-4ba0-bbbc-611377c2f69f"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLIENTE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="41" width="120" height="20" uuid="a8f31f6c-8929-489a-a6c7-de21868af500"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATA DOCUMENTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="61" width="120" height="20" uuid="74d1baa3-8349-448e-a8e2-9d31bf9c1a0d"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATA LANÇAMENTO:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="112" y="41" width="122" height="20" isPrintWhenDetailOverflows="true" uuid="02d612b0-10d5-4d74-9756-8ac74f2f6ef9"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data_documento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="112" y="61" width="122" height="20" isPrintWhenDetailOverflows="true" uuid="6a66c8f3-14b4-4d4d-9014-6a62ace41432"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data_lancamento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="92" width="555" height="20" uuid="de9d0f44-dbaf-40c6-8c27-a39d2c5a4346"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ITENS DO PEDIDO]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="270" y="0" width="79" height="22" isPrintWhenDetailOverflows="true" uuid="3179c00d-dedb-473e-bd73-0e2fa7a528e5"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QUANTIDADE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="349" y="0" width="113" height="22" isPrintWhenDetailOverflows="true" uuid="0d45d10b-9b71-4b27-b558-6f77c4ec74e7"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR UNITÁRIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="462" y="0" width="93" height="22" isPrintWhenDetailOverflows="true" uuid="c7c20daf-6294-4035-a91b-b52f983c381b"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="270" height="22" uuid="3fa8000e-fa9a-443a-bbf3-0c7f9eb7246c"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ITEM]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="###0">
+				<reportElement x="270" y="0" width="79" height="20" isPrintWhenDetailOverflows="true" uuid="77a041f0-6fe0-4d44-900d-31af254db9d8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantidade}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement x="349" y="0" width="113" height="20" isPrintWhenDetailOverflows="true" uuid="593e47d7-7454-42f7-9845-572f11638b58"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor_unitario}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement x="462" y="0" width="93" height="20" isPrintWhenDetailOverflows="true" uuid="212dab10-38a6-4c9c-82bc-e09fc3e9a76a"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="270" height="20" isPrintWhenDetailOverflows="true" uuid="38bebfe0-ecf1-4bea-b882-8a1051362fa8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="436" y="0" width="119" height="20" uuid="6f4dbf70-8ec6-45b4-ae09-7290f938df5d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="20">
+			<staticText>
+				<reportElement x="349" y="0" width="113" height="20" uuid="be52dd8c-d2ed-429e-9290-f689950e5a11"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="462" y="0" width="93" height="20" uuid="612c0247-e0ae-4449-9ca6-4e42d1feef62"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{valor_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
