@@ -44,7 +44,7 @@ public class JasperUtil {
 			try {
 
 				JasperExportManager.exportReportToPdfStream(impressao, response.getOutputStream());
-
+				
 				TSFacesUtil.getFacesContext().responseComplete();
 
 			} catch (JRException e) {

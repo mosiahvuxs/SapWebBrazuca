@@ -2,153 +2,158 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="envioPedidoVendaSap" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="12814f74-ee8f-43b6-a4dc-c93496d07d9d">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="imagem" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="clienteNome" class="java.lang.String">
-		<fieldDescription><![CDATA[clienteNome]]></fieldDescription>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
 	</field>
-	<field name="codigoBarras" class="java.lang.String">
-		<fieldDescription><![CDATA[codigoBarras]]></fieldDescription>
-	</field>
-	<field name="codigoImpostoId" class="java.lang.String">
-		<fieldDescription><![CDATA[codigoImpostoId]]></fieldDescription>
+	<field name="historico_notafiscalsaida_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[historicoNotaFiscalSaida.id]]></fieldDescription>
 	</field>
 	<field name="dataDocumento" class="java.sql.Timestamp">
 		<fieldDescription><![CDATA[dataDocumento]]></fieldDescription>
 	</field>
-	<field name="dataExportacao" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[dataExportacao]]></fieldDescription>
-	</field>
 	<field name="dataLancamento" class="java.sql.Timestamp">
 		<fieldDescription><![CDATA[dataLancamento]]></fieldDescription>
 	</field>
-	<field name="descricao" class="java.lang.String">
-		<fieldDescription><![CDATA[descricao]]></fieldDescription>
-	</field>
-	<field name="id" class="java.lang.Long">
-		<fieldDescription><![CDATA[id]]></fieldDescription>
-	</field>
-	<field name="itemId" class="java.lang.String">
-		<fieldDescription><![CDATA[itemId]]></fieldDescription>
-	</field>
-	<field name="numero" class="java.lang.Integer">
-		<fieldDescription><![CDATA[numero]]></fieldDescription>
-	</field>
 	<field name="pedidoVendaId" class="java.lang.Long">
-		<fieldDescription><![CDATA[pedidoVendaId]]></fieldDescription>
+		<fieldDescription><![CDATA[notaFiscalSaidaLinha.pedidoVendaLinha.pedidoVenda.id]]></fieldDescription>
 	</field>
-	<field name="quantidade" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[quantidade]]></fieldDescription>
+	<field name="dataExportacao" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[dataExportacao]]></fieldDescription>
 	</field>
-	<field name="valor" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[valor]]></fieldDescription>
+	<field name="item_id" class="java.lang.String">
+		<fieldDescription><![CDATA[notaFiscalSaidaLinha.item.id]]></fieldDescription>
+	</field>
+	<field name="quantidade" class="java.lang.Double">
+		<fieldDescription><![CDATA[notaFiscalSaidaLinha.quantidade]]></fieldDescription>
 	</field>
 	<field name="valorUnitario" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[valorUnitario]]></fieldDescription>
+		<fieldDescription><![CDATA[notaFiscalSaidaLinha.valorUnitario]]></fieldDescription>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[notaFiscalSaidaLinha.valor]]></fieldDescription>
+	</field>
+	<field name="codigo_imposto_id" class="java.lang.String">
+		<fieldDescription><![CDATA[notaFiscalSaidaLinha.codigoImposto.id]]></fieldDescription>
+	</field>
+	<field name="codigoBarras" class="java.lang.String">
+		<fieldDescription><![CDATA[notaFiscalSaidaLinha.codigoBarras]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.Integer">
+		<fieldDescription><![CDATA[notaFiscalSaidaLinha.pedidoVendaLinha.numero]]></fieldDescription>
+	</field>
+	<field name="clienteNome" class="java.lang.String">
+		<fieldDescription><![CDATA[historicoNotaFiscalSaida.notaFiscalSaida.cliente.nome]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[notaFiscalSaidaLinha.item.descricao]]></fieldDescription>
 	</field>
 	<variable name="valor_total" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
 	</variable>
+	<group name="pedido_venda_id" isStartNewPage="true" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{pedidoVendaId}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="206" splitType="Stretch">
-			<image hAlign="Center" onErrorType="Blank">
-				<reportElement x="170" y="0" width="215" height="132" uuid="16b16557-3a88-4d42-857a-87a7358126e0"/>
-				<imageExpression><![CDATA["logo_brazuca.png"]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement x="0" y="152" width="555" height="34" uuid="6f2ee50e-f783-49a0-9199-e25bfe8c8f58"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="14" isBold="true" isUnderline="true" isStrikeThrough="false"/>
-				</textElement>
-				<text><![CDATA[PEDIDOS DE VENDA ENVIADOS AO SAP]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="186" width="78" height="20" uuid="1571c5b6-0ebf-47b6-b4e9-b3ec07c9c089"/>
-				<textElement>
-					<font fontName="Tahoma" isBold="true"/>
-				</textElement>
-				<text><![CDATA[DATA ENVIO:]]></text>
-			</staticText>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="74" y="186" width="114" height="20" uuid="928fc8b8-4d89-4c72-91a6-7197d5613af3"/>
-				<textElement>
-					<font fontName="Tahoma" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{dataExportacao}]]></textFieldExpression>
-			</textField>
-		</band>
-	</title>
 	<pageHeader>
-		<band height="112" splitType="Stretch">
+		<band height="299" splitType="Stretch">
 			<textField>
-				<reportElement x="83" y="1" width="126" height="20" isPrintWhenDetailOverflows="true" uuid="94969376-fd3f-4075-92a1-e7a215898963"/>
+				<reportElement x="83" y="186" width="126" height="20" isPrintWhenDetailOverflows="true" uuid="94969376-fd3f-4075-92a1-e7a215898963"/>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pedidoVendaId}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="55" y="21" width="259" height="20" uuid="97fa6ce9-9b92-4d40-a331-ddd0f0ffcc9e"/>
+				<reportElement x="55" y="206" width="259" height="20" uuid="97fa6ce9-9b92-4d40-a331-ddd0f0ffcc9e"/>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{clienteNome}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="1" width="82" height="20" isPrintWhenDetailOverflows="true" uuid="7d805918-c29d-4b7a-aa92-7152f268d10b"/>
+				<reportElement x="0" y="186" width="82" height="20" isPrintWhenDetailOverflows="true" uuid="7d805918-c29d-4b7a-aa92-7152f268d10b"/>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nº DO PEDIDO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="21" width="59" height="20" uuid="640961e8-e501-4ba0-bbbc-611377c2f69f"/>
+				<reportElement x="0" y="206" width="59" height="20" uuid="640961e8-e501-4ba0-bbbc-611377c2f69f"/>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CLIENTE:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="41" width="120" height="20" uuid="a8f31f6c-8929-489a-a6c7-de21868af500"/>
+				<reportElement x="0" y="226" width="120" height="20" uuid="a8f31f6c-8929-489a-a6c7-de21868af500"/>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DATA DOCUMENTO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="61" width="120" height="20" uuid="74d1baa3-8349-448e-a8e2-9d31bf9c1a0d"/>
+				<reportElement x="0" y="246" width="120" height="20" uuid="74d1baa3-8349-448e-a8e2-9d31bf9c1a0d"/>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DATA LANÇAMENTO:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="112" y="41" width="122" height="20" isPrintWhenDetailOverflows="true" uuid="02d612b0-10d5-4d74-9756-8ac74f2f6ef9"/>
+				<reportElement x="112" y="226" width="122" height="20" isPrintWhenDetailOverflows="true" uuid="02d612b0-10d5-4d74-9756-8ac74f2f6ef9"/>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dataDocumento}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="112" y="61" width="122" height="20" isPrintWhenDetailOverflows="true" uuid="6a66c8f3-14b4-4d4d-9014-6a62ace41432"/>
+				<reportElement x="112" y="246" width="122" height="20" isPrintWhenDetailOverflows="true" uuid="6a66c8f3-14b4-4d4d-9014-6a62ace41432"/>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dataLancamento}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1" y="92" width="555" height="20" uuid="de9d0f44-dbaf-40c6-8c27-a39d2c5a4346"/>
+				<reportElement x="1" y="279" width="555" height="20" uuid="de9d0f44-dbaf-40c6-8c27-a39d2c5a4346"/>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ITENS DO PEDIDO]]></text>
 			</staticText>
+			<image hAlign="Center" onErrorType="Blank">
+				<reportElement x="170" y="0" width="215" height="132" uuid="16b16557-3a88-4d42-857a-87a7358126e0"/>
+				<imageExpression><![CDATA["logo_brazuca.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="1" y="132" width="555" height="34" uuid="6f2ee50e-f783-49a0-9199-e25bfe8c8f58"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="14" isBold="true" isUnderline="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[PEDIDOS DE VENDA ENVIADOS AO SAP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="166" width="78" height="20" uuid="1571c5b6-0ebf-47b6-b4e9-b3ec07c9c089"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATA ENVIO:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="74" y="166" width="114" height="20" uuid="928fc8b8-4d89-4c72-91a6-7197d5613af3"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataExportacao}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>

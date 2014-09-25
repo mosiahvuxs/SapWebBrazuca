@@ -30,7 +30,7 @@ public class HistoricoNotaFiscalSaidaLinhaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		StringBuilder sql = new StringBuilder("SELECT HL.ID, HL.HISTORICO_NOTAFISCALSAIDA_ID, H.DATA_DOCUMENTO, H.DATA_LANCAMENTO, H.PEDIDO_VENDA_ID, H.DATA_EXPORTACAO, HL.ITEM_ID, HL.QUANTIDADE, HL.VALOR_UNITARIO, HL.VALOR, HL.CODIGO_IMPOSTO_ID, HL.CODIGO_BARRAS, HL.PEDIDO_VENDA_LINHA_NUMERO, HL.DESCRICAO FROM PUBLIC.HISTORICO_NOTAFISCALSAIDA_LINHAS HL, PUBLIC.HISTORICO_NOTAFISCALSAIDA H WHERE HL.HISTORICO_NOTAFISCALSAIDA_ID = H.ID");
+		StringBuilder sql = new StringBuilder("SELECT H.CLIENTE_NOME, HL.ID, HL.HISTORICO_NOTAFISCALSAIDA_ID, H.DATA_DOCUMENTO, H.DATA_LANCAMENTO, H.PEDIDO_VENDA_ID, H.DATA_EXPORTACAO, HL.ITEM_ID, HL.QUANTIDADE, HL.VALOR_UNITARIO, HL.VALOR, HL.CODIGO_IMPOSTO_ID, HL.CODIGO_BARRAS, HL.PEDIDO_VENDA_LINHA_NUMERO, HL.DESCRICAO FROM PUBLIC.HISTORICO_NOTAFISCALSAIDA_LINHAS HL, PUBLIC.HISTORICO_NOTAFISCALSAIDA H WHERE HL.HISTORICO_NOTAFISCALSAIDA_ID = H.ID");
 
 		if (!TSUtil.isEmpty(model.getId())) {
 
@@ -68,8 +68,9 @@ public class HistoricoNotaFiscalSaidaLinhaDAO {
 
 		}
 
-		return broker.getCollectionBean(HistoricoNotaFiscalSaidaLinha.class, "id", "historicoNotaFiscalSaida.id", "notaFiscalSaidaLinha.dataDocumento", "notaFiscalSaidaLinha.dataLancamento", "notaFiscalSaidaLinha.pedidoVendaLinha.pedidoVenda.id", "notaFiscalSaidaLinha.notaFiscalSaida.dataExportacao",
-
+		return broker.getCollectionBean(HistoricoNotaFiscalSaidaLinha.class, 
+				
+		"historicoNotaFiscalSaida.notaFiscalSaida.cliente.nome", "id", "historicoNotaFiscalSaida.id", "dataDocumento", "dataLancamento", "notaFiscalSaidaLinha.pedidoVendaLinha.pedidoVenda.id", "dataExportacao",
 		"notaFiscalSaidaLinha.item.id", "notaFiscalSaidaLinha.quantidade", "notaFiscalSaidaLinha.valorUnitario", "notaFiscalSaidaLinha.valor", "notaFiscalSaidaLinha.codigoImposto.id", "notaFiscalSaidaLinha.codigoBarras", "notaFiscalSaidaLinha.pedidoVendaLinha.numero", "notaFiscalSaidaLinha.item.descricao");
 	}
 

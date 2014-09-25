@@ -45,7 +45,7 @@ public class RelatorioEnvioNotaFiscalFaces {
 		if (!TSUtil.isEmpty(this.historicosLinhas)) {
 
 			try {
-
+				
 				HashMap<String, Object> map = new HashMap<String, Object>();
 
 				new JasperUtil().gerarRelatorio("envioPedidoVendaSap.jasper", map, new JRBeanCollectionDataSource(this.historicosLinhas));
