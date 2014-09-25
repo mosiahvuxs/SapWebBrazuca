@@ -1,0 +1,57 @@
+<ui:composition xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+	
+	<ui:param name="mbean" value="#{relatorioEnvioNotaFiscalFaces}"/>
+	<ui:param name="mbeanPesquisaModel" value="#{relatorioEnvioNotaFiscalFaces.historicoNotaFiscalSaida}"/>
+	
+	<p:tabView prependId="false">
+	
+		<p:tab title="Relatório Envio Notas SAP">
+			
+			<h:form prependId="false">
+		
+				<br/>
+				
+				<p:fieldset legend="Filtros" style="width: 97%">
+					
+					<h:panelGrid columns="2">
+						
+						<p:fieldset legend="Pedido">
+							<h:panelGrid columns="1">
+								<p:outputLabel for="numeroPedido" value="Número" style="font-weight: bold;"/>
+								<p:inputText style="width: 197px;" id="numeroPedido" value="#{mbeanPesquisaModel.id}" onkeypress="Mascara(this, Integer)" onblur="Mascara(this, Integer)" maxlength="10"/>
+							</h:panelGrid>
+						</p:fieldset>
+						
+						<p:fieldset legend="Data de Envio">
+							
+							<h:panelGrid columns="2">
+								<p:outputLabel for="dtLacamentoInicial" value="Data Inicial" style="font-weight: bold;"/>
+								<p:outputLabel for="dtLacamentoFinal" value="Data Final" style="font-weight: bold;"/>
+								<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanPesquisaModel.dataInicial}"/>
+								<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanPesquisaModel.dataFinal}"/>
+							</h:panelGrid>
+							
+						</p:fieldset>
+						
+					</h:panelGrid>	
+					
+				</p:fieldset>
+				
+				<br/>
+				
+				<h:panelGrid columns="2">
+					<p:commandButton action="#{mbean.gerarRelatorio}" ajax="false" value="Imprimir" icon="imprimir" style="height:28px; width: 105px;"/>
+					<p:commandButton action="sucesso" update="@form" value="Limpar" icon="novo" style="height:28px; width: 130px;"/>
+				</h:panelGrid>
+				
+			</h:form>
+					
+		</p:tab>
+		
+	</p:tabView>
+		
+</ui:composition>

@@ -2,36 +2,53 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="envioPedidoVendaSap" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="12814f74-ee8f-43b6-a4dc-c93496d07d9d">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="96"/>
 	<parameter name="imagem" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT
-       H.ID, H.DATA_DOCUMENTO, H.DATA_LANCAMENTO, H.PEDIDO_VENDA_ID, Hl.VALOR,
-       ITEM_ID, QUANTIDADE, VALOR_UNITARIO, CODIGO_IMPOSTO_ID, CODIGO_BARRAS, PEDIDO_VENDA_LINHA_NUMERO, UPPER(H.CLIENTE_NOME) CLIENTE_NOME,
-HL.DESCRICAO, H.DATA_EXPORTACAO
-
-FROM   PUBLIC.HISTORICO_NOTAFISCALSAIDA H, PUBLIC.HISTORICO_NOTAFISCALSAIDA_LINHAS HL
-
-WHERE
-       HL.HISTORICO_NOTAFISCALSAIDA_ID = H.ID
-       AND CAST(H.DATA_EXPORTACAO AS DATE) >= TO_DATE('25/09/2014', 'DD/MM/YYYY')
-
-ORDER BY H.DATA_EXPORTACAO]]>
+		<![CDATA[]]>
 	</queryString>
-	<field name="id" class="java.lang.Long"/>
-	<field name="data_documento" class="java.sql.Timestamp"/>
-	<field name="data_lancamento" class="java.sql.Timestamp"/>
-	<field name="pedido_venda_id" class="java.lang.Long"/>
-	<field name="valor" class="java.math.BigDecimal"/>
-	<field name="item_id" class="java.lang.String"/>
-	<field name="quantidade" class="java.math.BigDecimal"/>
-	<field name="valor_unitario" class="java.math.BigDecimal"/>
-	<field name="codigo_imposto_id" class="java.lang.String"/>
-	<field name="codigo_barras" class="java.lang.String"/>
-	<field name="pedido_venda_linha_numero" class="java.lang.Integer"/>
-	<field name="cliente_nome" class="java.lang.String"/>
-	<field name="descricao" class="java.lang.String"/>
-	<field name="data_exportacao" class="java.sql.Timestamp"/>
+	<field name="clienteNome" class="java.lang.String">
+		<fieldDescription><![CDATA[clienteNome]]></fieldDescription>
+	</field>
+	<field name="codigoBarras" class="java.lang.String">
+		<fieldDescription><![CDATA[codigoBarras]]></fieldDescription>
+	</field>
+	<field name="codigoImpostoId" class="java.lang.String">
+		<fieldDescription><![CDATA[codigoImpostoId]]></fieldDescription>
+	</field>
+	<field name="dataDocumento" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[dataDocumento]]></fieldDescription>
+	</field>
+	<field name="dataExportacao" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[dataExportacao]]></fieldDescription>
+	</field>
+	<field name="dataLancamento" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[dataLancamento]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[descricao]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="itemId" class="java.lang.String">
+		<fieldDescription><![CDATA[itemId]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.Integer">
+		<fieldDescription><![CDATA[numero]]></fieldDescription>
+	</field>
+	<field name="pedidoVendaId" class="java.lang.Long">
+		<fieldDescription><![CDATA[pedidoVendaId]]></fieldDescription>
+	</field>
+	<field name="quantidade" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[quantidade]]></fieldDescription>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[valor]]></fieldDescription>
+	</field>
+	<field name="valorUnitario" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[valorUnitario]]></fieldDescription>
+	</field>
 	<variable name="valor_total" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
 	</variable>
@@ -63,7 +80,7 @@ ORDER BY H.DATA_EXPORTACAO]]>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{data_exportacao}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dataExportacao}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -74,14 +91,14 @@ ORDER BY H.DATA_EXPORTACAO]]>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pedido_venda_id}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{pedidoVendaId}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="55" y="21" width="259" height="20" uuid="97fa6ce9-9b92-4d40-a331-ddd0f0ffcc9e"/>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cliente_nome}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{clienteNome}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="1" width="82" height="20" isPrintWhenDetailOverflows="true" uuid="7d805918-c29d-4b7a-aa92-7152f268d10b"/>
@@ -116,14 +133,14 @@ ORDER BY H.DATA_EXPORTACAO]]>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{data_documento}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dataDocumento}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="112" y="61" width="122" height="20" isPrintWhenDetailOverflows="true" uuid="6a66c8f3-14b4-4d4d-9014-6a62ace41432"/>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{data_lancamento}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dataLancamento}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="1" y="92" width="555" height="20" uuid="de9d0f44-dbaf-40c6-8c27-a39d2c5a4346"/>
@@ -222,7 +239,7 @@ ORDER BY H.DATA_EXPORTACAO]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{valor_unitario}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{valorUnitario}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00">
 				<reportElement x="462" y="0" width="93" height="20" isPrintWhenDetailOverflows="true" uuid="212dab10-38a6-4c9c-82bc-e09fc3e9a76a"/>

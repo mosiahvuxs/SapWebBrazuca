@@ -18,7 +18,7 @@ public class NotaFiscalSaidaLinhaDAO {
 
 		model.getNotaFiscalSaida().getId(), model.getItem().getId(), model.getQuantidade(), model.getValorUnitario(), model.getValor(),
 
-		model.getCodigoImposto().getId(), model.getCodigoBarras(), model.getPedidoVendaLinha().getNumero(), model.getPedidoVendaLinha().getPedidoVenda().getId());
+		model.getCodigoImposto().getId(), model.getCodigoBarras(), model.getPedidoVendaLinha().getNumero(), model.getPedidoVendaLinha().getPedidoVenda().getId(), model.getPedidoVendaLinha().getItem().getDescricao());
 
 		broker.execute();
 

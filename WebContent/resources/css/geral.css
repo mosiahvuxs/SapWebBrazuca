@@ -546,10 +546,11 @@ img.right {
     width:16px !important;
     background-image: url(../images/refresh_16x16.gif) !important;
 }
+
 .imprimir {
     height:16px !important;
     width:16px !important;
-    background-image: url(../images/printer16.png) !important;
+    background-image: url(../images/imprimir16.png) !important;
 }
 
 .imprimir32{
