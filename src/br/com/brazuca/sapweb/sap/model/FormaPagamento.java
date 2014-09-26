@@ -6,6 +6,8 @@ package br.com.brazuca.sapweb.sap.model;
 
 import java.io.Serializable;
 
+import br.com.brazuca.sapweb.model.Empresa;
+
 @SuppressWarnings("serial")
 public class FormaPagamento implements Serializable{
 

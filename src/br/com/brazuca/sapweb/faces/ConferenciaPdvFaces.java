@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -12,12 +13,12 @@ import br.com.brazuca.sapweb.business.NotaFiscalSaidaBusiness;
 import br.com.brazuca.sapweb.dao.ItemEstruturadoDAO;
 import br.com.brazuca.sapweb.dao.PedidoVendaDAO;
 import br.com.brazuca.sapweb.dao.PedidoVendaLinhaDAO;
+import br.com.brazuca.sapweb.model.Empresa;
 import br.com.brazuca.sapweb.model.ItemEstruturado;
-import br.com.brazuca.sapweb.sap.model.Empresa;
 import br.com.brazuca.sapweb.sap.model.ParceiroNegocio;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.brazuca.sapweb.sap.model.PedidoVendaLinha;
-import br.com.brazuca.sapweb.util.Utilitarios;
+import br.com.brazuca.sapweb.util.Constantes;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
@@ -37,13 +38,23 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 	private Empresa empresa;
 	private String mensagem;
 	private boolean limparCampos;
+	
+	@PostConstruct
+	public void init() {
 
-	public ConferenciaPdvFaces() {
+		this.initObjetosNaSecao();
+		
+		this.clearFields();
 
-		this.limpar();
-	}
+	}	
+	
+	private void initObjetosNaSecao() {
 
-	public void limpar() {
+		this.setEmpresa((Empresa) TSFacesUtil.getObjectInSession(Constantes.EMPRESA));
+
+	}		
+
+	public void clearFields() {
 
 		this.pedidoVenda = new PedidoVenda();
 		this.pedidoVendaPesquisa = new PedidoVenda();
@@ -51,9 +62,6 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		this.pedidoVendaLinha = new PedidoVendaLinha();
 		this.pedidos = new ArrayList<PedidoVenda>();
 		this.quantidade = 1;
-
-		this.empresa = new Empresa(Utilitarios.getEmpresaConectada().getId(), Utilitarios.getEmpresaConectada().getJndi());
-
 		this.mensagem = null;
 		this.limparCampos = false;
 	}

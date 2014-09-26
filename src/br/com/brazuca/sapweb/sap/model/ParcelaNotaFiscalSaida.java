@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import br.com.brazuca.sapweb.model.Empresa;
+
 /**
  *
  * @author mroland

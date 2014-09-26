@@ -131,7 +131,7 @@
 				
 			</h:form>
 			
-			<p:dialog focus="formDialog:codigoBarras" onHide="remoteCommand()" onShow="updateForm()" position="center" showEffect="fade" height="500" appendTo="@(body)" header="Conferência de Itens" modal="true" widgetVar="dlgConferencia">
+			<p:dialog focus="formDialog:codigoBarras" onHide="remoteCommand()" onShow="updateForm()" position="center" showEffect="fade" height="500" appendTo="@(body)" header="Conferência de Itens" modal="true" widgetVar="dlgConferencia" resizable="false">
 				
 				<h:form id="formDialog" onkeydown="if(event.keyCode == 13) setarQuantidadeItens();">
 				

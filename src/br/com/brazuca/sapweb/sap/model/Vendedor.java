@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import br.com.brazuca.sapweb.adapter.TimestampAdapter;
+import br.com.brazuca.sapweb.model.Empresa;
 
 /**
  * 

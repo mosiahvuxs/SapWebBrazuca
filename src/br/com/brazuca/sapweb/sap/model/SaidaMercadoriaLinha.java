@@ -3,6 +3,8 @@ package br.com.brazuca.sapweb.sap.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import br.com.brazuca.sapweb.model.Empresa;
+
 @SuppressWarnings("serial")
 public class SaidaMercadoriaLinha implements Serializable{
 	

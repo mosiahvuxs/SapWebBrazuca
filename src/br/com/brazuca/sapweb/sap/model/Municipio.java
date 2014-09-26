@@ -5,6 +5,8 @@
 
 package br.com.brazuca.sapweb.sap.model;
 
+import br.com.brazuca.sapweb.model.Empresa;
+
 /**
  *
  * @author mroland

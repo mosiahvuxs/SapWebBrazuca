@@ -3,14 +3,15 @@ package br.com.brazuca.sapweb.faces;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.brazuca.sapweb.business.ItemEstruturadoBusiness;
 import br.com.brazuca.sapweb.dao.NotaFiscalSaidaLinhaDAO;
+import br.com.brazuca.sapweb.model.Empresa;
 import br.com.brazuca.sapweb.sap.dao.PedidoVendaDAO;
 import br.com.brazuca.sapweb.sap.dao.PedidoVendaLinhaDAO;
-import br.com.brazuca.sapweb.sap.model.Empresa;
 import br.com.brazuca.sapweb.sap.model.ParceiroNegocio;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.brazuca.sapweb.util.Constantes;
@@ -29,18 +30,29 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 	private List<PedidoVenda> pedidosVenda;
 	private boolean todos;
 	private boolean importarItensEstruturados;
+	private Empresa empresa;
 
-	public ImportacaoPdvFaces() {
+	@PostConstruct
+	public void init() {
 
+		this.initObjetosNaSecao();
+		
 		this.clearFields();
-	}
+
+	}	
+	
+	private void initObjetosNaSecao() {
+
+		this.setEmpresa((Empresa) TSFacesUtil.getObjectInSession(Constantes.EMPRESA));
+
+	}	
 
 	@Override
 	protected void clearFields() {
 
 		this.pedidoVenda = new PedidoVenda();
 		this.pedidoVenda.setCliente(new ParceiroNegocio());
-		this.pedidoVenda.setEmpresa(new Empresa(Utilitarios.getEmpresaConectada().getId(), Utilitarios.getEmpresaConectada().getJndi()));
+		this.pedidoVenda.setEmpresa(this.empresa);
 		this.pedidosVenda = new ArrayList<PedidoVenda>();
 		this.todos = false;
 		this.importarItensEstruturados = false;
@@ -75,13 +87,14 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 
 			for (PedidoVenda pdv : pedidos) {
 
-				if (TSUtil.isEmpty(notaFiscalSaidaDAO.pesquisarPorPedidoVenda(pdv, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_MATRIZ)) && TSUtil.isEmpty(notaFiscalSaidaDAO.pesquisarPorPedidoVenda(pdv, null))) {
+				if (TSUtil.isEmpty(notaFiscalSaidaDAO.pesquisarPorPedidoVenda(pdv, Constantes.JNDI_SAP_SERVICO)) && TSUtil.isEmpty(notaFiscalSaidaDAO.pesquisarPorPedidoVenda(pdv, null))) {
 
 					this.pedidosVenda.add(pdv);
 				}
 			}
 
 			TSFacesUtil.gerarResultadoLista(this.pedidosVenda);
+			
 		}
 
 		return null;
@@ -182,4 +195,14 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 	public void setImportarItensEstruturados(boolean importarItensEstruturados) {
 		this.importarItensEstruturados = importarItensEstruturados;
 	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+	
+	
 }

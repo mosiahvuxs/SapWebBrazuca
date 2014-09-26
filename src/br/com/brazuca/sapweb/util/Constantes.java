@@ -15,10 +15,9 @@ public final class Constantes {
 
 	public static final String JNDI_SAP_SERVICO = "java:comp/env/jdbc/ServicoSapBrazucaDS";
 	public static final String JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_LOCAL = "java:comp/env/jdbc/SapWebBrazucaDS";
-	public static final String JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_MATRIZ = "java:comp/env/jdbc/SapWebBrazucaMatrizDS";
 	
 	public static final String URL_RESTFUL_BRAZUCA = TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("L") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("D") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("H") ? Constantes.URL_RESTFUL_BRAZUCA_DESENV : Constantes.URL_RESTFUL_BRAZUCA_PROD;
-	public static final String URL_RESTFUL_BRAZUCA_DESENV = "http://murrinha:8085/ServicoSapBrazuca/";
+	public static final String URL_RESTFUL_BRAZUCA_DESENV = "http://localhost:8085/ServicoSapBrazuca/";
 	public static final String URL_RESTFUL_BRAZUCA_PROD = "http://bilbo:8095/servicosap/";
 
 	public static final String PASTA_RELATORIO = "relatorios";

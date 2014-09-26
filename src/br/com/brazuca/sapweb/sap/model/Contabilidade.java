@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import br.com.brazuca.sapweb.model.Empresa;
+
 @SuppressWarnings("serial")
 @XmlRootElement
 public class Contabilidade implements Serializable{

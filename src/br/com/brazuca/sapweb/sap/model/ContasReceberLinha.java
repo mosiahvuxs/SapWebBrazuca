@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+import br.com.brazuca.sapweb.model.Empresa;
+
 @SuppressWarnings("serial")
 public class ContasReceberLinha implements Serializable{
 	
