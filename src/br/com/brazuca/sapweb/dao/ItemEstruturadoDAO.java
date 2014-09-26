@@ -3,29 +3,18 @@ package br.com.brazuca.sapweb.dao;
 import java.sql.Timestamp;
 import java.util.List;
 
+import br.com.brazuca.sapweb.model.Empresa;
 import br.com.brazuca.sapweb.model.ItemEstruturado;
-import br.com.brazuca.sapweb.util.Constantes;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
 
 public class ItemEstruturadoDAO {
 
-	public Long getQuantidadeRegistrosImportacao() {
-
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(Constantes.JNDI_SAP_WEB_BRAZUCA_SQL_SERVER_MATRIZ);
-
-		StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM OITT AS ESTRUTURA WITH(NOLOCK) INNER JOIN ITT1 AS LINHA WITH(NOLOCK) ON (LINHA.FATHER = ESTRUTURA.CODE) INNER JOIN OITM AS ITEM WITH(NOLOCK) ON(ITEM.ITEMCODE = ESTRUTURA.CODE)");
-
-		broker.setSQL(sql.toString());
-
-		return (Long) broker.getObject();
-	}
-
 	@SuppressWarnings("unchecked")
-	public List<ItemEstruturado> pesquisarSqlServerMatriz(ItemEstruturado model) {
+	public List<ItemEstruturado> pesquisarSqlServerMatriz(Empresa model) {
 
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(Constantes.JNDI_SAP_WEB_BRAZUCA_SQL_SERVER_MATRIZ);
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(model.getJndi());
 
 		StringBuilder sql = new StringBuilder();
 

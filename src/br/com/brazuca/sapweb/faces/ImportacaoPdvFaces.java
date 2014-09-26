@@ -128,7 +128,7 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 
 				if (this.importarItensEstruturados) {
 
-					new ItemEstruturadoBusiness().importar();
+					new ItemEstruturadoBusiness().importar(Utilitarios.getEmpresaConectada());
 				}
 
 				this.limpar();
