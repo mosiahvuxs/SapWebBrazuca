@@ -29,7 +29,9 @@ import br.com.topsys.web.util.TSFacesUtil;
 public class ExportacaoPdvFaces extends TSMainFaces {
 
 	private NotaFiscalSaida notaFiscalSaida;
+	private NotaFiscalSaida notaFiscalSaidaInterface;
 	private List<NotaFiscalSaida> notas;
+	private List<NotaFiscalSaida> notasInterface;
 	private boolean todos;
 
 	public ExportacaoPdvFaces() {
@@ -48,6 +50,8 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 		}
 
 		this.todos = false;
+		this.notaFiscalSaidaInterface = new NotaFiscalSaida();
+		this.notasInterface = new ArrayList<NotaFiscalSaida>();
 
 	}
 
@@ -151,6 +155,28 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 		return null;
 	}
 
+	public String pesquisarInterfaceMatriz() {
+
+		this.notasInterface = new NotaFiscalSaidaDAO().pesquisarInterfaceMatriz(new NotaFiscalSaida());
+
+		return null;
+	}
+
+	@Override
+	protected String delete() throws TSApplicationException {
+
+		super.setClearFields(false);
+		super.setDefaultMessage(false);
+
+		new NotaFiscalSaidaDAO().excluirInterfaceMatriz(this.notaFiscalSaidaInterface);
+
+		this.notasInterface.remove(this.notaFiscalSaidaInterface);
+
+		TSFacesUtil.addInfoMessage("Registro excluído com sucesso.");
+
+		return null;
+	}
+
 	public NotaFiscalSaida getNotaFiscalSaida() {
 		return notaFiscalSaida;
 	}
@@ -173,6 +199,22 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 
 	public void setTodos(boolean todos) {
 		this.todos = todos;
+	}
+
+	public List<NotaFiscalSaida> getNotasInterface() {
+		return notasInterface;
+	}
+
+	public void setNotasInterface(List<NotaFiscalSaida> notasInterface) {
+		this.notasInterface = notasInterface;
+	}
+
+	public NotaFiscalSaida getNotaFiscalSaidaInterface() {
+		return notaFiscalSaidaInterface;
+	}
+
+	public void setNotaFiscalSaidaInterface(NotaFiscalSaida notaFiscalSaidaInterface) {
+		this.notaFiscalSaidaInterface = notaFiscalSaidaInterface;
 	}
 
 }
