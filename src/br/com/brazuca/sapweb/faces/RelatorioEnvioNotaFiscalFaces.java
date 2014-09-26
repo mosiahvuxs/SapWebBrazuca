@@ -57,7 +57,7 @@ public class RelatorioEnvioNotaFiscalFaces {
 
 		} else {
 
-			TSFacesUtil.addErrorMessage("Não foi possível gerar o relatório com os filtros informados.");
+			TSFacesUtil.addInfoMessage("Não foi possível gerar o relatório com os filtros informados.");
 		}
 
 		return null;
