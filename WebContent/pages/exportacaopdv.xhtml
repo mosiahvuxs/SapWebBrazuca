@@ -142,6 +142,74 @@
 					
 		</p:tab>
 		
+		<p:tab title="Pesquisa">
+			
+			<h:form prependId="false">
+			
+				<p:commandButton value="Atualizar" action="#{exportacaoPdvFaces.pesquisarInterfaceMatriz}" update="@form"/>
+				
+				<br/><br/>
+				
+				<p:fieldset legend="Resultado" style="width: 97%">
+
+					<p:dataTable var="linha" id="notasInterface" rowIndexVar="index" value="#{mbean.notasInterface}" paginator="true" paginatorAlwaysVisible="false" rows="30" emptyMessage="Nenhum registro encontrado">
+						<f:facet name="header">
+							Pedidos de Venda - Interface
+						</f:facet>
+						<p:column headerText="Nº do Pedido" style="width: 80px;">
+							<div align="center">
+								<h:outputText value="#{linha.pedidoVenda.id}" style="font-weight: bold;" />
+							</div>
+						</p:column>
+						<p:column headerText="Cliente" style="width: 300px;">
+							<div align="center">
+								<h:outputText value="#{linha.cliente.nome}" style="font-weight: bold;" />
+							</div>
+						</p:column>
+						<p:column headerText="Data de Exportação" style="width: 100px;">
+							<div align="center">
+								<h:outputText value="#{linha.dataExportacao}" style="font-weight: bold;">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</div>
+						</p:column>
+						<p:column headerText="Data de Lançamento" style="width: 100px;">
+							<div align="center">
+								<h:outputText value="#{linha.dataLancamento}" style="font-weight: bold;">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</div>
+						</p:column>
+						<p:column headerText="Data Documento" style="width: 100px;">
+							<div align="center">
+								<h:outputText value="#{linha.dataDocumento}" style="font-weight: bold;">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</div>
+						</p:column>
+						<p:column headerText="Remover" style="width: 50px;">
+							<div align="center">
+								<p:commandLink type="button" icon="delete16" id="excluir" onclick="PF('cdExcluir').show()" global="false">
+									<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+									<f:setPropertyActionListener target="#{mbean.notaFiscalSaidaInterface}" value="#{linha}" />
+								</p:commandLink>
+								
+							</div>
+						</p:column>
+						
+					</p:dataTable>
+					
+				</p:fieldset>
+				
+				<p:confirmDialog message="Deseja realmente remover?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdExcluir">
+	    			<p:commandButton value="Sim" onclick="PF('cdExcluir').hide();" action="#{mbean.deleteEvent}" update="@form" process="@this" />
+				    <p:commandButton value="Não" onclick="PF('cdExcluir').hide();" />
+			  	</p:confirmDialog>
+				
+			</h:form>
+			
+		</p:tab>
+		
 	</p:tabView>
 		
 </ui:composition>
