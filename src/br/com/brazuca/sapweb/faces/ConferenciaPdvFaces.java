@@ -78,7 +78,8 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		return true;
 	}
 
-	public String pesquisar() {
+	@Override
+	protected String find() {
 
 		if (this.validaCamposPesquisa()) {
 

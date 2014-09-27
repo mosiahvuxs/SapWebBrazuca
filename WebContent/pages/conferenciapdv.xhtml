@@ -1,226 +1,177 @@
-<ui:composition xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
-      xmlns:f="http://xmlns.jcp.org/jsf/core" 
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui">
-	
-	<ui:param name="mbean" value="#{conferenciaPdvFaces}"/>
-	<ui:param name="mbeanModel" value="#{conferenciaPdvFaces.pedidoVenda}"/>
-	<ui:param name="mbeanPesquisaModel" value="#{conferenciaPdvFaces.pedidoVendaPesquisa}"/>
-	
-	<p:tabView prependId="false">
-	
-		<p:tab title="Conferência">
-			
-			<h:form prependId="false">
-		
-				<br/>
-				
-				<p:fieldset legend="Filtros" style="width: 97%">
-				
-					<h:panelGrid columns="2">
-						
-						<p:fieldset legend="Pedido">
-							<h:panelGrid columns="1">
-								<p:outputLabel for="numeroPedido" value="Número" style="font-weight: bold;"/>
-								<p:inputText style="width: 197px;" id="numeroPedido" value="#{mbeanPesquisaModel.id}" onkeypress="Mascara(this, Integer)" onblur="Mascara(this, Integer)" maxlength="10"/>
-							</h:panelGrid>
-						</p:fieldset>
-						
-						<p:fieldset legend="Cliente">
-							<h:panelGrid columns="1">
-								<p:outputLabel for="cliente" value="Nome:" style="font-weight: bold;"/>
-								<p:inputText id="cliente" value="#{mbeanPesquisaModel.cliente.nome}" maxlength="50" style="width: 440px;"/>
-							</h:panelGrid>
-						</p:fieldset>
-					
-					</h:panelGrid>
-					
-					<h:panelGrid columns="3">
-					
-						<p:fieldset legend="Data de Lançamento">
-							
-							<h:panelGrid columns="2">
-								<p:outputLabel for="dtLacamentoInicial" value="Data Inicial" style="font-weight: bold;"/>
-								<p:outputLabel for="dtLacamentoFinal" value="Data Final" style="font-weight: bold;"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanPesquisaModel.dataLancamento}"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanPesquisaModel.dataLancamentoFinal}"/>
-							</h:panelGrid>
-							
-						</p:fieldset>
-						
-						<p:fieldset legend="Data de Entrega">
-							
-							<h:panelGrid columns="2">
-								<p:outputLabel for="dtEntregaInicial" value="Data Inicial" style="font-weight: bold;"/>
-								<p:outputLabel for="dtEntregaFinal" value="Data Final" style="font-weight: bold;"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtEntregaInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanPesquisaModel.dataVencimento}"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtEntregaFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanPesquisaModel.dataVencimentoFinal}"/>
-							</h:panelGrid>
-							
-						</p:fieldset>
-						
-						<p:fieldset legend="Data do Documento">
-							
-							<h:panelGrid columns="2">
-								<p:outputLabel for="dtDocumentoInicial" value="Data Inicial" style="font-weight: bold;"/>
-								<p:outputLabel for="dtDocumentoFinal" value="Data Final" style="font-weight: bold;"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanPesquisaModel.dataDocumento}"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanPesquisaModel.dataDocumentoFinal}"/>
-							</h:panelGrid>
-							
-						</p:fieldset>
-					
-					</h:panelGrid>	
-					
-				</p:fieldset>
-				
-				<br/>
-				
-				<h:panelGrid columns="2">
-					<p:commandButton action="#{mbean.pesquisar}" value="Pesquisar" icon="pesquisar" style="height:28px; width: 105px;" update="@form"/>
-					<p:commandButton action="sucesso" update="@form" value="Nova Pesquisa" icon="novo" style="height:28px; width: 130px;"/>
-				</h:panelGrid>
-				
-				<br/>
-				
-				<p:fieldset legend="Resultado" style="width: 97%">
+<ui:composition xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:p="http://primefaces.org/ui">
 
-					<p:dataTable var="pdv" id="pdvs" rowIndexVar="index" value="#{mbean.pedidos}" paginator="true" paginatorAlwaysVisible="false" rows="20" emptyMessage="Nenhum P.D.V encontrado">
-						<f:facet name="header">
+	<ui:param name="mbean" value="#{conferenciaPdvFaces}" />
+	<ui:param name="mbeanModel" value="#{conferenciaPdvFaces.pedidoVenda}" />
+	<ui:param name="mbeanPesquisaModel" value="#{conferenciaPdvFaces.pedidoVendaPesquisa}" />
+
+	<h:form prependId="false">
+
+		<p:outputPanel style="width:97%; margin-left: 1%;margin-top:1%">
+
+			<p:fieldset legend="Filtros" style="width: 97%">
+
+				<h:panelGrid columns="4" columnClasses="coluna15,coluna15,coluna15,coluna55" styleClass="coluna85">
+
+					<p:outputLabel for="dtLacamentoInicial" value="Data Lançamento Inicial:" />
+					<p:outputLabel for="dtEntregaInicial" value="Data Entrega Inicial:" />
+					<p:outputLabel for="dtDocumentoInicial" value="Data Documento Inicial:" />
+					<p:outputLabel for="numeroPedido" value="Pedido:" />
+
+					<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoInicial" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataLancamento}" size="25" />
+					<p:calendar navigator="true" readonlyInput="true" id="dtEntregaInicial" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataVencimento}" size="25" />
+					<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoInicial" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataDocumento}" size="25" />
+					<p:inputText id="numeroPedido" value="#{mbeanPesquisaModel.id}" onkeypress="Mascara(this, Integer)" onblur="Mascara(this, Integer)" maxlength="10" />
+
+					<p:outputLabel for="dtLacamentoFinal" value="Data Lançamento  Final:" />
+					<p:outputLabel for="dtEntregaFinal" value="Data Entrega Final:" />
+					<p:outputLabel for="dtDocumentoFinal" value="Data Documento Final:" />
+					<p:outputLabel for="cliente" value="Nome Cliente:" />
+
+					<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoFinal" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataLancamentoFinal}" size="25" />
+					<p:calendar navigator="true" readonlyInput="true" id="dtEntregaFinal" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataVencimentoFinal}" size="25" />
+					<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoFinal" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataDocumentoFinal}" size="25" />
+					<p:inputText id="cliente" value="#{mbeanPesquisaModel.cliente.nome}" maxlength="50" style="width:70%" />
+
+				</h:panelGrid>
+
+			</p:fieldset>
+			<br />
+			<h:panelGrid columns="2" style="margin-top:-0.5%">
+				<p:commandButton action="#{mbean.findEvent()}" value="Pesquisar" icon="pesquisar" style="height:28px; width: 105px;" update="@form" />
+				<p:commandButton action="sucesso" update="@form" value="Nova Pesquisa" icon="novo" style="height:28px; width: 130px;" />
+			</h:panelGrid>
+
+			<p:separator style="height:2px;width:99%; " />
+			<br />
+			<p:fieldset legend="Resultado" style="width: 97%; margin-top:-0.5%" rendered="#{!empty mbean.pedidos}">
+
+				<p:dataTable var="pdv" id="pdvs" rowIndexVar="index" value="#{mbean.pedidos}" paginator="true" paginatorAlwaysVisible="false" rows="20" emptyMessage="Nenhum registro encontrado." rowsPerPageTemplate="10,50,100,1000" scrollable="true" scrollHeight="280" paginatorPosition="top">
+					<f:facet name="header">
 							Pedidos de Venda
 						</f:facet>
-						<p:column headerText="Conferir" style="width: 20px;">
-							<div align="center">
-								<p:commandLink onclick="PF('dlgConferencia').show();" type="button">
-									<h:graphicImage value="/resources/images/edit.png"/>
-									<f:setPropertyActionListener target="#{conferenciaPdvFaces.pedidoVenda}" value="#{pdv}"/>
-								</p:commandLink>
-							</div>
-						</p:column>
-						<p:column headerText="Cliente" style="width: 300px;">
-							<div align="center">
-								<h:outputText value="#{pdv.cliente.nome}" style="font-weight: bold;" />
-							</div>
-						</p:column>
-						<p:column headerText="Nº do Pedido" style="width: 80px;">
-							<div align="center">
-								<h:outputText value="#{pdv.id}" style="font-weight: bold;" />
-							</div>
-						</p:column>
-						<p:column headerText="Data de Lançamento" style="width: 100px;">
-							<div align="center">
-								<h:outputText value="#{pdv.dataLancamento}" style="font-weight: bold;">
-									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</div>
-						</p:column>
-						<p:column headerText="Data Documento" style="width: 100px;">
-							<div align="center">
-								<h:outputText value="#{pdv.dataDocumento}" style="font-weight: bold;">
-									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</div>
-						</p:column>
-						
-					</p:dataTable>
-					
-				</p:fieldset>
-				
-				<p:remoteCommand name="remoteCommand" action="#{mbean.remoteCommand}" update="@form" process="@form"/>
-				
-			</h:form>
-			
-			<p:dialog focus="formDialog:codigoBarras" onHide="remoteCommand()" onShow="updateForm()" position="center" showEffect="fade" height="500" appendTo="@(body)" header="Conferência de Itens" modal="true" widgetVar="dlgConferencia" resizable="false">
-				
-				<h:form id="formDialog" onkeydown="if(event.keyCode == 13) setarQuantidadeItens();">
-				
-				<p:remoteCommand action="#{mbean.pesquisarLinhas}"  name="updateForm" update="@form"/>
-				
-				<p:remoteCommand id="buttonHidden" name="setarQuantidadeItens" action="#{mbean.setarQuantidadeItens}" update="@form" process="@form"/>
-				
-				<p:hotkey bind="ESC" handler="PF('dlgConferencia').hide();"/>
-				
-				<p:hotkey bind="CTRL+B" handler="alert('Deseja realmente Salvar?');"/>
-				
-				<h:panelGrid columns="4">
-					
-					<p:outputLabel for="cliente" value="Cliente" style="font-weight: bold;"/>
-					<p:outputLabel for="numeroPedidoDl" value="Nº do Pedido" style="font-weight: bold;"/>
-					<p:outputLabel for="dtLancamentoDl" value="Data de Lançamento" style="font-weight: bold;"/>
-					<p:outputLabel for="dtDocumentoDl" value="Data do Documento" style="font-weight: bold;"/>
-					
-					<p:inputText readonly="true" id="cliente" value="#{mbeanModel.cliente.nome}" style="width: 250px; font-weight: bold;" tabindex="4"/>
-					<p:inputText readonly="true" id="numeroPedidoDl" value="#{mbeanModel.id}" style="font-weight: bold;" tabindex="5"/>
-					<p:inputText readonly="true" id="dtLancamentoDl" value="#{mbeanModel.dataLancamento}" style="font-weight: bold;" tabindex="6">
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
-					</p:inputText>
-					<p:inputText readonly="true" id="dtDocumentoDl" value="#{mbeanModel.dataDocumento}" style="font-weight: bold;" tabindex="7">
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
-					</p:inputText>
-					
-				</h:panelGrid>
-				
-				<br/>
-				
-				<h:panelGrid columns="2">
-					<p:outputLabel for="codigoBarras" value="Código de Barras" style="font-weight: bold;"/>
-					<p:outputLabel for="quantidade" value="Quantidade" style="font-weight: bold;"/>
-					<p:inputText id="codigoBarras" style="width: 400px; font-weight: bold;" tabindex="1" value="#{mbean.codigoBarras}"/>
-					<p:spinner min="1" value="#{mbean.quantidade}" size="8" maxlength="19" id="quantidade" tabindex="2"/>
-				</h:panelGrid>
-				
-				<br/>
-				
-				<p:fieldset id="fsItens" legend="Itens do Pedido" style="width: 800px;">
-				
-					<p:dataTable id="gridItens" paginator="true" paginatorAlwaysVisible="false" rows="10" emptyMessage="Nenhum P.D.V encontrado" value="#{mbeanModel.linhas}" var="linha">
-						
-						<p:column headerText="Código do Item" styleClass="coluna20">
-							<div align="center">
-								<h:outputText value="#{linha.item.id}" style="font-weight: bold;"/>
-							</div>
-						</p:column>
-						<p:column headerText="Item" style="width: 300px;">
-							<div align="center">
-								<h:outputText value="#{linha.item.descricao}" style="font-weight: bold;"/>
-							</div>
-						</p:column>
-						<p:column headerText="Qtd Requisitada" styleClass="coluna10">
-							<div align="center">
-								<h:outputText value="#{linha.quantidade.intValue()}" style="font-weight: bold;"/>
-							</div>
-						</p:column>
-						<p:column headerText="Qtd Liberada" styleClass="coluna10">
-							<div align="center">
-								<h:outputText value="#{linha.quantidadeLiberada.intValue()}" style="font-weight: bold;"/>
-							</div>
-						</p:column>
-						
-					</p:dataTable>
-				
-				</p:fieldset>
-				
-				<br/>
-				
-				<div align="center">
-					<h:panelGrid style="margin-left: -2px;" columns="2">
-						<p:commandButton id="salvar" type="button" value="Salvar" icon="salvar" onclick="PF('cdInserir').show();"/>
-						<p:commandButton id="sair" type="button" value="Sair" icon="cancelar" onclick="PF('dlgConferencia').hide();"/>
+					<p:column headerText="Conferir" style="width: 20px;">
+						<div align="center">
+							<p:commandLink onclick="PF('dlgConferencia').show();" type="button">
+								<h:graphicImage value="/resources/images/edit.png" />
+								<f:setPropertyActionListener target="#{conferenciaPdvFaces.pedidoVenda}" value="#{pdv}" />
+							</p:commandLink>
+						</div>
+					</p:column>
+					<p:column headerText="Pedido" style="width: 20px;text-align: right">
+						<h:outputText value="#{pdv.id}" />
+					</p:column>
+					<p:column headerText="Cliente" style="width: 300px;text-align: left">
+						<h:outputText value="#{pdv.cliente.nome}" />
+					</p:column>
+					<p:column headerText="Data Lançamento" style="width: 60px;text-align: center">
+						<h:outputText value="#{pdv.dataLancamento}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Data Documento" style="width: 60px;text-align: center">
+						<h:outputText value="#{pdv.dataDocumento}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+				</p:dataTable>
+
+			</p:fieldset>
+
+			<p:remoteCommand name="remoteCommand" action="#{mbean.remoteCommand}" update="@form" process="@form" />
+
+		</p:outputPanel>
+	</h:form>
+
+	<p:dialog focus="formDialog:codigoBarras" onHide="remoteCommand()" onShow="updateForm()" position="center" height="500" width="900" appendTo="@(body)" header="Conferência de Itens" modal="true" widgetVar="dlgConferencia" resizable="false">
+
+		<h:form id="formDialog" onkeydown="if(event.keyCode == 13) setarQuantidadeItens();">
+
+			<p:remoteCommand action="#{mbean.pesquisarLinhas}" name="updateForm" update="@form" />
+
+			<p:remoteCommand id="buttonHidden" name="setarQuantidadeItens" action="#{mbean.setarQuantidadeItens}" update="@form" process="@form" />
+
+			<p:hotkey bind="ESC" handler="PF('dlgConferencia').hide();" />
+
+			<p:hotkey bind="CTRL+B" handler="alert('Deseja realmente Salvar?');" />
+
+			<h:panelGrid columns="4" columnClasses="coluna15,coluna55,coluna15,coluna15" styleClass="coluna95">
+
+				<p:outputLabel for="numeroPedidoDl" value="Pedido" />
+				<p:outputLabel for="cliente" value="Cliente" />
+
+				<p:outputLabel for="dtLancamentoDl" value="Data Lançamento" />
+				<p:outputLabel for="dtDocumentoDl" value="Data Documento" />
+
+				<p:inputText readonly="true" id="numeroPedidoDl" value="#{mbeanModel.id}" tabindex="5" style="width:90%" />
+				<p:inputText readonly="true" id="cliente" value="#{mbeanModel.cliente.nome}" tabindex="4" style="width:98%" />
+
+				<p:inputText readonly="true" id="dtLancamentoDl" value="#{mbeanModel.dataLancamento}" tabindex="6" style="width:90%">
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+				</p:inputText>
+
+				<p:inputText readonly="true" id="dtDocumentoDl" value="#{mbeanModel.dataDocumento}" tabindex="7" style="width:90%">
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+				</p:inputText>
+
+			</h:panelGrid>
+
+			<br />
+
+			<p:fieldset id="fsItens" legend="Itens do Pedido">
+
+				<p:dataTable id="gridItens" paginator="true" paginatorAlwaysVisible="false" rows="10" emptyMessage="Nenhum registro encontrado." value="#{mbeanModel.linhas}" var="linha" rowsPerPageTemplate="10,50,100,1000" scrollable="true" scrollHeight="200" paginatorPosition="top">
+
+					<p:column headerText="Código do Item" styleClass="coluna20">
+						<div align="center">
+							<h:outputText value="#{linha.item.id}" style="font-weight: bold;" />
+						</div>
+					</p:column>
+					<p:column headerText="Item" style="width: 300px;">
+						<div align="center">
+							<h:outputText value="#{linha.item.descricao}" style="font-weight: bold;" />
+						</div>
+					</p:column>
+					<p:column headerText="Qtd Requisitada" styleClass="coluna10">
+						<div align="center">
+							<h:outputText value="#{linha.quantidade.intValue()}" style="font-weight: bold;" />
+						</div>
+					</p:column>
+					<p:column headerText="Qtd Liberada" styleClass="coluna10">
+						<div align="center">
+							<h:outputText value="#{linha.quantidadeLiberada.intValue()}" style="font-weight: bold;" />
+						</div>
+					</p:column>
+
+				</p:dataTable>
+
+			</p:fieldset>
+
+			<p:separator style="height:2px;width:99%; " />
+
+			<h:panelGrid columns="3" columnClasses="coluna50,coluna10,coluna40" styleClass="coluna90">
+				<p:fieldset legend="Conferência" style="width:85%">
+					<h:panelGrid columns="2" columnClasses="coluna80,coluna20" styleClass="coluna100">
+						<p:outputLabel for="codigoBarras" value="Código de Barras" style="font-weight: bold;" />
+						<p:outputLabel for="quantidade" value="Quantidade" style="font-weight: bold;" />
+						<p:inputText id="codigoBarras" style="width:95%;font-weight: bold;" tabindex="1" value="#{mbean.codigoBarras}" />
+						<p:spinner min="1" value="#{mbean.quantidade}" size="8" maxlength="19" id="quantidade" tabindex="2" />
 					</h:panelGrid>
-				</div>
-				
-				<p:confirmDialog message="Deseja realmente Salvar?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdInserir">
-	    			<p:commandButton value="Sim" oncomplete="PF('cdInserir').hide(); PF('dlgConferencia').hide();" action="#{mbean.insertEvent}" update="@form" process="@this"/>
-				    <p:commandButton value="Não" onclick="PF('cdInserir').hide();" />
-			  	</p:confirmDialog>
-				
-				</h:form>
-					
-			</p:dialog>
-					
-		</p:tab>
-		
-	</p:tabView>
-		
+
+				</p:fieldset>
+
+				<p:commandButton id="salvar" type="button" value="Salvar" icon="salvar" onclick="PF('cdInserir').show();" />
+				<p:commandButton id="sair" type="button" value="Sair" icon="cancelar" onclick="PF('dlgConferencia').hide();" />
+
+			</h:panelGrid>
+			<p:confirmDialog message="Deseja realmente Salvar?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdInserir">
+				<p:commandButton value="Sim" oncomplete="PF('cdInserir').hide(); PF('dlgConferencia').hide();" action="#{mbean.insertEvent}" update="@form" process="@this" />
+				<p:commandButton value="Não" onclick="PF('cdInserir').hide();" />
+			</p:confirmDialog>
+
+		</h:form>
+
+	</p:dialog>
+
+
 </ui:composition>

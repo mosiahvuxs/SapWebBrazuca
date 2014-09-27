@@ -1,161 +1,104 @@
-<ui:composition xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
-      xmlns:f="http://xmlns.jcp.org/jsf/core" 
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui">
-	
-	<ui:param name="mbean" value="#{importacaoPdvFaces}"/>
-	<ui:param name="mbeanModel" value="#{importacaoPdvFaces.pedidoVenda}"/>
-	
-	<p:tabView prependId="false">
-	
-		<p:tab title="Importação">
-			
-			<h:form id="form">
-		
-				<br/>
-				
-				<p:fieldset legend="Filtros" style="width: 97%">
-				
-					<h:panelGrid columns="2">
-						
-						<p:fieldset legend="Pedido">
-							<h:panelGrid columns="1">
-								<p:outputLabel for="numeroPedido" value="Número" style="font-weight: bold;"/>
-								<p:inputText style="width: 197px;" id="numeroPedido" value="#{mbeanModel.id}" onkeypress="Mascara(this, Integer)" onblur="Mascara(this, Integer)" maxlength="10"/>
-							</h:panelGrid>
-						</p:fieldset>
-						
-						<p:fieldset legend="Cliente">
-							<h:panelGrid columns="1">
-								<p:outputLabel for="cliente" value="Nome:" style="font-weight: bold;"/>
-								<p:inputText id="cliente" value="#{mbeanModel.cliente.nome}" maxlength="50" style="width: 440px;"/>
-							</h:panelGrid>
-						</p:fieldset>
-					
-					</h:panelGrid>
-					
-					<h:panelGrid columns="3">
-					
-						<p:fieldset legend="Data de Lançamento">
-							
-							<h:panelGrid columns="2">
-								<p:outputLabel for="dtLacamentoInicial" value="Data Inicial" style="font-weight: bold;"/>
-								<p:outputLabel for="dtLacamentoFinal" value="Data Final" style="font-weight: bold;"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataLancamento}"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataLancamentoFinal}"/>
-							</h:panelGrid>
-							
-						</p:fieldset>
-						
-						<p:fieldset legend="Data de Entrega">
-							
-							<h:panelGrid columns="2">
-								<p:outputLabel for="dtEntregaInicial" value="Data Inicial" style="font-weight: bold;"/>
-								<p:outputLabel for="dtEntregaFinal" value="Data Final" style="font-weight: bold;"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtEntregaInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataVencimento}"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtEntregaFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataVencimentoFinal}"/>
-							</h:panelGrid>
-							
-						</p:fieldset>
-						
-						<p:fieldset legend="Data do Documento">
-							
-							<h:panelGrid columns="2">
-								<p:outputLabel for="dtDocumentoInicial" value="Data Inicial" style="font-weight: bold;"/>
-								<p:outputLabel for="dtDocumentoFinal" value="Data Final" style="font-weight: bold;"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoInicial" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataDocumento}"/>
-								<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoFinal" pattern="dd/MM/yyyy" size="15" value="#{mbeanModel.dataDocumentoFinal}"/>
-							</h:panelGrid>
-							
-						</p:fieldset>
-					
-					</h:panelGrid>	
-					
-				</p:fieldset>
-				
-				<br/>
-				
-				<h:panelGrid columns="3">
-					<p:commandButton action="#{mbean.pesquisar}" value="Pesquisar" icon="pesquisar" style="height:28px; width: 105px;" update="@form"/>
-					<p:commandButton action="sucesso" update="@form" value="Nova Pesquisa" icon="novo" style="height:28px; width: 130px;"/>
-					<p:commandButton value="Importar" onclick="PF('cdInserir').show();" icon="salvar" style="height:28px; width: 105px;" rendered="#{!empty mbean.pedidosVenda}"/>
-					<h:panelGroup rendered="#{empty mbean.pedidosVenda}"/>
-				</h:panelGrid>
-				
-				<br/>
-				
-				<p:fieldset legend="Itens Estruturados" rendered="#{!empty mbean.pedidosVenda}" style="width: 17%">
-					
-					<h:panelGrid columns="2">
-						<h:selectBooleanCheckbox id="importarItemEstruturado" value="#{mbean.importarItensEstruturados}"/>
-						<p:outputLabel for="importarItemEstruturado" value="Importar?" style="font-weight: bold;"/>
-					</h:panelGrid>
-					
-				</p:fieldset>
-				
-				<h:panelGrid rendered="#{!empty mbean.pedidosVenda}">
-					<br/>
-				</h:panelGrid>
-				
-				<p:fieldset legend="Resultado"  style="width: 97%">
+<ui:composition xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:p="http://primefaces.org/ui">
 
-					<p:dataTable var="pdv" id="pdvs" rowIndexVar="index" value="#{mbean.pedidosVenda}" paginator="true" paginatorAlwaysVisible="false" rows="20" emptyMessage="Nenhum registro encontrado." rowsPerPageTemplate="10,50,100,1000">
-						
-						<f:facet name="header">
+	<ui:param name="mbean" value="#{importacaoPdvFaces}" />
+	<ui:param name="mbeanModel" value="#{importacaoPdvFaces.pedidoVenda}" />
+
+	<h:form id="form">
+
+		<p:outputPanel style="width:97%; margin-left: 1%;margin-top:1%">
+
+			<p:fieldset legend="Filtros" style="width: 97%">
+
+				<h:panelGrid columns="4" columnClasses="coluna15,coluna15,coluna15,coluna55" styleClass="coluna85">
+
+					<p:outputLabel for="dtLacamentoInicial" value="Data Lançamento Inicial:" />
+					<p:outputLabel for="dtEntregaInicial" value="Data Entrega Inicial:" />
+					<p:outputLabel for="dtDocumentoInicial" value="Data Documento Inicial:" />
+					<p:outputLabel for="numeroPedido" value="Pedido:" />
+
+					<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoInicial" pattern="dd/MM/yyyy" value="#{mbeanModel.dataLancamento}" size="25" />
+					<p:calendar navigator="true" readonlyInput="true" id="dtEntregaInicial" pattern="dd/MM/yyyy" value="#{mbeanModel.dataVencimento}" size="25" />
+					<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoInicial" pattern="dd/MM/yyyy" value="#{mbeanModel.dataDocumento}" size="25" />
+					<p:inputText id="numeroPedido" value="#{mbeanModel.id}" onkeypress="Mascara(this, Integer)" onblur="Mascara(this, Integer)" maxlength="10" />
+
+					<p:outputLabel for="dtLacamentoFinal" value="Data Lançamento  Final:" />
+					<p:outputLabel for="dtEntregaFinal" value="Data Entrega Final:" />
+					<p:outputLabel for="dtDocumentoFinal" value="Data Documento Final:" />
+					<p:outputLabel for="cliente" value="Nome Cliente:" />
+
+					<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoFinal" pattern="dd/MM/yyyy" value="#{mbeanModel.dataLancamentoFinal}" size="25" />
+					<p:calendar navigator="true" readonlyInput="true" id="dtEntregaFinal" pattern="dd/MM/yyyy" value="#{mbeanModel.dataVencimentoFinal}" size="25" />
+					<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoFinal" pattern="dd/MM/yyyy" value="#{mbeanModel.dataDocumentoFinal}" size="25" />
+					<p:inputText id="cliente" value="#{mbeanModel.cliente.nome}" maxlength="50" style="width:70%" />
+
+				</h:panelGrid>
+
+			</p:fieldset>
+			<br />
+			<h:panelGrid columns="4" style="margin-top:-0.5%">
+				<p:commandButton action="#{mbean.findEvent()}" value="Pesquisar" icon="pesquisar" style="height:28px; width: 105px;" update="@form" />
+				<p:commandButton action="sucesso" update="@form" value="Nova Pesquisa" icon="novo" style="height:28px; width: 130px;" />
+				<p:commandButton value="Importar" onclick="PF('cdInserir').show();" icon="salvar" style="height:28px; width: 105px;" rendered="#{!empty mbean.pedidosVenda}" />
+				<p:outputPanel rendered="#{!empty mbean.pedidosVenda}">
+
+					<h:panelGrid columns="2">
+						<p:outputLabel for="importarItemEstruturado" value="Importar Itens Estruturados?" style="font-weight: bold;" />
+						<h:selectBooleanCheckbox id="importarItemEstruturado" value="#{mbean.importarItensEstruturados}" />
+					</h:panelGrid>
+
+				</p:outputPanel>
+			</h:panelGrid>
+
+			<p:separator style="height:2px;width:99%; " />
+			<br />
+			<p:fieldset legend="Resultado" style="width: 97%; margin-top:-0.5%" rendered="#{!empty mbean.pedidosVenda}">
+
+				<p:dataTable var="pdv" id="pdvs" rowIndexVar="index" value="#{mbean.pedidosVenda}" paginator="true" paginatorAlwaysVisible="false" rows="10" emptyMessage="Nenhum registro encontrado." rowsPerPageTemplate="10,50,100,1000" scrollable="true" scrollHeight="280" paginatorPosition="top">
+
+					<f:facet name="header">
 							Pedidos de Vendas
 						</f:facet>
-						<p:column headerText="Selecione" style="width: 60px;">
-							<f:facet name="header">
-								<p:outputLabel value="Todos" for="todos" />
-								<div align="center">
-									<h:selectBooleanCheckbox id="todos" value="#{mbean.todos}" rendered="#{!empty mbean.pedidosVenda}">
-										<f:ajax event="change" listener="#{mbean.setarTodos}" execute="@this" render="pdvs"/>
-									</h:selectBooleanCheckbox>
-								</div>
-							</f:facet>
+					<p:column style="width: 20px;">
+						<f:facet name="header">
+							<p:outputLabel value="Todos" for="todos" />
 							<div align="center">
-								<h:selectBooleanCheckbox value="#{pdv.selecionado}" />
+								<h:selectBooleanCheckbox id="todos" value="#{mbean.todos}" rendered="#{!empty mbean.pedidosVenda}">
+									<f:ajax event="change" listener="#{mbean.setarTodos}" execute="@this" render="pdvs" />
+								</h:selectBooleanCheckbox>
 							</div>
-						</p:column>
-						<p:column headerText="Cliente" style="width: 300px;">
-							<div align="center">
-								<h:outputText value="#{pdv.cliente.nome}" style="font-weight: bold;" />
-							</div>
-						</p:column>
-						<p:column headerText="Nº do Pedido" style="width: 80px;">
-							<div align="center">
-								<h:outputText value="#{pdv.id}" style="font-weight: bold;" />
-							</div>
-						</p:column>
-						<p:column headerText="Data de Lançamento" style="width: 100px;">
-							<div align="center">
-								<h:outputText value="#{pdv.dataLancamento}" style="font-weight: bold;">
-									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</div>
-						</p:column>
-						<p:column headerText="Data Documento" style="width: 100px;">
-							<div align="center">
-								<h:outputText value="#{pdv.dataDocumento}" style="font-weight: bold;">
-									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</div>
-						</p:column>
-						
-					</p:dataTable>
+						</f:facet>
+						<div align="center">
+							<h:selectBooleanCheckbox value="#{pdv.selecionado}" />
+						</div>
+					</p:column>
+					<p:column headerText="Pedido" style="width: 20px;text-align: right">
+						<h:outputText value="#{pdv.id}" />
+					</p:column>
+					<p:column headerText="Cliente" style="width: 300px;text-align: left">
+						<h:outputText value="#{pdv.cliente.nome}" />
+					</p:column>
+					<p:column headerText="Data Lançamento" style="width: 60px;text-align: center">
+						<h:outputText value="#{pdv.dataLancamento}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Data Documento" style="width: 60px;text-align: center">
+						<h:outputText value="#{pdv.dataDocumento}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
 
-				</p:fieldset>
-				
-				<p:confirmDialog message="Deseja realmente importar o(s) Pedido(s)?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdInserir">
-	    			<p:commandButton value="Sim" onclick="PF('cdInserir').hide();" action="#{mbean.insertEvent}" update="@form" process="@this" />
-				    <p:commandButton value="Não" onclick="PF('cdInserir').hide();" />
-			  	</p:confirmDialog>
-				
-			</h:form>
-			
-		</p:tab>
-		
-	</p:tabView>
-	
+				</p:dataTable>
+
+			</p:fieldset>
+
+			<p:confirmDialog message="Deseja realmente importar o(s) Pedido(s)?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdInserir">
+				<p:commandButton value="Sim" onclick="PF('cdInserir').hide();" action="#{mbean.insertEvent}" update="@form" process="@this" />
+				<p:commandButton value="Não" onclick="PF('cdInserir').hide();" />
+			</p:confirmDialog>
+
+		</p:outputPanel>
+
+	</h:form>
+
 </ui:composition>

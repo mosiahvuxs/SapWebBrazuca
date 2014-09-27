@@ -74,8 +74,9 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 
 		return true;
 	}
-
-	public String pesquisar() {
+	
+	@Override
+	protected String find() {
 
 		this.pedidosVenda = new ArrayList<PedidoVenda>();
 
@@ -98,8 +99,9 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 		}
 
 		return null;
-	}
 
+	}
+		
 	public void setarTodos() {
 
 		for (PedidoVenda item : this.pedidosVenda) {
@@ -203,6 +205,6 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}
-	
+
 	
 }

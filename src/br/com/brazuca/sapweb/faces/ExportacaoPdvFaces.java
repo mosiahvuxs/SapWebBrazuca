@@ -67,7 +67,8 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 		return true;
 	}
 
-	public String pesquisar() {
+	@Override
+	protected String find() {
 
 		if (this.validaCamposPesquisa()) {
 
@@ -158,6 +159,8 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 	public String pesquisarInterfaceMatriz() {
 
 		this.notasInterface = new NotaFiscalSaidaDAO().pesquisarInterfaceMatriz(new NotaFiscalSaida());
+		
+		TSFacesUtil.gerarResultadoLista(this.notasInterface);
 
 		return null;
 	}
