@@ -20,7 +20,7 @@
 					<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoInicial" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataLancamento}" size="25" />
 					<p:calendar navigator="true" readonlyInput="true" id="dtEntregaInicial" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataVencimento}" size="25" />
 					<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoInicial" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataDocumento}" size="25" />
-					<p:inputText id="numeroPedido" value="#{mbeanPesquisaModel.id}" onkeypress="Mascara(this, Integer)" onblur="Mascara(this, Integer)" maxlength="10" />
+					<p:inputText id="numeroPedido" value="#{mbeanPesquisaModel.id}" onkeypress="Mascara(this, Integer)" onblur="Mascara(this, Integer)" maxlength="14" />
 
 					<p:outputLabel for="dtLacamentoFinal" value="Data Lançamento  Final:" />
 					<p:outputLabel for="dtEntregaFinal" value="Data Entrega Final:" />
@@ -51,7 +51,7 @@
 						</f:facet>
 					<p:column headerText="Conferir" style="width: 20px;">
 						<div align="center">
-							<p:commandLink onclick="PF('dlgConferencia').show();" type="button">
+							<p:commandLink oncomplete="PF('dlgConferencia').show();" action="#{mbean.pesquisarLinhas}" process="@this">
 								<h:graphicImage value="/resources/images/edit.png" />
 								<f:setPropertyActionListener target="#{conferenciaPdvFaces.pedidoVenda}" value="#{pdv}" />
 							</p:commandLink>
@@ -78,17 +78,18 @@
 
 			</p:fieldset>
 
-			<p:remoteCommand name="remoteCommand" action="#{mbean.remoteCommand}" update="@form" process="@form" />
+			<p:remoteCommand name="remoteCommand" action="#{mbean.remoteCommand}" update="@form" process="@form"/>
 
 		</p:outputPanel>
+		
 	</h:form>
 
 	<p:dialog focus="formDialog:codigoBarras" onHide="remoteCommand()" onShow="updateForm()" position="center" height="500" width="900" appendTo="@(body)" header="Conferência de Itens" modal="true" widgetVar="dlgConferencia" resizable="false">
 
 		<h:form id="formDialog" onkeydown="if(event.keyCode == 13) setarQuantidadeItens();">
 
-			<p:remoteCommand action="#{mbean.pesquisarLinhas}" name="updateForm" update="@form" />
-
+			<p:remoteCommand name="updateForm" update="@form"/>
+			
 			<p:remoteCommand id="buttonHidden" name="setarQuantidadeItens" action="#{mbean.setarQuantidadeItens}" update="@form" process="@form" />
 
 			<p:hotkey bind="ESC" handler="PF('dlgConferencia').hide();" />
@@ -120,7 +121,7 @@
 
 			<p:fieldset id="fsItens" legend="Itens do Pedido">
 
-				<p:dataTable id="gridItens" paginator="true" paginatorAlwaysVisible="false" rows="10" emptyMessage="Nenhum registro encontrado." value="#{mbeanModel.linhas}" var="linha" rowsPerPageTemplate="10,50,100,1000" scrollable="true" scrollHeight="200" paginatorPosition="top">
+				<p:dataTable widgetVar="gridItem" id="gridItens" paginator="true" paginatorAlwaysVisible="false" rows="10" emptyMessage="Nenhum registro encontrado." value="#{mbeanModel.linhas}" var="linha" rowsPerPageTemplate="10,50,100,1000" scrollable="true" scrollHeight="200" paginatorPosition="top">
 
 					<p:column headerText="Código do Item" styleClass="coluna20">
 						<div align="center">
@@ -155,7 +156,7 @@
 						<p:outputLabel for="codigoBarras" value="Código de Barras" style="font-weight: bold;" />
 						<p:outputLabel for="quantidade" value="Quantidade" style="font-weight: bold;" />
 						<p:inputText id="codigoBarras" style="width:95%;font-weight: bold;" tabindex="1" value="#{mbean.codigoBarras}" />
-						<p:spinner min="1" value="#{mbean.quantidade}" size="8" maxlength="19" id="quantidade" tabindex="2" />
+						<p:spinner onkeypress="Mascara(this, Integer)" onblur="Mascara(this, Integer)" min="1" value="#{mbean.quantidade}" size="8" maxlength="19" id="quantidade" tabindex="2" />
 					</h:panelGrid>
 
 				</p:fieldset>
