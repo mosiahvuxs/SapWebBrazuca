@@ -78,18 +78,18 @@
 
 			</p:fieldset>
 
-			<p:remoteCommand name="remoteCommand" action="#{mbean.remoteCommand}" update="@form" process="@form"/>
+			<p:remoteCommand name="remoteCommand" action="#{mbean.remoteCommand}" update="@form" process="@form" />
 
 		</p:outputPanel>
-		
+
 	</h:form>
 
 	<p:dialog focus="formDialog:codigoBarras" onHide="remoteCommand()" onShow="updateForm()" position="center" height="500" width="900" appendTo="@(body)" header="Conferência de Itens" modal="true" widgetVar="dlgConferencia" resizable="false">
 
 		<h:form id="formDialog" onkeydown="if(event.keyCode == 13) setarQuantidadeItens();">
 
-			<p:remoteCommand name="updateForm" update="@form"/>
-			
+			<p:remoteCommand name="updateForm" update="@form" />
+
 			<p:remoteCommand id="buttonHidden" name="setarQuantidadeItens" action="#{mbean.setarQuantidadeItens}" update="@form" process="@form" />
 
 			<p:hotkey bind="ESC" handler="PF('dlgConferencia').hide();" />
@@ -123,22 +123,18 @@
 
 				<p:dataTable widgetVar="gridItem" id="gridItens" paginator="true" paginatorAlwaysVisible="false" rows="10" emptyMessage="Nenhum registro encontrado." value="#{mbeanModel.linhas}" var="linha" rowsPerPageTemplate="10,50,100,1000" scrollable="true" scrollHeight="200" paginatorPosition="top">
 
-					<p:column headerText="Código do Item" styleClass="coluna20">
-						<div align="center">
-							<h:outputText value="#{linha.item.id}" style="font-weight: bold;" />
-						</div>
+					<p:column headerText="Código do Item" styleClass="coluna20" style="text-align:left">
+						<h:outputText value="#{linha.item.id}" style="font-weight: bold;" />
 					</p:column>
-					<p:column headerText="Item" style="width: 300px;">
-						<div align="center">
-							<h:outputText value="#{linha.item.descricao}" style="font-weight: bold;" />
-						</div>
+					<p:column headerText="Item" style="width: 300px;text-align:left">
+						<h:outputText value="#{linha.item.descricao}" style="font-weight: bold;" />
 					</p:column>
-					<p:column headerText="Qtd Requisitada" styleClass="coluna10">
+					<p:column headerText="Qtd Requisitada" styleClass="coluna15">
 						<div align="center">
 							<h:outputText value="#{linha.quantidade.intValue()}" style="font-weight: bold;" />
 						</div>
 					</p:column>
-					<p:column headerText="Qtd Liberada" styleClass="coluna10">
+					<p:column headerText="Qtd Liberada" styleClass="coluna15">
 						<div align="center">
 							<h:outputText value="#{linha.quantidadeLiberada.intValue()}" style="font-weight: bold;" />
 						</div>
@@ -150,7 +146,7 @@
 
 			<p:separator style="height:2px;width:99%; " />
 
-			<h:panelGrid columns="3" columnClasses="coluna50,coluna10,coluna40" styleClass="coluna90">
+			<h:panelGrid columns="3" columnClasses="coluna50,coluna15,coluna35" styleClass="coluna90">
 				<p:fieldset legend="Conferência" style="width:85%">
 					<h:panelGrid columns="2" columnClasses="coluna80,coluna20" styleClass="coluna100">
 						<p:outputLabel for="codigoBarras" value="Código de Barras" style="font-weight: bold;" />
@@ -161,8 +157,8 @@
 
 				</p:fieldset>
 
-				<p:commandButton id="salvar" type="button" value="Salvar" icon="salvar" onclick="PF('cdInserir').show();" />
-				<p:commandButton id="sair" type="button" value="Sair" icon="cancelar" onclick="PF('dlgConferencia').hide();" />
+				<p:commandButton id="salvar" type="button" value="Salvar" icon="salvar" onclick="PF('cdInserir').show();" style="height:28px; width: 105px;"/>
+				<p:commandButton id="sair" type="button" value="Sair" icon="cancelar" onclick="PF('dlgConferencia').hide();" style="height:28px; width: 105px;"/>
 
 			</h:panelGrid>
 			<p:confirmDialog message="Deseja realmente Salvar?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdInserir">

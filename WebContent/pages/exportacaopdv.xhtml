@@ -113,38 +113,28 @@
 						<f:facet name="header">
 							Pedidos de Venda - Interface
 						</f:facet>
-						<p:column headerText="Nº do Pedido" style="width: 80px;">
-							<div align="center">
-								<h:outputText value="#{linha.pedidoVenda.id}" style="font-weight: bold;" />
-							</div>
+						<p:column headerText="Pedido" style="width: 20px;text-align: right">
+								<h:outputText value="#{linha.pedidoVenda.id}"  />
 						</p:column>
-						<p:column headerText="Cliente" style="width: 300px;">
-							<div align="center">
-								<h:outputText value="#{linha.cliente.nome}" style="font-weight: bold;" />
-							</div>
+						<p:column headerText="Cliente" style="width: 300px;text-align: left">
+								<h:outputText value="#{linha.cliente.nome}" />
 						</p:column>
-						<p:column headerText="Data de Exportação" style="width: 100px;">
-							<div align="center">
-								<h:outputText value="#{linha.dataExportacao}" style="font-weight: bold;">
+						<p:column headerText="Data Exportação" style="width: 70px;text-align: center">
+								<h:outputText value="#{linha.dataExportacao}" >
 									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 								</h:outputText>
-							</div>
 						</p:column>
-						<p:column headerText="Data de Lançamento" style="width: 100px;">
-							<div align="center">
-								<h:outputText value="#{linha.dataLancamento}" style="font-weight: bold;">
+						<p:column headerText="Data Lançamento" style="width: 70px;text-align: center">
+								<h:outputText value="#{linha.dataLancamento}" >
 									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 								</h:outputText>
-							</div>
 						</p:column>
-						<p:column headerText="Data Documento" style="width: 100px;">
-							<div align="center">
-								<h:outputText value="#{linha.dataDocumento}" style="font-weight: bold;">
+						<p:column headerText="Data Documento" style="width: 70px;text-align: center">
+								<h:outputText value="#{linha.dataDocumento}" >
 									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 								</h:outputText>
-							</div>
 						</p:column>
-						<p:column headerText="Remover" style="width: 50px;">
+						<p:column headerText="Excluir" style="width: 20px;">
 							<div align="center">
 								<p:commandLink type="button" icon="delete16" id="excluir" onclick="PF('cdExcluir').show()" global="false">
 									<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
