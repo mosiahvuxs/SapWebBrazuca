@@ -127,7 +127,7 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 			for (NotaFiscalSaida notaFiscal : notasFiscais) {
 
 				notaFiscal.setDataCriacao(new Timestamp(System.currentTimeMillis()));
-				
+
 				notaFiscal.setIdExterno(notaFiscal.getId().toString());
 
 				NotaFiscalSaida model = new NotaFiscalSaidaRestful().inserirLote(notaFiscal);
@@ -175,7 +175,7 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 	protected String delete() throws TSApplicationException {
 
 		super.setClearFields(false);
-		
+
 		super.setDefaultMessage(false);
 
 		HistoricoNotaFiscalSaidaDAO historicoNotaFiscalSaidaDAO = new HistoricoNotaFiscalSaidaDAO();
