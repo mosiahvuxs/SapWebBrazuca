@@ -35,7 +35,7 @@ public class HistoricoNotaFiscalSaidaDAO {
 
 		broker.setPropertySQL("historiconotafiscalsaidadao.inserir",
 
-		model.getId(), model.getNotaFiscalSaida().getDataLancamento(), model.getNotaFiscalSaida().getDataDocumento(), model.getNotaFiscalSaida().getDataVencimento(), model.getNotaFiscalSaida().getCondicaoPagamento().getId(), model.getNotaFiscalSaida().getValor(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getNotaFiscalSaida().getCliente().getNome(), model.getNotaFiscalSaida().getVendedor().getNome(), model.getNotaFiscalSaida().getIdExterno(), model.getNotaFiscalSaida().getEmpresa().getId(), model.getNotaFiscalSaida().getCliente().getId(), model.getNotaFiscalSaida().getVendedor().getId(), model.getNotaFiscalSaida().getEnderecoEntregaFormatado(), model.getNotaFiscalSaida().getEnderecoCobrancaFormatado(), model.getNotaFiscalSaida().getCliente().getIdentificadorFederal(), model.getNotaFiscalSaida().getObservacao(), model.getNotaFiscalSaida().getTipoResumo(), model.getNotaFiscalSaida().getTipo(), model.getNotaFiscalSaida().getTipoEnvio(),
+		model.getId(), model.getNotaFiscalSaida().getIdExterno(), model.getNotaFiscalSaida().getDataLancamento(), model.getNotaFiscalSaida().getDataDocumento(), model.getNotaFiscalSaida().getDataVencimento(), model.getNotaFiscalSaida().getCondicaoPagamento().getId(), model.getNotaFiscalSaida().getValor(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getNotaFiscalSaida().getCliente().getNome(), model.getNotaFiscalSaida().getVendedor().getNome(), model.getNotaFiscalSaida().getIdExterno(), model.getNotaFiscalSaida().getEmpresa().getId(), model.getNotaFiscalSaida().getCliente().getId(), model.getNotaFiscalSaida().getVendedor().getId(), model.getNotaFiscalSaida().getEnderecoEntregaFormatado(), model.getNotaFiscalSaida().getEnderecoCobrancaFormatado(), model.getNotaFiscalSaida().getCliente().getIdentificadorFederal(), model.getNotaFiscalSaida().getObservacao(), model.getNotaFiscalSaida().getTipoResumo(), model.getNotaFiscalSaida().getTipo(), model.getNotaFiscalSaida().getTipoEnvio(),
 				model.getNotaFiscalSaida().getStatus().getId(), model.getNotaFiscalSaida().getPedidoVenda().getId());
 
 		broker.execute();
@@ -139,7 +139,7 @@ public class HistoricoNotaFiscalSaidaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
 
-		broker.setPropertySQL("historiconotafiscalsaidadao.excluir", model.getId());
+		broker.setPropertySQL("historiconotafiscalsaidadao.excluir", model.getIdExterno());
 
 		broker.execute();
 

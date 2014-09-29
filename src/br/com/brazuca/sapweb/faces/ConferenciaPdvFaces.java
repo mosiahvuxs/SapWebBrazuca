@@ -38,21 +38,21 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 	private Empresa empresa;
 	private String mensagem;
 	private boolean limparCampos;
-	
+
 	@PostConstruct
 	public void init() {
 
 		this.initObjetosNaSecao();
-		
+
 		this.clearFields();
 
-	}	
-	
+	}
+
 	private void initObjetosNaSecao() {
 
 		this.setEmpresa((Empresa) TSFacesUtil.getObjectInSession(Constantes.EMPRESA));
 
-	}		
+	}
 
 	public void clearFields() {
 
@@ -132,7 +132,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 		for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
 
-			if (linha.getCodigoBarras().equals(codigoBarras)) {
+			if (!TSUtil.isEmpty(linha.getCodigoBarras()) && linha.getCodigoBarras().equals(codigoBarras)) {
 
 				existe = true;
 
@@ -144,7 +144,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 				} else {
 
-					super.addErrorMessage("A quantidade máxima já foi atingida para o Item " + linha.getItem().getDescricao() + ".");
+					super.addErrorMessage("A quantidade solicitada é maior que a quantidade requisitada para o Item " + linha.getItem().getDescricao() + ".");
 				}
 
 			}
