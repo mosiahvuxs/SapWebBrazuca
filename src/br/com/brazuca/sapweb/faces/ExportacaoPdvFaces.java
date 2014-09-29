@@ -173,9 +173,16 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 	protected String delete() throws TSApplicationException {
 
 		super.setClearFields(false);
+		
 		super.setDefaultMessage(false);
 
+		HistoricoNotaFiscalSaidaDAO historicoNotaFiscalSaidaDAO = new HistoricoNotaFiscalSaidaDAO();
+
 		new NotaFiscalSaidaDAO().excluirInterfaceMatriz(this.notaFiscalSaidaInterface);
+
+		historicoNotaFiscalSaidaDAO.excluir(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_MATRIZ);
+
+		historicoNotaFiscalSaidaDAO.excluir(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_LOCAL);
 
 		this.notasInterface.remove(this.notaFiscalSaidaInterface);
 

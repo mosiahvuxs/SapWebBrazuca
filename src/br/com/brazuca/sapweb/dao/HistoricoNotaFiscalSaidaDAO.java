@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaida;
 import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaidaLinha;
+import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
@@ -132,6 +133,16 @@ public class HistoricoNotaFiscalSaidaDAO {
 		}
 
 		return broker.getCollectionBean(HistoricoNotaFiscalSaida.class, "notaFiscalSaida.pedidoVenda.id", "id", "notaFiscalSaida.dataLancamento", "notaFiscalSaida.dataDocumento", "notaFiscalSaida.dataVencimento", "notaFiscalSaida.condicaoPagamento.id", "notaFiscalSaida.valor", "notaFiscalSaida.dataExportacao", "notaFiscalSaida.dataImportacao", "notaFiscalSaida.dataAtualizacao", "notaFiscalSaida.cliente.nome", "notaFiscalSaida.vendedor.nome", "notaFiscalSaida.idExterno", "notaFiscalSaida.empresa.id", "notaFiscalSaida.cliente.id", "notaFiscalSaida.vendedor.id", "notaFiscalSaida.enderecoEntregaFormatado", "notaFiscalSaida.enderecoCobrancaFormatado", "notaFiscalSaida.cliente.identificadorFederal", "notaFiscalSaida.observacao", "notaFiscalSaida.tipoResumo", "notaFiscalSaida.tipo", "notaFiscalSaida.tipoEnvio");
+	}
+
+	public void excluir(NotaFiscalSaida model, String jndi) throws TSApplicationException {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
+
+		broker.setPropertySQL("historiconotafiscalsaidadao.excluir", model.getId());
+
+		broker.execute();
+
 	}
 
 }
