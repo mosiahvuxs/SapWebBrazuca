@@ -15,9 +15,18 @@ import br.com.topsys.util.TSUtil;
 
 public class HistoricoNotaFiscalSaidaDAO {
 
-	public void inserir(HistoricoNotaFiscalSaida model) throws TSApplicationException {
+	public void inserir(HistoricoNotaFiscalSaida model, String jndi) throws TSApplicationException {
 
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		TSDataBaseBrokerIf broker = null;
+
+		if (TSUtil.isEmpty(jndi)) {
+
+			broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		} else {
+
+			broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
+		}
 
 		broker.beginTransaction();
 
@@ -91,12 +100,12 @@ public class HistoricoNotaFiscalSaidaDAO {
 
 			sql.append(" AND PEDIDO_VENDA_ID = ?");
 		}
-		
+
 		if (!TSUtil.isEmpty(model.getDataInicial())) {
 
 			sql.append(" AND CAST(DATA_EXPORTACAO AS DATE) >= TO_DATE(?, 'DD/MM/YYYY')");
 		}
-		
+
 		if (!TSUtil.isEmpty(model.getDataFinal())) {
 
 			sql.append(" AND CAST(DATA_EXPORTACAO AS DATE) <= TO_DATE(?, 'DD/MM/YYYY')");
@@ -110,16 +119,16 @@ public class HistoricoNotaFiscalSaidaDAO {
 
 			broker.set(model.getId());
 		}
-		
+
 		if (!TSUtil.isEmpty(model.getDataInicial())) {
 
 			broker.set(TSParseUtil.dateToString(model.getDataInicial(), TSDateUtil.DD_MM_YYYY));
 		}
-		
+
 		if (!TSUtil.isEmpty(model.getDataFinal())) {
-			
+
 			broker.set(TSParseUtil.dateToString(model.getDataFinal(), TSDateUtil.DD_MM_YYYY));
-			
+
 		}
 
 		return broker.getCollectionBean(HistoricoNotaFiscalSaida.class, "notaFiscalSaida.pedidoVenda.id", "id", "notaFiscalSaida.dataLancamento", "notaFiscalSaida.dataDocumento", "notaFiscalSaida.dataVencimento", "notaFiscalSaida.condicaoPagamento.id", "notaFiscalSaida.valor", "notaFiscalSaida.dataExportacao", "notaFiscalSaida.dataImportacao", "notaFiscalSaida.dataAtualizacao", "notaFiscalSaida.cliente.nome", "notaFiscalSaida.vendedor.nome", "notaFiscalSaida.idExterno", "notaFiscalSaida.empresa.id", "notaFiscalSaida.cliente.id", "notaFiscalSaida.vendedor.id", "notaFiscalSaida.enderecoEntregaFormatado", "notaFiscalSaida.enderecoCobrancaFormatado", "notaFiscalSaida.cliente.identificadorFederal", "notaFiscalSaida.observacao", "notaFiscalSaida.tipoResumo", "notaFiscalSaida.tipo", "notaFiscalSaida.tipoEnvio");

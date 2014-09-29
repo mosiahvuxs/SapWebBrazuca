@@ -136,7 +136,11 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 
 					notaFiscal.setStatus(new Status(Constantes.ID_STATUS_PROCESSADO));
 
-					historicoNotaFiscalSaidaDAO.inserir(new HistoricoNotaFiscalSaida(notaFiscal));
+					HistoricoNotaFiscalSaida historicoNotaFiscalSaida = new HistoricoNotaFiscalSaida(notaFiscal);
+
+					historicoNotaFiscalSaidaDAO.inserir(historicoNotaFiscalSaida, null);
+
+					historicoNotaFiscalSaidaDAO.inserir(historicoNotaFiscalSaida, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_MATRIZ);
 
 					TSFacesUtil.addInfoMessage("Pedido com número " + notaFiscal.getPedidoVenda().getId() + " exportado com sucesso.");
 
@@ -159,7 +163,7 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 	public String pesquisarInterfaceMatriz() {
 
 		this.notasInterface = new NotaFiscalSaidaDAO().pesquisarInterfaceMatriz(new NotaFiscalSaida());
-		
+
 		TSFacesUtil.gerarResultadoLista(this.notasInterface);
 
 		return null;
