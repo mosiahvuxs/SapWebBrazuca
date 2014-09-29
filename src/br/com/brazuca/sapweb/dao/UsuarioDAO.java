@@ -54,7 +54,7 @@ public class UsuarioDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		model.setId(broker.getSequenceNextValue("usuarios_adm_id_seq"));
+		model.setId(broker.getSequenceNextValue("usuarios_id_seq"));
 
 		broker.setPropertySQL("usuariodao.inserir", model.getId(), model.getEmail(), model.getFlagAtivo(),
 
