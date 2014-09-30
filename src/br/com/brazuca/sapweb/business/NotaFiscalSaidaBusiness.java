@@ -26,7 +26,6 @@ public class NotaFiscalSaidaBusiness {
 		notaFiscal.setValor(model.getValor());
 		notaFiscal.setCliente(model.getCliente());
 		notaFiscal.setVendedor(model.getVendedor());
-		notaFiscal.setIdExterno(model.getIdExterno());
 		notaFiscal.setEmpresa(model.getEmpresa());
 		notaFiscal.setObservacao(model.getObservacao());
 		notaFiscal.setTipoResumo(model.getTipoResumo());
