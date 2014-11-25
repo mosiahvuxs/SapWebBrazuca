@@ -5,16 +5,21 @@
       	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       	xmlns:p="http://primefaces.org/ui">
 
-	<ui:param name="mbean" value="${grupoFaces}" />
-	<ui:param name="mbeanModel" value="${grupoFaces.crudModel}" />
-	<ui:param name="mbeanPesquisaModel" value="${grupoFaces.crudPesquisaModel}" />
+	<ui:param name="mbean" value="#{grupoFaces}" />
+	<ui:param name="mbeanModel" value="#{grupoFaces.crudModel}" />
+	<ui:param name="mbeanPesquisaModel" value="#{grupoFaces.crudPesquisaModel}" />
 
 	<ui:define name="cadastro">
 
-		<h:panelGrid columns="1" style="width:50%">
+		<h:panelGrid columns="2" columnClasses="coluna85,coluna15" style="width:50%">
 
-			<p:outputLabel for="descricao" value="Descrição" />
-			<p:inputText id="descricao" value="#{mbeanModel.descricao}"  maxlength="50" styleClass="coluna90" required="true"  requiredMessage="Descrição Campo obrigatório"  style="text-transform: uppercase;"/>
+			<p:outputLabel for="descricao" value="Descrição:" />
+			<p:outputLabel for="tipo" value="Tipo" />			
+			<p:inputText id="descricao" value="#{mbeanModel.descricao}"  maxlength="50" styleClass="coluna95" required="true"  requiredMessage="Descrição Campo obrigatório"  style="text-transform: uppercase;"/>
+			<p:selectOneMenu value="#{mbeanModel.tipoGrupo.id}" id="tipo" required="true"  requiredMessage="Descrição Campo obrigatório" style="width:110px">
+				<f:selectItem itemLabel="Selecione"/>
+				<f:selectItems value="#{mbean.tipoGrupos}"/>
+			</p:selectOneMenu>
 			
 		</h:panelGrid>
 		

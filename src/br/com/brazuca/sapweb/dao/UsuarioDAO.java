@@ -16,7 +16,7 @@ public class UsuarioDAO {
 
 		broker.setPropertySQL("usuariodao.obter", model.getId());
 
-		return (Usuario) broker.getObjectBean(Usuario.class, "id", "email", "flagAtivo", "login", "nome", "senha", "grupo.id");
+		return (Usuario) broker.getObjectBean(Usuario.class, "id", "email", "flagAtivo", "login", "nome", "senha", "grupoWeb.id", "grupoAndroid.id", "grupoIphone.id");
 	}
 
 	public Usuario obterPorLoginSenha(Usuario model) {
@@ -25,7 +25,7 @@ public class UsuarioDAO {
 
 		broker.setPropertySQL("usuariodao.obterPorLoginSenha", model.getLogin(), model.getSenha());
 
-		return (Usuario) broker.getObjectBean(Usuario.class, "id", "email", "flagAtivo", "login", "nome", "senha", "grupo.id");
+		return (Usuario) broker.getObjectBean(Usuario.class, "id", "email", "flagAtivo", "login", "nome", "senha", "grupoWeb.id","grupoAndroid.id", "grupoIphone.id");
 	}
 
 	public void excluir(Usuario model) throws TSApplicationException {
@@ -44,7 +44,7 @@ public class UsuarioDAO {
 
 		broker.setPropertySQL("usuariodao.alterar", model.getEmail(), model.getFlagAtivo(),
 
-		model.getLogin(), model.getNome(), model.getSenha(), model.getGrupo().getId(), model.getId());
+		model.getLogin(), model.getNome(), model.getSenha(), model.getGrupoWeb().getId(), model.getGrupoAndroid().getId(), model.getGrupoIphone().getId(),model.getId());
 
 		broker.execute();
 
@@ -58,7 +58,7 @@ public class UsuarioDAO {
 
 		broker.setPropertySQL("usuariodao.inserir", model.getId(), model.getEmail(), model.getFlagAtivo(),
 
-		model.getLogin(), model.getNome(), model.getSenha(), model.getGrupo().getId());
+		model.getLogin(), model.getNome(), model.getSenha(), model.getGrupoWeb().getId(), model.getGrupoAndroid().getId(), model.getGrupoIphone().getId());
 
 		broker.execute();
 
@@ -73,7 +73,7 @@ public class UsuarioDAO {
 
 		StringBuilder sql = new StringBuilder();
 
-		sql.append("SELECT U.ID, U.EMAIL, U.FLAG_ATIVO, U.LOGIN, U.NOME, U.SENHA, U.GRUPO_ID, G.DESCRICAO FROM USUARIOS U, GRUPOS G WHERE U.GRUPO_ID = G.ID");
+		sql.append("SELECT U.ID, U.EMAIL, U.FLAG_ATIVO, U.LOGIN, U.NOME, U.SENHA, U.GRUPO_WEB_ID,U.GRUPO_ANDROID_ID, U.GRUPO_IPHONE_ID, G.DESCRICAO FROM USUARIOS U, GRUPOS G WHERE U.GRUPO_WEB_ID = G.ID");
 
 		if (!TSUtil.isEmpty(model.getLogin())) {
 
@@ -90,7 +90,7 @@ public class UsuarioDAO {
 			sql.append(" AND SEM_ACENTOS(U.NOME) ILIKE ?");
 		}
 
-		if (!TSUtil.isEmpty(model.getGrupo()) && !TSUtil.isEmpty(model.getGrupo().getId())) {
+		if (!TSUtil.isEmpty(model.getGrupoWeb()) && !TSUtil.isEmpty(model.getGrupoWeb().getId())) {
 
 			sql.append(" AND U.GRUPO_ID = ?");
 		}
@@ -119,15 +119,15 @@ public class UsuarioDAO {
 
 		}
 
-		if (!TSUtil.isEmpty(model.getGrupo()) && !TSUtil.isEmpty(model.getGrupo().getId())) {
+		if (!TSUtil.isEmpty(model.getGrupoWeb()) && !TSUtil.isEmpty(model.getGrupoWeb().getId())) {
 
-			broker.set(model.getGrupo().getId());
+			broker.set(model.getGrupoWeb().getId());
 
 		}
 
 		broker.set(model.getFlagAtivo());
 
-		return broker.getCollectionBean(Usuario.class, "id", "email", "flagAtivo", "login", "nome", "senha", "grupo.id", "grupo.descricao");
+		return broker.getCollectionBean(Usuario.class, "id", "email", "flagAtivo", "login", "nome", "senha", "grupoWeb.id", "grupoAndroid.id", "grupoIphone.id", "grupoWeb.descricao");
 	}
 
 }

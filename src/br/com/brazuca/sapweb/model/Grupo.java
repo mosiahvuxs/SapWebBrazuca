@@ -11,6 +11,8 @@ public class Grupo implements Serializable {
 	private Long id;
 
 	private String descricao;
+	
+	private TipoGrupo tipoGrupo;
 
 	private List<Permissao> permissoes;
 	
@@ -22,6 +24,10 @@ public class Grupo implements Serializable {
 		this.id = id;
 	}
 	
+	public Grupo(TipoGrupo tipoGrupo) {
+		this.tipoGrupo = tipoGrupo;
+	}
+
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}
@@ -45,5 +51,15 @@ public class Grupo implements Serializable {
 	public void setPermissoes(List<Permissao> permissoes) {
 		this.permissoes = permissoes;
 	}
+
+	public TipoGrupo getTipoGrupo() {
+		return tipoGrupo;
+	}
+
+	public void setTipoGrupo(TipoGrupo tipoGrupo) {
+		this.tipoGrupo = tipoGrupo;
+	}
+	
+	
 
 }

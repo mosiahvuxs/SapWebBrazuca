@@ -11,9 +11,11 @@ import javax.faces.model.SelectItem;
 import br.com.brazuca.sapweb.dao.GrupoDAO;
 import br.com.brazuca.sapweb.dao.MenuDAO;
 import br.com.brazuca.sapweb.dao.PermissaoDAO;
+import br.com.brazuca.sapweb.dao.TipoGrupoDAO;
 import br.com.brazuca.sapweb.model.Grupo;
 import br.com.brazuca.sapweb.model.Menu;
 import br.com.brazuca.sapweb.model.Permissao;
+import br.com.brazuca.sapweb.model.TipoGrupo;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.util.TSUtil;
@@ -28,6 +30,7 @@ public class GrupoFaces extends TSMainFaces {
 	private Grupo crudModel;
 	private Grupo crudPesquisaModel;
 	private List<SelectItem> comboMenus;
+	private List<SelectItem> tipoGrupos;
 	private Permissao permissaoSelecionada;
 	private List<Grupo> grid;
 	private Integer tabIndex;
@@ -45,6 +48,8 @@ public class GrupoFaces extends TSMainFaces {
 	private void initCombo() {
 
 		this.comboMenus = super.initCombo(new MenuDAO().pesquisarExecutaveis(), "id", "descricao");
+		
+		this.tipoGrupos = this.initCombo(new TipoGrupoDAO().pesquisar(new TipoGrupo()), "id", "descricao");
 	}
 
 	@Override
@@ -61,6 +66,8 @@ public class GrupoFaces extends TSMainFaces {
 		try {
 
 			this.crudModel = new Grupo();
+			
+			this.crudModel.setTipoGrupo(new TipoGrupo());
 
 			this.clearFields();
 
@@ -237,6 +244,14 @@ public class GrupoFaces extends TSMainFaces {
 
 	public void setFlagAlterar(boolean flagAlterar) {
 		this.flagAlterar = flagAlterar;
+	}
+
+	public List<SelectItem> getTipoGrupos() {
+		return tipoGrupos;
+	}
+
+	public void setTipoGrupos(List<SelectItem> tipoGrupos) {
+		this.tipoGrupos = tipoGrupos;
 	}
 
 }

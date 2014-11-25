@@ -10,6 +10,7 @@ import javax.faces.model.SelectItem;
 import br.com.brazuca.sapweb.dao.GrupoDAO;
 import br.com.brazuca.sapweb.dao.UsuarioDAO;
 import br.com.brazuca.sapweb.model.Grupo;
+import br.com.brazuca.sapweb.model.TipoGrupo;
 import br.com.brazuca.sapweb.model.Usuario;
 import br.com.brazuca.sapweb.util.UsuarioUtil;
 import br.com.brazuca.sapweb.util.Utilitarios;
@@ -27,7 +28,7 @@ public class UsuarioFaces extends TSMainFaces {
 
 	private Usuario crudModel;
 	private Usuario crudPesquisaModel;
-	private List<SelectItem> grupos;
+	private List<SelectItem> gruposWeb, gruposAndroid, gruposIphone;
 	private List<Usuario> grid;
 	private Integer tabIndex;
 	private boolean flagAlterar;
@@ -59,7 +60,11 @@ public class UsuarioFaces extends TSMainFaces {
 
 		this.crudModel = new Usuario();
 
-		this.getCrudModel().setGrupo(new Grupo());
+		this.getCrudModel().setGrupoWeb(new Grupo());
+		
+		this.getCrudModel().setGrupoAndroid(new Grupo());
+		
+		this.getCrudModel().setGrupoIphone(new Grupo());		
 
 		this.getCrudModel().setFlagAtivo(Boolean.TRUE);
 
@@ -76,7 +81,11 @@ public class UsuarioFaces extends TSMainFaces {
 
 		this.setCrudPesquisaModel(new Usuario());
 
-		this.getCrudPesquisaModel().setGrupo(new Grupo());
+		this.getCrudModel().setGrupoWeb(new Grupo());
+		
+		this.getCrudModel().setGrupoAndroid(new Grupo());
+		
+		this.getCrudModel().setGrupoIphone(new Grupo());	
 
 		this.getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
 
@@ -85,7 +94,11 @@ public class UsuarioFaces extends TSMainFaces {
 
 	private void initCombo() {
 
-		this.grupos = super.initCombo(new GrupoDAO().pesquisar(new Grupo()), "id", "descricao");
+		this.gruposWeb = super.initCombo(new GrupoDAO().pesquisar(new Grupo(new TipoGrupo(1L))), "id", "descricao");
+		
+		this.gruposAndroid = super.initCombo(new GrupoDAO().pesquisar(new Grupo(new TipoGrupo(2L))), "id", "descricao");
+		
+		this.gruposIphone = super.initCombo(new GrupoDAO().pesquisar(new Grupo(new TipoGrupo(3L))), "id", "descricao");		
 	}
 
 	private boolean validaSenhas() {
@@ -206,14 +219,6 @@ public class UsuarioFaces extends TSMainFaces {
 		this.crudPesquisaModel = crudPesquisaModel;
 	}
 
-	public List<SelectItem> getGrupos() {
-		return grupos;
-	}
-
-	public void setGrupos(List<SelectItem> grupos) {
-		this.grupos = grupos;
-	}
-
 	public List<Usuario> getGrid() {
 		return grid;
 	}
@@ -246,4 +251,29 @@ public class UsuarioFaces extends TSMainFaces {
 		this.senha = senha;
 	}
 
+	public List<SelectItem> getGruposIphone() {
+		return gruposIphone;
+	}
+
+	public void setGruposIphone(List<SelectItem> gruposIphone) {
+		this.gruposIphone = gruposIphone;
+	}
+
+	public List<SelectItem> getGruposWeb() {
+		return gruposWeb;
+	}
+
+	public void setGruposWeb(List<SelectItem> gruposWeb) {
+		this.gruposWeb = gruposWeb;
+	}
+
+	public List<SelectItem> getGruposAndroid() {
+		return gruposAndroid;
+	}
+
+	public void setGruposAndroid(List<SelectItem> gruposAndroid) {
+		this.gruposAndroid = gruposAndroid;
+	}
+ 
 }
+

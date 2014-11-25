@@ -2,10 +2,13 @@ package br.com.brazuca.sapweb.model;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import br.com.brazuca.sapweb.util.Utilitarios;
 import br.com.topsys.util.TSUtil;
 
 @SuppressWarnings("serial")
+@XmlRootElement
 public class Usuario implements Serializable {
 
 	private Long id;
@@ -22,7 +25,7 @@ public class Usuario implements Serializable {
 
 	private Boolean flagAtivo;
 
-	private Grupo grupo;
+	private Grupo grupoWeb, grupoAndroid, grupoIphone;
 
 	public Usuario() {
 
@@ -84,14 +87,6 @@ public class Usuario implements Serializable {
 		this.confirmaSenha = confirmaSenha;
 	}
 
-	public Grupo getGrupo() {
-		return grupo;
-	}
-
-	public void setGrupo(Grupo grupo) {
-		this.grupo = grupo;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -124,5 +119,31 @@ public class Usuario implements Serializable {
 			return false;
 		return true;
 	}
+
+	public Grupo getGrupoWeb() {
+		return grupoWeb;
+	}
+
+	public void setGrupoWeb(Grupo grupoWeb) {
+		this.grupoWeb = grupoWeb;
+	}
+
+	public Grupo getGrupoAndroid() {
+		return grupoAndroid;
+	}
+
+	public void setGrupoAndroid(Grupo grupoAndroid) {
+		this.grupoAndroid = grupoAndroid;
+	}
+
+	public Grupo getGrupoIphone() {
+		return grupoIphone;
+	}
+
+	public void setGrupoIphone(Grupo grupoIphone) {
+		this.grupoIphone = grupoIphone;
+	}
+	
+	
 
 }

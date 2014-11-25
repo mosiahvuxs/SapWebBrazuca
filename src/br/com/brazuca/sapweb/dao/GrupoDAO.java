@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.brazuca.sapweb.model.Grupo;
 import br.com.brazuca.sapweb.model.Permissao;
+import br.com.brazuca.sapweb.util.Utilitarios;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
@@ -18,11 +19,16 @@ public class GrupoDAO {
 
 		StringBuilder sql = new StringBuilder();
 
-		sql.append("SELECT ID, DESCRICAO FROM GRUPOS WHERE 1 = 1");
+		sql.append("SELECT ID, DESCRICAO, TIPO_GRUPO_ID FROM GRUPOS WHERE 1 = 1");
 
 		if (!TSUtil.isEmpty(model.getDescricao())) {
 
 			sql.append(" AND SEM_ACENTOS(DESCRICAO) ILIKE ?");
+		}
+
+		if(!TSUtil.isEmpty(model.getTipoGrupo()) && !TSUtil.isEmpty(Utilitarios.tratarLong(model.getTipoGrupo().getId()))){
+			
+			sql.append(" AND TIPO_GRUPO_ID = ? ");
 		}
 
 		sql.append(" ORDER BY DESCRICAO");
@@ -34,8 +40,14 @@ public class GrupoDAO {
 			broker.set("%" + model.getDescricao() + "%");
 
 		}
+		
+		if(!TSUtil.isEmpty(model.getTipoGrupo()) && !TSUtil.isEmpty(Utilitarios.tratarLong(model.getTipoGrupo().getId()))){
+			
+			broker.set(model.getTipoGrupo().getId());
+			
+		}
 
-		return broker.getCollectionBean(Grupo.class, "id", "descricao");
+		return broker.getCollectionBean(Grupo.class, "id", "descricao", "tipoGrupo.id");
 	}
 
 	public Grupo obter(Grupo model) {
@@ -44,7 +56,7 @@ public class GrupoDAO {
 
 		broker.setPropertySQL("grupodao.obter", model.getId());
 
-		return (Grupo) broker.getObjectBean(Grupo.class, "id", "descricao");
+		return (Grupo) broker.getObjectBean(Grupo.class, "id", "descricao", "tipoGrupo.id");
 	}
 
 	public void excluir(Grupo model) throws TSApplicationException {
@@ -65,7 +77,7 @@ public class GrupoDAO {
 
 		model.setId(broker.getSequenceNextValue("grupos_id_seq"));
 
-		broker.setPropertySQL("grupodao.inserir", model.getId(), model.getDescricao());
+		broker.setPropertySQL("grupodao.inserir", model.getId(), model.getDescricao(), model.getTipoGrupo().getId());
 
 		broker.execute();
 
@@ -91,7 +103,7 @@ public class GrupoDAO {
 
 		broker.beginTransaction();
 
-		broker.setPropertySQL("grupodao.alterar", model.getDescricao(), model.getId());
+		broker.setPropertySQL("grupodao.alterar", model.getDescricao(), model.getTipoGrupo().getId(), model.getId());
 
 		broker.execute();
 
