@@ -35,4 +35,8 @@ public final class Constantes {
 	public static final Long ID_STATUS_NAO_PROCESSADO = 0L;
 	public static final Long ID_STATUS_PROCESSADO = 1L;
 
+	public static final Long TIPO_GRUPO_WEB = 1L;	
+	public static final Long TIPO_GRUPO_ANDROID = 2L;
+	public static final Long TIPO_GRUPO_IPHONE = 3L;	
+
 }

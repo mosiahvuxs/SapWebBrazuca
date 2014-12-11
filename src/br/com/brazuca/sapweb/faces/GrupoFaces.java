@@ -47,7 +47,7 @@ public class GrupoFaces extends TSMainFaces {
 
 	private void initCombo() {
 
-		this.comboMenus = super.initCombo(new MenuDAO().pesquisarExecutaveis(), "id", "descricao");
+		this.comboMenus = super.initCombo(new MenuDAO().pesquisarExecutaveis(new Menu()), "id", "descricao");
 		
 		this.tipoGrupos = this.initCombo(new TipoGrupoDAO().pesquisar(new TipoGrupo()), "id", "descricao");
 	}

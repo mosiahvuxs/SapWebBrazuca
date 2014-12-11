@@ -3,6 +3,7 @@ package br.com.brazuca.sapweb.model;
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import br.com.brazuca.sapweb.util.Utilitarios;
 import br.com.topsys.util.TSUtil;
@@ -26,6 +27,10 @@ public class Usuario implements Serializable {
 	private Boolean flagAtivo;
 
 	private Grupo grupoWeb, grupoAndroid, grupoIphone;
+	
+	private Boolean flagAndroid, flagWeb,flagIphone;
+	
+	private String mensagemErro;
 
 	public Usuario() {
 
@@ -75,6 +80,7 @@ public class Usuario implements Serializable {
 		this.flagAtivo = flagAtivo;
 	}
 
+	@XmlTransient
 	public String getSituacao() {
 		return Utilitarios.getSituacao(flagAtivo);
 	}
@@ -142,6 +148,38 @@ public class Usuario implements Serializable {
 
 	public void setGrupoIphone(Grupo grupoIphone) {
 		this.grupoIphone = grupoIphone;
+	}
+
+	public String getMensagemErro() {
+		return mensagemErro;
+	}
+
+	public void setMensagemErro(String mensagemErro) {
+		this.mensagemErro = mensagemErro;
+	}
+
+	public Boolean getFlagAndroid() {
+		return flagAndroid;
+	}
+
+	public void setFlagAndroid(Boolean flagAndroid) {
+		this.flagAndroid = flagAndroid;
+	}
+
+	public Boolean getFlagWeb() {
+		return flagWeb;
+	}
+
+	public void setFlagWeb(Boolean flagWeb) {
+		this.flagWeb = flagWeb;
+	}
+
+	public Boolean getFlagIphone() {
+		return flagIphone;
+	}
+
+	public void setFlagIphone(Boolean flagIphone) {
+		this.flagIphone = flagIphone;
 	}
 	
 	

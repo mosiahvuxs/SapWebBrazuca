@@ -6,7 +6,6 @@ import java.util.List;
 import br.com.topsys.util.TSUtil;
 
 @SuppressWarnings("serial")
-
 public final class Menu implements Serializable {
 
 	private Long id;
@@ -30,6 +29,10 @@ public final class Menu implements Serializable {
 	
 	public Menu(Boolean flagAtivo) {
 		this.flagAtivo = flagAtivo;
+	}
+
+	public Menu(Menu pai) {
+		this.menuPai = pai;
 	}
 
 	public Long getId() {

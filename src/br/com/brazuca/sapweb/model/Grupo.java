@@ -3,9 +3,12 @@ package br.com.brazuca.sapweb.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import br.com.topsys.util.TSUtil;
 
 @SuppressWarnings("serial")
+@XmlRootElement
 public class Grupo implements Serializable {
 
 	private Long id;
@@ -15,6 +18,8 @@ public class Grupo implements Serializable {
 	private TipoGrupo tipoGrupo;
 
 	private List<Permissao> permissoes;
+	
+	private Permissao permissao;
 	
 	public Grupo() {
 		
@@ -58,6 +63,14 @@ public class Grupo implements Serializable {
 
 	public void setTipoGrupo(TipoGrupo tipoGrupo) {
 		this.tipoGrupo = tipoGrupo;
+	}
+
+	public Permissao getPermissao() {
+		return permissao;
+	}
+
+	public void setPermissao(Permissao permissao) {
+		this.permissao = permissao;
 	}
 	
 	

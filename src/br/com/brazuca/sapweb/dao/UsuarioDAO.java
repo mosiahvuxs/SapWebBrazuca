@@ -3,6 +3,7 @@ package br.com.brazuca.sapweb.dao;
 import java.util.List;
 
 import br.com.brazuca.sapweb.model.Usuario;
+import br.com.brazuca.sapweb.util.Utilitarios;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
@@ -92,7 +93,22 @@ public class UsuarioDAO {
 
 		if (!TSUtil.isEmpty(model.getGrupoWeb()) && !TSUtil.isEmpty(model.getGrupoWeb().getId())) {
 
-			sql.append(" AND U.GRUPO_ID = ?");
+			sql.append(" AND U.GRUPO_WEB_ID = ?");
+		}
+		
+		if (!TSUtil.isEmpty(model.getFlagAndroid())) {
+
+			sql.append(" AND U.GRUPO_ANDROID_ID IS NOT NULL ");
+		}	
+		
+		if (!TSUtil.isEmpty(model.getFlagWeb())) {
+
+			sql.append(" AND U.GRUPO_WEB_ID IS NOT NULL ");
+		}
+		
+		if (!TSUtil.isEmpty(model.getFlagIphone())) {
+
+			sql.append(" AND U.GRUPO_IPHONE_ID IS NOT NULL ");
 		}
 
 		sql.append(" AND U.FLAG_ATIVO = ?");
@@ -124,6 +140,12 @@ public class UsuarioDAO {
 			broker.set(model.getGrupoWeb().getId());
 
 		}
+		
+		if (!TSUtil.isEmpty(model.getGrupoAndroid()) && !TSUtil.isEmpty(model.getGrupoAndroid().getTipoGrupo()) && !TSUtil.isEmpty(Utilitarios.tratarLong(model.getGrupoAndroid().getTipoGrupo().getId()))) {
+
+			broker.set(model.getGrupoAndroid().getTipoGrupo().getId());
+			
+		}			
 
 		broker.set(model.getFlagAtivo());
 
