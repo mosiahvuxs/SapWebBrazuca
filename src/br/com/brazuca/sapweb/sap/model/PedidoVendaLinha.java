@@ -3,11 +3,11 @@ package br.com.brazuca.sapweb.sap.model;
 import java.math.BigDecimal;
 
 @SuppressWarnings("serial")
-public class PedidoVendaLinha extends DocumentoLinhaAB {
+public class PedidoVendaLinha extends DocumentoLinhaAB{
 
 	private Long interfaceId;
 	private PedidoVenda pedidoVenda;
-	private BigDecimal quantidadeLiberada;
+	private BigDecimal quantidadeLiberada;	
 
 	public Long getInterfaceId() {
 		return interfaceId;
@@ -32,5 +32,6 @@ public class PedidoVendaLinha extends DocumentoLinhaAB {
 	public void setQuantidadeLiberada(BigDecimal quantidadeLiberada) {
 		this.quantidadeLiberada = quantidadeLiberada;
 	}
-
+	
+	
 }

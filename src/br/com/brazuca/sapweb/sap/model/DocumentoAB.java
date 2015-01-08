@@ -48,6 +48,7 @@ public abstract class DocumentoAB implements Serializable {
 	private String tipoResumo;
 	private String tipo;
 	private Long tipoEnvio;
+	private String enderecoEntregaFormatado, enderecoCobrancaFormatado;
 
 	public Long getId() {
 		return id;
@@ -293,6 +294,21 @@ public abstract class DocumentoAB implements Serializable {
 	public void setDataVencimentoFinal(Date dataVencimentoFinal) {
 		this.dataVencimentoFinal = dataVencimentoFinal;
 	}
-	
-	
+
+	public String getEnderecoEntregaFormatado() {
+		return enderecoEntregaFormatado;
+	}
+
+	public void setEnderecoEntregaFormatado(String enderecoEntregaFormatado) {
+		this.enderecoEntregaFormatado = enderecoEntregaFormatado;
+	}
+
+	public String getEnderecoCobrancaFormatado() {
+		return enderecoCobrancaFormatado;
+	}
+
+	public void setEnderecoCobrancaFormatado(String enderecoCobrancaFormatado) {
+		this.enderecoCobrancaFormatado = enderecoCobrancaFormatado;
+	}
+
 }

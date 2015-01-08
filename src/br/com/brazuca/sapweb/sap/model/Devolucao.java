@@ -14,32 +14,32 @@ import br.com.brazuca.sapweb.model.Empresa;
 public class Devolucao extends DocumentoAB implements Serializable {
 
 	private Long interfaceId;
-    private Long serial;
-    private Long serialInicial;
-    private Long serialFinal;
-    private Long idInicial;
-    private Long idFinal;    
-    private Date dataEmissao;
-    private Date dataEmissaoInicial;
-    private Date dataEmissaoFinal;
-    private Boolean flagBoleto;
-    private BigDecimal valor;
-    private Empresa empresa;
-    private String arquivoUpload;
-    private List<DevolucaoLinha> linhas; 
-    private ParceiroNegocio cliente;    
+	private Long serial;
+	private Long serialInicial;
+	private Long serialFinal;
+	private Long idInicial;
+	private Long idFinal;
+	private Date dataEmissao;
+	private Date dataEmissaoInicial;
+	private Date dataEmissaoFinal;
+	private Boolean flagBoleto;
+	private BigDecimal valor;
+	private Empresa empresa;
+	private String arquivoUpload;
+	private List<DevolucaoLinha> linhas;
+	private ParceiroNegocio cliente;
 
-    public Devolucao() {
-    }
+	public Devolucao() {
+	}
 
-    public Devolucao(Long id) {
-        this.setId(id);
-    }
+	public Devolucao(Long id) {
+		this.setId(id);
+	}
 
 	public Devolucao(Empresa empresa) {
 
 		this.setEmpresa(empresa);
-		
+
 	}
 
 	public Devolucao(Status status) {
@@ -167,5 +167,4 @@ public class Devolucao extends DocumentoAB implements Serializable {
 		this.linhas = linhas;
 	}
 
-   
 }

@@ -16,13 +16,13 @@ import br.com.brazuca.sapweb.util.WebServiceUtil;
 
 public class DevolucaoRestful {
 
-	public Devolucao inserirLote(Devolucao model){
+	public Devolucao inserirLote(Devolucao model, String restful){
 		
 		try {
 
 			WebServiceUtil webServiceUtil;
 
-			webServiceUtil = new WebServiceUtil(Constantes.URL_RESTFUL_BRAZUCA, "devolucaoWS", "inserirLote");
+			webServiceUtil = new WebServiceUtil(restful, "devolucaoWS", "inserirLote");
 
 			JAXBContext jc = JAXBContext.newInstance(Devolucao.class);
 

@@ -1,10 +1,14 @@
 package br.com.brazuca.sapweb.sap.model;
 
 import java.io.Serializable;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import br.com.brazuca.sapweb.model.Empresa;
 
 @SuppressWarnings("serial")
+@XmlRootElement
 public class Estoque implements Serializable{
 	
 	//Tabela OWHS
@@ -12,9 +16,11 @@ public class Estoque implements Serializable{
 	private String id;
 	private String descricao;
 	private Item item;
+	private List<Item> itens;
 	private Empresa empresa;
 	private Integer quantidadeDisponivel;
-	private Integer quantidadeLiberada;	
+	private Integer quantidadeLiberada;
+	private String mensagemErro;
 	
 	public Estoque(){
 		
@@ -69,6 +75,22 @@ public class Estoque implements Serializable{
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public List<Item> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<Item> itens) {
+		this.itens = itens;
+	}
+
+	public String getMensagemErro() {
+		return mensagemErro;
+	}
+
+	public void setMensagemErro(String mensagemErro) {
+		this.mensagemErro = mensagemErro;
 	}
 
 	

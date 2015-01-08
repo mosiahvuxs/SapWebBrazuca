@@ -128,7 +128,7 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 
 				notaFiscal.setDataCriacao(new Timestamp(System.currentTimeMillis()));
 
-				NotaFiscalSaida model = new NotaFiscalSaidaRestful().inserirLote(notaFiscal);
+				NotaFiscalSaida model = new NotaFiscalSaidaRestful().inserirLote(notaFiscal, Constantes.URL_RESTFUL_BRAZUCA_LOCAL);
 
 				if (TSUtil.isEmpty(model.getMensagemErro())) {
 

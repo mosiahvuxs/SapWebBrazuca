@@ -10,22 +10,22 @@ import br.com.brazuca.sapweb.model.Empresa;
 
 @SuppressWarnings("serial")
 @XmlRootElement
-public class Contabilidade implements Serializable{
-	
+public class Contabilidade implements Serializable {
+
 	private Long id;
-	
+
 	private Date dataVencimento;
-	
+
 	private String observacao;
-	
+
 	private Date dataLancamento;
-	
+
 	private Date dataDocumento;
-	
+
 	private List<ContabilidadeLinha> linhas;
-	
+
 	private Empresa empresa;
-	
+
 	private Status status;
 
 	private Date dataImportacao;
@@ -33,17 +33,17 @@ public class Contabilidade implements Serializable{
 	private Date dataExportacao;
 
 	private String mensagemErro;
-	
+
 	private Date dataAtualizacao;
-	
+
 	private Usuario usuario;
-	
+
 	private Projeto projeto;
-	
-	private String referencia1;	
-	
-	public Contabilidade(){
-		
+
+	private String referencia1;
+
+	public Contabilidade() {
+
 	}
 
 	public Contabilidade(Status status) {
@@ -178,7 +178,5 @@ public class Contabilidade implements Serializable{
 	public void setReferencia1(String referencia1) {
 		this.referencia1 = referencia1;
 	}
-
-	
 
 }

@@ -10,21 +10,20 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
-import br.com.brazuca.sapweb.sap.model.Entrega;
-import br.com.brazuca.sapweb.util.Constantes;
+import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.brazuca.sapweb.util.WebServiceUtil;
 
-public class EntregaRestful {
+public class PedidoVendaRestful {
 
-	public Entrega inserirLote(Entrega model, String restful){
+	public PedidoVenda inserirLote(PedidoVenda model, String restful){
 		
 		try {
 
 			WebServiceUtil webServiceUtil;
 
-			webServiceUtil = new WebServiceUtil(restful, "entregaWS", "inserirLote");
+			webServiceUtil = new WebServiceUtil(restful, "pedidoVendaWS", "inserirLote");
 
-			JAXBContext jc = JAXBContext.newInstance(Entrega.class);
+			JAXBContext jc = JAXBContext.newInstance(PedidoVenda.class);
 
 			javax.xml.bind.Marshaller marshaller = jc.createMarshaller();
 
@@ -42,9 +41,9 @@ public class EntregaRestful {
 
 			String resp = webServiceUtil.post(stringWriter.toString());
 
-			Entrega nota = this.populaEntregaREST(resp);
+			model = this.populaPedidoVendaREST(resp);
 
-			return nota;
+			return model;
 
 		} catch (Exception ex) {
 
@@ -52,14 +51,16 @@ public class EntregaRestful {
 		}
 
 		return null;
-			
+		
+		
+		
 	}
 	
-	private Entrega populaEntregaREST(String resp) throws JAXBException {
+	private PedidoVenda populaPedidoVendaREST(String resp) throws JAXBException {
 
-		JAXBContext context = JAXBContext.newInstance(Entrega.class);
+		JAXBContext context = JAXBContext.newInstance(PedidoVenda.class);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
-		JAXBElement<Entrega> catalog = unmarshaller.unmarshal(new StreamSource(new StringReader(resp)), Entrega.class);
+		JAXBElement<PedidoVenda> catalog = unmarshaller.unmarshal(new StreamSource(new StringReader(resp)), PedidoVenda.class);
 
 		return catalog.getValue();
 	}		

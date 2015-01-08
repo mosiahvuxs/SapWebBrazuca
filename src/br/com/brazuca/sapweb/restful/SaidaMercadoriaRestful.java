@@ -16,13 +16,13 @@ import br.com.brazuca.sapweb.util.WebServiceUtil;
 
 public class SaidaMercadoriaRestful {
 
-	public SaidaMercadoria inserirLote(SaidaMercadoria model) {
+	public SaidaMercadoria inserirLote(SaidaMercadoria model, String restful) {
 
 		try {
 
 			WebServiceUtil webServiceUtil;
 
-			webServiceUtil = new WebServiceUtil(Constantes.URL_RESTFUL_BRAZUCA, "saidaMercadoriaWS", "inserirLote");
+			webServiceUtil = new WebServiceUtil(restful, "saidaMercadoriaWS", "inserirLote");
 
 			JAXBContext jc = JAXBContext.newInstance(SaidaMercadoria.class);
 
@@ -61,7 +61,7 @@ public class SaidaMercadoriaRestful {
 
 			WebServiceUtil webServiceUtil;
 
-			webServiceUtil = new WebServiceUtil(Constantes.URL_RESTFUL_BRAZUCA, "saidaMercadoriaWS", "inserir");
+			webServiceUtil = new WebServiceUtil(Constantes.URL_RESTFUL_BRAZUCA_LOCAL, "saidaMercadoriaWS", "inserir");
 
 			JAXBContext jc = JAXBContext.newInstance(SaidaMercadoria.class);
 

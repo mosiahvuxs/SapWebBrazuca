@@ -88,7 +88,7 @@ public class ImportacaoPdvFaces extends TSMainFaces {
 
 			for (PedidoVenda pdv : pedidos) {
 
-				if (TSUtil.isEmpty(notaFiscalSaidaDAO.pesquisarPorPedidoVenda(pdv, Constantes.JNDI_SAP_SERVICO)) && TSUtil.isEmpty(notaFiscalSaidaDAO.pesquisarPorPedidoVenda(pdv, null))) {
+				if (TSUtil.isEmpty(notaFiscalSaidaDAO.pesquisarPorPedidoVenda(pdv, Constantes.JNDI_SAP_SERVICO_LOCAL)) && TSUtil.isEmpty(notaFiscalSaidaDAO.pesquisarPorPedidoVenda(pdv, null))) {
 
 					this.pedidosVenda.add(pdv);
 				}

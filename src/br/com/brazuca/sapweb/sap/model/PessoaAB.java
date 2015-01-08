@@ -19,6 +19,7 @@ public abstract class PessoaAB implements Serializable{
     private String mensagemErro;
     private String tipo;
     private String observacao;
+    private String identificadorFederal;    
     
 	public String getId() {
 		return id;
@@ -97,6 +98,12 @@ public abstract class PessoaAB implements Serializable{
 	}
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+	public String getIdentificadorFederal() {
+		return identificadorFederal;
+	}
+	public void setIdentificadorFederal(String identificadorFederal) {
+		this.identificadorFederal = identificadorFederal;
 	} 
     
 }

@@ -16,13 +16,13 @@ import br.com.brazuca.sapweb.util.WebServiceUtil;
 
 public class NotaFiscalSaidaRestful {
 
-	public NotaFiscalSaida inserirLote(NotaFiscalSaida model){
+	public NotaFiscalSaida inserirLote(NotaFiscalSaida model, String restful){
 		
 		try {
 
 			WebServiceUtil webServiceUtil;
 
-			webServiceUtil = new WebServiceUtil(Constantes.URL_RESTFUL_BRAZUCA, "notaFiscalSaidaWS", "inserirLote");
+			webServiceUtil = new WebServiceUtil(restful, "notaFiscalSaidaWS", "inserirLote");
 
 			JAXBContext jc = JAXBContext.newInstance(NotaFiscalSaida.class);
 

@@ -5,31 +5,31 @@ import java.io.Serializable;
 import br.com.brazuca.sapweb.model.Empresa;
 
 @SuppressWarnings("serial")
-public class ContaContabil implements Serializable{
-	
-    // tabela OACT
+public class ContaContabil implements Serializable {
 
-    private String id;
+	// tabela OACT
 
-    private String descricao;
-    
-    private Empresa empresa;    
+	private String id;
 
-    public String getId() {
-        return id;
-    }
+	private String descricao;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	private Empresa empresa;
 
-    public String getDescricao() {
-        return descricao;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
 	public Empresa getEmpresa() {
 		return empresa;
@@ -38,7 +38,5 @@ public class ContaContabil implements Serializable{
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}
-    
-    
 
 }

@@ -7,54 +7,58 @@ package br.com.brazuca.sapweb.sap.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import br.com.brazuca.sapweb.adapter.TimestampAdapter;
 import br.com.brazuca.sapweb.model.Empresa;
 
 /**
- * 
+ *
  * @author mroland
  */
 @SuppressWarnings("serial")
+@XmlRootElement(name = "vendedor")
 public class Vendedor implements Serializable {
 
-	private Long id;
-	private String nome;
-	private Integer tipoIdentificador;
-	private String identificador;
-	private Empresa empresa;
-	private GrupoComissao grupoComissao;
-	private String mensagemErro;
-	private VendedorEndereco endereco;
-	private Timestamp dataAtualizacao;
+    private Long id;
+    private String nome;
+    private Integer tipoIdentificador; 
+    private String identificador;
+    private Empresa empresa;
+    private GrupoComissao grupoComissao;
+    private String mensagemErro;
+    private VendedorEndereco endereco;
+    private Timestamp dataAtualizacao;
+    private String email;
+    
+    
+    public Vendedor(){
+    	
+    }
 
-	public Vendedor() {
+    public Vendedor(Empresa empresa) {
 
-	}
-
-	public Vendedor(Empresa empresa) {
-
-		this.empresa = empresa;
-
+    	this.empresa = empresa;
+    	
 	}
 
 	public Long getId() {
-		return id;
-	}
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
 	public Empresa getEmpresa() {
 		return empresa;
 	}
@@ -103,7 +107,7 @@ public class Vendedor implements Serializable {
 		this.tipoIdentificador = tipoIdentificador;
 	}
 
-	@XmlJavaTypeAdapter(TimestampAdapter.class)
+	@XmlJavaTypeAdapter( TimestampAdapter.class)		
 	public Timestamp getDataAtualizacao() {
 		return dataAtualizacao;
 	}
@@ -112,4 +116,15 @@ public class Vendedor implements Serializable {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
+	
+    
 }

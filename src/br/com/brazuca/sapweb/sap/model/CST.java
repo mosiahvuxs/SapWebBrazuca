@@ -10,47 +10,47 @@ import java.io.Serializable;
 import br.com.brazuca.sapweb.model.Empresa;
 
 /**
- *
+ * 
  * @author mroland
  */
 @SuppressWarnings("serial")
-public class CST implements Serializable{
+public class CST implements Serializable {
 
-    // tabela OTSC
+	// tabela OTSC
 
-    private Long id;                // referente a id
+	private Long id; // referente a id
 
-    private String codigo;          // referente a code
+	private String codigo; // referente a code
 
-    private String descricao;       // referente a situation
+	private String descricao; // referente a situation
 
-    private Categoria categoria;
-    
-    private Empresa empresa;
+	private Categoria categoria;
 
-    public String getCodigo() {
-        return codigo;
-    }
+	private Empresa empresa;
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
+	public String getCodigo() {
+		return codigo;
+	}
 
-    public String getDescricao() {
-        return descricao;
-    }
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+	public String getDescricao() {
+		return descricao;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Categoria getCategoria() {
 		return categoria;
@@ -67,7 +67,5 @@ public class CST implements Serializable{
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}
-    
-    
 
 }

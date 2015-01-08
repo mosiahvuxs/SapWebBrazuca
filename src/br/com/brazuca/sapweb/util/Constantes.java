@@ -13,15 +13,22 @@ public final class Constantes {
 	public static final String USUARIOS_CONECTADOS = "usuariosConectados";
 	public static final String EMPRESA = "empresa";
 
-	public static final String JNDI_SAP_SERVICO = "java:comp/env/jdbc/ServicoSapBrazucaDS";
+	public static final String JNDI_SAP_SERVICO_LOCAL = "java:comp/env/jdbc/ServicoSapBrazucaDS";
+	public static final String JNDI_SAP_SERVICO_MATRIZ = "java:comp/env/jdbc/ServicoSapBrazucaMatrizDS";	
+	
 	public static final String JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_LOCAL = "java:comp/env/jdbc/SapWebBrazucaDS";
 	public static final String JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_MATRIZ = "java:comp/env/jdbc/SapWebBrazucaMatrizDS";
 	
 	
-	public static final String URL_RESTFUL_BRAZUCA = TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("L") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("D") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("H") ? Constantes.URL_RESTFUL_BRAZUCA_DESENV : Constantes.URL_RESTFUL_BRAZUCA_PROD;
-	public static final String URL_RESTFUL_BRAZUCA_DESENV = "http://murrinha:8085/ServicoSapBrazuca/";
-	public static final String URL_RESTFUL_BRAZUCA_PROD = "http://172.16.10.7:8085/ServicoSapBrazuca/";
+	public static final String URL_RESTFUL_BRAZUCA_LOCAL = TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("L") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("D") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("H") ? Constantes.URL_RESTFUL_BRAZUCA_DESENV_LOCAL : Constantes.URL_RESTFUL_BRAZUCA_PROD_LOCAL;
+	public static final String URL_RESTFUL_BRAZUCA_DESENV_LOCAL = "http://murrinha:8085/ServicoSapBrazuca/";
+	public static final String URL_RESTFUL_BRAZUCA_PROD_LOCAL = "http://localhost:8085/ServicoSapBrazuca/";
 
+	public static final String URL_RESTFUL_BRAZUCA_MATRIZ = TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("L") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("D") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("H") ? Constantes.URL_RESTFUL_BRAZUCA_DESENV_MATRIZ : Constantes.URL_RESTFUL_BRAZUCA_PROD_MATRIZ;
+	public static final String URL_RESTFUL_BRAZUCA_DESENV_MATRIZ = "http://murrinha:8085/ServicoSapBrazucaMatriz/";
+	public static final String URL_RESTFUL_BRAZUCA_PROD_MATRIZ = "http://172.16.10.7:8085/ServicoSapBrazucaMatriz/";
+
+	
 	public static final String PASTA_RELATORIO = "relatorios";
 	public static final String PASTA_ARQUIVOS = "/arquivos/";
 

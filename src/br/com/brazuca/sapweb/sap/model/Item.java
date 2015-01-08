@@ -1,11 +1,15 @@
 package br.com.brazuca.sapweb.sap.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import br.com.brazuca.sapweb.model.Empresa;
 
 @SuppressWarnings("serial")
+@XmlRootElement
 public class Item implements Serializable {
 
     private String id;
@@ -14,7 +18,21 @@ public class Item implements Serializable {
     private String detalhe;
     private Empresa empresa;
     private Estoque estoque;
-    private List<Estoque> estoques;    
+    private List<Estoque> estoques; 
+    private BigDecimal preco;
+    private EstoqueItem estoqueItem;
+    
+    public Item(){
+    	
+    }
+    
+    public Item(Empresa empresa, Estoque estoque){
+    	
+    	this.empresa = empresa;
+    	
+    	this.estoque = estoque;
+    	
+    }
 
     public String getDescricao() {
         return descricao;
@@ -70,6 +88,22 @@ public class Item implements Serializable {
 
 	public void setEstoques(List<Estoque> estoques) {
 		this.estoques = estoques;
+	}
+
+	public BigDecimal getPreco() {
+		return preco;
+	}
+
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
+	}
+
+	public EstoqueItem getEstoqueItem() {
+		return estoqueItem;
+	}
+
+	public void setEstoqueItem(EstoqueItem estoqueItem) {
+		this.estoqueItem = estoqueItem;
 	}
     
     

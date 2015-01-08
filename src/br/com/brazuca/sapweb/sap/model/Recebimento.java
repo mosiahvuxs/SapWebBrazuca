@@ -33,13 +33,13 @@ public class Recebimento implements Serializable {
 	private Status status;
 
 	private BigDecimal valor;
-
+	
 	public Recebimento() {
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public Recebimento(Status status) {
-
+		
 		this.status = status;
 	}
 
@@ -59,7 +59,7 @@ public class Recebimento implements Serializable {
 		this.contasReceber = contasReceber;
 	}
 
-	@XmlJavaTypeAdapter(TimestampAdapter.class)
+	@XmlJavaTypeAdapter(TimestampAdapter.class)	
 	public Timestamp getDataAtualizacao() {
 		return dataAtualizacao;
 	}
@@ -68,7 +68,7 @@ public class Recebimento implements Serializable {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
-	@XmlJavaTypeAdapter(TimestampAdapter.class)
+	@XmlJavaTypeAdapter(TimestampAdapter.class)	
 	public Timestamp getDataExportacao() {
 		return dataExportacao;
 	}
@@ -77,7 +77,7 @@ public class Recebimento implements Serializable {
 		this.dataExportacao = dataExportacao;
 	}
 
-	@XmlJavaTypeAdapter(TimestampAdapter.class)
+	@XmlJavaTypeAdapter(TimestampAdapter.class)	
 	public Timestamp getDataImportacao() {
 		return dataImportacao;
 	}

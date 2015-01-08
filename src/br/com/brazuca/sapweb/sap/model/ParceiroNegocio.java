@@ -29,7 +29,6 @@ public class ParceiroNegocio extends PessoaAB implements Serializable {
     private Contato contato;
     private String observacao;
     private ContasReceber contasReceber;
-    private String identificadorFederal;
     
     public ParceiroNegocio() {
 		// TODO Auto-generated constructor stub
@@ -112,14 +111,5 @@ public class ParceiroNegocio extends PessoaAB implements Serializable {
 	public void setContasReceber(ContasReceber contasReceber) {
 		this.contasReceber = contasReceber;
 	}
-
-	public String getIdentificadorFederal() {
-		return identificadorFederal;
-	}
-
-	public void setIdentificadorFederal(String identificadorFederal) {
-		this.identificadorFederal = identificadorFederal;
-	}  
-	
     
 }

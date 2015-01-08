@@ -14,40 +14,35 @@ import br.com.brazuca.sapweb.model.Empresa;
 public class NotaFiscalSaida extends DocumentoAB implements Serializable {
 
 	private Long interfaceId;
-    private Long serial;
-    private Long serialInicial;
-    private Long serialFinal;
-    private Long idInicial;
-    private Long idFinal;    
-    private Date dataEmissao;
-    private Date dataEmissaoInicial;
-    private Date dataEmissaoFinal;
-    private Boolean flagBoleto;
-    private BigDecimal valor;
-    private Empresa empresa;
-    private String arquivoUpload;
-    private List<NotaFiscalSaidaLinha> linhas; 
-    private ParceiroNegocio cliente;  
-    private String enderecoCobrancaFormatado;
-    private String enderecoEntregaFormatado;
-    private String tipoResumo;
-    private String tipo;
-    private Long tipoEnvio;
-    private PedidoVenda pedidoVenda;
-    
-    private boolean selecionado;
-    
-    public NotaFiscalSaida() {
-    }
+	private Long serial;
+	private Long serialInicial;
+	private Long serialFinal;
+	private Long idInicial;
+	private Long idFinal;
+	private Date dataEmissao;
+	private Date dataEmissaoInicial;
+	private Date dataEmissaoFinal;
+	private Boolean flagBoleto;
+	private BigDecimal valor;
+	private Empresa empresa;
+	private String arquivoUpload;
+	private List<NotaFiscalSaidaLinha> linhas;
+	private ParceiroNegocio cliente;
+	private Usuario usuario;
+	private PedidoVenda pedidoVenda;
+    private boolean selecionado;	
 
-    public NotaFiscalSaida(Long id) {
-        this.setId(id);
-    }
+	public NotaFiscalSaida() {
+	}
+
+	public NotaFiscalSaida(Long id) {
+		this.setId(id);
+	}
 
 	public NotaFiscalSaida(Empresa empresa) {
 
 		this.setEmpresa(empresa);
-		
+
 	}
 
 	public NotaFiscalSaida(Status status) {
@@ -175,44 +170,12 @@ public class NotaFiscalSaida extends DocumentoAB implements Serializable {
 		this.cliente = cliente;
 	}
 
-	public String getEnderecoCobrancaFormatado() {
-		return enderecoCobrancaFormatado;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setEnderecoCobrancaFormatado(String enderecoCobrancaFormatado) {
-		this.enderecoCobrancaFormatado = enderecoCobrancaFormatado;
-	}
-
-	public String getEnderecoEntregaFormatado() {
-		return enderecoEntregaFormatado;
-	}
-
-	public void setEnderecoEntregaFormatado(String enderecoEntregaFormatado) {
-		this.enderecoEntregaFormatado = enderecoEntregaFormatado;
-	}
-
-	public String getTipoResumo() {
-		return tipoResumo;
-	}
-
-	public void setTipoResumo(String tipoResumo) {
-		this.tipoResumo = tipoResumo;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
-	public Long getTipoEnvio() {
-		return tipoEnvio;
-	}
-
-	public void setTipoEnvio(Long tipoEnvio) {
-		this.tipoEnvio = tipoEnvio;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public PedidoVenda getPedidoVenda() {
@@ -222,14 +185,13 @@ public class NotaFiscalSaida extends DocumentoAB implements Serializable {
 	public void setPedidoVenda(PedidoVenda pedidoVenda) {
 		this.pedidoVenda = pedidoVenda;
 	}
-
-
+	
 	public boolean isSelecionado() {
 		return selecionado;
 	}
 
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
-	}
-   
+	}	
+
 }

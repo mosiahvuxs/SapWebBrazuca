@@ -179,7 +179,7 @@ public class NotaFiscalSaidaDAO {
 	@SuppressWarnings("unchecked")
 	public List<NotaFiscalSaida> pesquisarInterfaceMatriz(NotaFiscalSaida model) {
 
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(Constantes.JNDI_SAP_SERVICO);
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(Constantes.JNDI_SAP_SERVICO_LOCAL);
 
 		StringBuilder sql = new StringBuilder("SELECT PEDIDO_VENDA_ID, ID, DATA_LANCAMENTO, DATA_DOCUMENTO, CONDICAO_PAGAMENTO_ID, VALOR, DATA_EXPORTACAO, DATA_IMPORTACAO, DATA_ATUALIZACAO, CLIENTE_NOME, VENDEDOR_NOME, ID_EXTERNO, EMPRESA_ID, CLIENTE_ID, VENDEDOR_ID, ENDERECO_ENTREGA, ENDERECO_COBRANCA, CLIENTE_IDENTIFICADOR_FEDERAL, OBSERVACAO, TIPO_RESUMO, TIPO, TIPO_ENVIO FROM PUBLIC.NOTAFISCALSAIDA WHERE 1 = 1");
 
@@ -292,7 +292,7 @@ public class NotaFiscalSaidaDAO {
 
 	public void excluirInterfaceMatriz(NotaFiscalSaida model) throws TSApplicationException {
 
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(Constantes.JNDI_SAP_SERVICO);
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(Constantes.JNDI_SAP_SERVICO_LOCAL);
 
 		broker.setPropertySQL("notafiscalsaidadao.excluir", model.getId());
 
