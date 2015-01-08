@@ -13,6 +13,7 @@ public abstract class EnderecoAB implements Serializable {
 	private String numero;
 	private String cidade;
 	private Pais pais;
+	private Estado estado;
 	private String complemento;
 	private String cep;
 	private Municipio municipio;
@@ -96,6 +97,14 @@ public abstract class EnderecoAB implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 
 }

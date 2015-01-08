@@ -75,6 +75,8 @@ public class ExportacaoPedidoVendaFaces extends TSMainFaces {
 	@Override
 	protected String find() {
 		
+		this.lista = new ArrayList<PedidoVenda>();
+		
 		for (PedidoVenda item : new PedidoVendaDAO().pesquisarInterface(this.pedidoVenda,Constantes.JNDI_SAP_SERVICO_LOCAL)) {
 			
 			item.setLinhas(new PedidoVendaLinhaDAO().pesquisarInterface(item,Constantes.JNDI_SAP_SERVICO_LOCAL));
@@ -105,6 +107,8 @@ public class ExportacaoPedidoVendaFaces extends TSMainFaces {
 		super.setClearFields(false);
 		
 		super.setDefaultMessage(false);
+		
+		List<PedidoVenda> listaExcluir = new ArrayList<PedidoVenda>();
 
 		if (!TSUtil.isEmpty(this.lista)) {
 
@@ -116,12 +120,14 @@ public class ExportacaoPedidoVendaFaces extends TSMainFaces {
 
 				if (TSUtil.isEmpty(model.getMensagemErro())) {
 
-					this.lista.remove(pedido);
+					listaExcluir.add(pedido);
 
 					pedido.setStatus(new Status(Constantes.ID_STATUS_PROCESSADO));
 
-					new HistoricoPedidoVendaDAO().inserirInterface(this.popularHistorico(pedido));
-
+					new HistoricoPedidoVendaDAO().inserirInterface(this.popularHistorico(pedido), Constantes.JNDI_SAP_SERVICO_LOCAL);
+					
+					new PedidoVendaDAO().excluirInterface(pedido, Constantes.JNDI_SAP_SERVICO_LOCAL);
+					
 					TSFacesUtil.addInfoMessage("Pedido com número " + pedido.getIdExterno() + " exportado com sucesso.");
 
 				} else {
@@ -129,6 +135,8 @@ public class ExportacaoPedidoVendaFaces extends TSMainFaces {
 					TSFacesUtil.addErrorMessage("Não foi possível exportar o Pedido número : " + pedido.getIdExterno() + ". " + model.getMensagemErro());
 				}
 			}
+			
+			this.lista.removeAll(listaExcluir);
 
 		} else {
 

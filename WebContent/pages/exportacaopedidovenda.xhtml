@@ -21,7 +21,7 @@
 						<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoInicial" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataLancamento}" size="25" />
 						<p:calendar navigator="true" readonlyInput="true" id="dtEntregaInicial" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataVencimento}" size="25" />
 						<p:calendar navigator="true" readonlyInput="true" id="dtDocumentoInicial" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataDocumento}" size="25" />
-						<p:inputText id="vendedor" value="#{mbeanPesquisaModel.vendedor.nome}" maxlength="50" style="width:70%"/>
+						<p:inputText id="vendedor" value="#{mbeanPesquisaModel.vendedor.nome}" maxlength="50" style="width:70%" />
 
 						<p:outputLabel for="dtLacamentoFinal" value="Data Lançamento  Final:" />
 						<p:outputLabel for="dtEntregaFinal" value="Data Entrega Final:" />
@@ -42,49 +42,53 @@
 				<h:panelGrid columns="3">
 					<p:commandButton action="#{mbean.findEvent()}" value="Pesquisar" icon="pesquisar" style="height:28px; width: 105px;" update="@form" />
 					<p:commandButton action="sucesso" update="@form" value="Nova Pesquisa" icon="novo" style="height:28px; width: 130px;" />
-					<p:commandButton onclick="PF('cdInserir').show();" value="Exportar" icon="salvar" style="height:28px; width: 105px;" rendered="#{!empty mbean.lista}" />
+					<p:commandButton onclick="PF('cdInserir').show();" value="Exportar" icon="salvar" style="height:28px; width: 105px;" rendered="#{!empty mbean.lista}" update="opResultado" />
 					<h:panelGroup rendered="#{empty mbean.lista}" />
 				</h:panelGrid>
 
 				<p:separator style="height:2px;width:99%; " />
 				<br />
 
-				<p:fieldset legend="Resultado" style="width: 97%; margin-top:-0.5%" rendered="#{!empty mbean.lista}">
+				<p:outputPanel id="opResultado">
 
-					<p:dataTable var="pdv" id="pdvs" rowIndexVar="index" value="#{mbean.lista}" paginator="true" paginatorAlwaysVisible="false" rows="20" emptyMessage="Nenhum registro encontrado." rowsPerPageTemplate="10,50,100,1000" scrollable="true" scrollHeight="250" paginatorPosition="top">
-						<f:facet name="header">
+					<p:fieldset legend="Resultado" style="width: 97%; margin-top:-0.5%" rendered="#{!empty mbean.lista}">
+
+						<p:dataTable var="pdv" id="pdvs" rowIndexVar="index" value="#{mbean.lista}" paginator="true" paginatorAlwaysVisible="false" rows="20" emptyMessage="Nenhum registro encontrado." rowsPerPageTemplate="10,50,100,1000" scrollable="true" scrollHeight="250" paginatorPosition="top">
+							<f:facet name="header">
 							Pedidos de Venda
 						</f:facet>
-						<p:column style="width: 20px;">
-							<f:facet name="header">
-								<p:outputLabel value="Todos" for="todos" />
+							<p:column style="width: 20px;">
+								<f:facet name="header">
+									<p:outputLabel value="Todos" for="todos" />
+									<div align="center">
+										<h:selectBooleanCheckbox id="todos" value="#{mbean.todos}" rendered="#{!empty mbean.lista}">
+											<f:ajax event="change" listener="#{mbean.setarTodos}" execute="@this" render="pdvs" />
+										</h:selectBooleanCheckbox>
+									</div>
+								</f:facet>
 								<div align="center">
-									<h:selectBooleanCheckbox id="todos" value="#{mbean.todos}" rendered="#{!empty mbean.lista}">
-										<f:ajax event="change" listener="#{mbean.setarTodos}" execute="@this" render="pdvs" />
-									</h:selectBooleanCheckbox>
+									<h:selectBooleanCheckbox value="#{pdv.selecionado}" />
 								</div>
-							</f:facet>
-							<div align="center">
-								<h:selectBooleanCheckbox value="#{pdv.selecionado}" />
-							</div>
-						</p:column>
-						<p:column headerText="Cliente" style="width: 300px;text-align: left">
-							<h:outputText value="#{pdv.cliente.nome}"  />
-						</p:column>
-						<p:column headerText="Data de Lançamento" style="width: 60px;text-align: center">
-							<h:outputText value="#{pdv.dataLancamento}" >
-								<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-							</h:outputText>
-						</p:column>
-						<p:column headerText="Data Documento" style="width: 60px;text-align: center">
-							<h:outputText value="#{pdv.dataDocumento}" >
-								<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-							</h:outputText>
-						</p:column>
+							</p:column>
+							<p:column headerText="Cliente" style="width: 300px;text-align: left">
+								<h:outputText value="#{pdv.cliente.nome}" />
+							</p:column>
+							<p:column headerText="Data de Lançamento" style="width: 60px;text-align: center">
+								<h:outputText value="#{pdv.dataLancamento}">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Data Documento" style="width: 60px;text-align: center">
+								<h:outputText value="#{pdv.dataDocumento}">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
 
-					</p:dataTable>
+						</p:dataTable>
 
-				</p:fieldset>
+					</p:fieldset>
+
+				</p:outputPanel>
 
 				<p:confirmDialog message="Deseja realmente exportar o(s) Pedido(s)?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdInserir">
 					<p:commandButton value="Sim" onclick="PF('cdInserir').hide();" action="#{mbean.insertEvent}" update="@form" process="@this" />
@@ -110,26 +114,23 @@
 						<f:facet name="header">
 							Pedidos de Venda - Interface
 						</f:facet>
-						<p:column headerText="Pedido" style="width: 20px;text-align: right">
-								<h:outputText value="#{linha.pedidoVenda.id}"  />
-						</p:column>
 						<p:column headerText="Cliente" style="width: 300px;text-align: left">
-								<h:outputText value="#{linha.cliente.nome}" />
+							<h:outputText value="#{linha.cliente.nome}" />
 						</p:column>
 						<p:column headerText="Data Exportação" style="width: 70px;text-align: center">
-								<h:outputText value="#{linha.dataExportacao}" >
-									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-								</h:outputText>
+							<h:outputText value="#{linha.dataExportacao}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+							</h:outputText>
 						</p:column>
 						<p:column headerText="Data Lançamento" style="width: 70px;text-align: center">
-								<h:outputText value="#{linha.dataLancamento}" >
-									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-								</h:outputText>
+							<h:outputText value="#{linha.dataLancamento}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+							</h:outputText>
 						</p:column>
 						<p:column headerText="Data Documento" style="width: 70px;text-align: center">
-								<h:outputText value="#{linha.dataDocumento}" >
-									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-								</h:outputText>
+							<h:outputText value="#{linha.dataDocumento}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+							</h:outputText>
 						</p:column>
 
 					</p:dataTable>

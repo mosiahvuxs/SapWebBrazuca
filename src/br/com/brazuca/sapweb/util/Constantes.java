@@ -22,6 +22,7 @@ public final class Constantes {
 	
 	public static final String URL_RESTFUL_BRAZUCA_LOCAL = TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("L") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("D") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("H") ? Constantes.URL_RESTFUL_BRAZUCA_DESENV_LOCAL : Constantes.URL_RESTFUL_BRAZUCA_PROD_LOCAL;
 	public static final String URL_RESTFUL_BRAZUCA_DESENV_LOCAL = "http://murrinha:8085/ServicoSapBrazuca/";
+	//public static final String URL_RESTFUL_BRAZUCA_DESENV_LOCAL = "http://localhost:8085/ServicoSapBrazuca/";	
 	public static final String URL_RESTFUL_BRAZUCA_PROD_LOCAL = "http://localhost:8085/ServicoSapBrazuca/";
 
 	public static final String URL_RESTFUL_BRAZUCA_MATRIZ = TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("L") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("D") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("H") ? Constantes.URL_RESTFUL_BRAZUCA_DESENV_MATRIZ : Constantes.URL_RESTFUL_BRAZUCA_PROD_MATRIZ;

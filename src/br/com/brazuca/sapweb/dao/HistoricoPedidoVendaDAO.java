@@ -3,16 +3,15 @@ package br.com.brazuca.sapweb.dao;
 import br.com.brazuca.sapweb.model.HistoricoPedidoVenda;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.brazuca.sapweb.sap.model.PedidoVendaLinha;
-import br.com.brazuca.sapweb.util.Constantes;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
 
 public class HistoricoPedidoVendaDAO {
 
-	public HistoricoPedidoVenda inserirInterface(HistoricoPedidoVenda model) throws TSApplicationException {
+	public HistoricoPedidoVenda inserirInterface(HistoricoPedidoVenda model, String jndi) throws TSApplicationException {
 
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(Constantes.JNDI_SAP_SERVICO_LOCAL);
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
 		
 		broker.beginTransaction();
 		

@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.brazuca.sapweb.sap.model.PedidoVendaLinha;
-import br.com.brazuca.sapweb.util.Constantes;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
@@ -319,9 +318,9 @@ public class PedidoVendaDAO {
         													   "vendedor.id", "enderecoEntregaFormatado", "enderecoCobrancaFormatado", "cliente.identificadorFederal", "observacao", "tipoResumo", "tipo", "tipoEnvio");
 	}
 
-	public void alterarInterface(PedidoVenda model) throws TSApplicationException{
+	public void alterarInterface(PedidoVenda model, String jndi) throws TSApplicationException{
 
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
 		
 		broker.setPropertySQL("pedidovendadaoI.alterarInterface", model.getStatus().getId(), model.getMensagemErro(), model.getDataAtualizacao(), model.getDataImportacao(), model.getInterfaceId());
 		
@@ -329,9 +328,9 @@ public class PedidoVendaDAO {
 		
 	}
 
-	public PedidoVenda inserirInterface(PedidoVenda model) throws TSApplicationException {
+	public PedidoVenda inserirInterface(PedidoVenda model, String jndi) throws TSApplicationException {
 
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
 		
 		broker.beginTransaction();
 		
@@ -382,9 +381,9 @@ public class PedidoVendaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<PedidoVenda> pesquisarPorAtrasadaInterface(PedidoVenda model) {
+	public List<PedidoVenda> pesquisarPorAtrasadaInterface(PedidoVenda model, String jndi) {
 
-        TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+        TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
         
         broker.setPropertySQL("pedidovendadaoI.pesquisarPorAtrasadaInterface", model.getStatus().getId());
         
@@ -392,9 +391,9 @@ public class PedidoVendaDAO {
 	}
 
 	
-	public PedidoVenda obterIdExternoInterface(PedidoVenda model) {
+	public PedidoVenda obterIdExternoInterface(PedidoVenda model, String jndi) {
 
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
 		
 		broker.setPropertySQL("pedidovendadaoI.obterIdExternoInterface", model.getIdExterno(), model.getEmpresa().getId());
 		
