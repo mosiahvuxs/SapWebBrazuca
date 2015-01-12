@@ -41,6 +41,10 @@ public class PedidoVenda extends DocumentoAB{
 		this.empresa = empresa;
 	}
 
+	public PedidoVenda(Long id) {
+		this.setId(id);
+	}
+
 	public Long getInterfaceId() {
 		return interfaceId;
 	}

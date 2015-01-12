@@ -1,7 +1,7 @@
 <ui:composition xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:p="http://primefaces.org/ui">
 
-	<ui:param name="mbean" value="#{exportacaoPdvFaces}" />
-	<ui:param name="mbeanPesquisaModel" value="#{exportacaoPdvFaces.notaFiscalSaida}" />
+	<ui:param name="mbean" value="#{exportacaoNffSaidaFaces}" />
+	<ui:param name="mbeanPesquisaModel" value="#{exportacaoNffSaidaFaces.notaFiscalSaida}" />
 
 	<p:tabView prependId="false">
 
@@ -102,7 +102,7 @@
 
 			<h:form prependId="false">
 
-				<p:commandButton value="Atualizar" action="#{exportacaoPdvFaces.pesquisarInterfaceMatriz}" update="@form" style="margin-left:1.5%" />
+				<p:commandButton value="Atualizar" action="#{exportacaoNffSaidaFaces.pesquisarInterfaceMatriz}" update="@form" style="margin-left:1.5%" />
 
 				<p:separator style="height:2px;width:99%; " />
 

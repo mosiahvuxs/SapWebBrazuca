@@ -15,6 +15,8 @@ import br.com.brazuca.sapweb.dao.PedidoVendaDAO;
 import br.com.brazuca.sapweb.dao.PedidoVendaLinhaDAO;
 import br.com.brazuca.sapweb.model.Empresa;
 import br.com.brazuca.sapweb.model.ItemEstruturado;
+import br.com.brazuca.sapweb.restful.NotaFiscalSaidaRestful;
+import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
 import br.com.brazuca.sapweb.sap.model.ParceiroNegocio;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.brazuca.sapweb.sap.model.PedidoVendaLinha;
@@ -247,13 +249,24 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 		if (!TSUtil.isEmpty(linhas)) {
 
-			new NotaFiscalSaidaBusiness().inserir(this.pedidoVenda, linhas);
+			NotaFiscalSaida nota = new NotaFiscalSaidaBusiness().inserir(this.pedidoVenda, linhas);
+			
+			nota  = new NotaFiscalSaidaRestful().inserirLote(nota, Constantes.URL_RESTFUL_BRAZUCA_LOCAL);
 
-			this.limparCampos = true;
+			if (TSUtil.isEmpty(nota.getMensagemErro())) {
+				
+				this.pedidos.remove(this.pedidoVenda);				
+				
+				this.limparCampos = true;
 
-			this.pedidos.remove(this.pedidoVenda);
+				this.mensagem = "Operação realizada com sucesso";				
 
-			this.mensagem = "Operação realizada com sucesso";
+			} else {
+				
+				this.mensagem = "Não foi possível exportar o Pedido número : " + this.pedidoVenda.getId() + ". " + nota.getMensagemErro();
+
+			}
+			
 
 		} else {
 
@@ -273,7 +286,10 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		if (this.limparCampos) {
 
 			this.pedidoVenda = new PedidoVenda();
+			
 			this.pedidoVendaPesquisa = new PedidoVenda();
+			
+			this.pedidoVendaPesquisa.setCliente(new ParceiroNegocio());
 		}
 
 	}

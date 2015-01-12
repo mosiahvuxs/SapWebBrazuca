@@ -25,9 +25,9 @@ public class NotaFiscalSaidaLinhaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<NotaFiscalSaidaLinha> pesquisar(NotaFiscalSaida model) {
+	public List<NotaFiscalSaidaLinha> pesquisarInterface(NotaFiscalSaida model, String jndi) {
 
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
 
 		broker.setPropertySQL("notafiscalsaidalinhadao.pesquisar", model.getId());
 

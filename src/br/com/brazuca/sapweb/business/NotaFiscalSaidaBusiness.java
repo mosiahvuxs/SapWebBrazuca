@@ -1,9 +1,9 @@
 package br.com.brazuca.sapweb.business;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.brazuca.sapweb.dao.NotaFiscalSaidaDAO;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
@@ -14,7 +14,7 @@ import br.com.topsys.exception.TSApplicationException;
 
 public class NotaFiscalSaidaBusiness {
 
-	public void inserir(PedidoVenda model, List<PedidoVendaLinha> linhas) throws TSApplicationException {
+	public NotaFiscalSaida inserir(PedidoVenda model, List<PedidoVendaLinha> linhas) throws TSApplicationException {
 
 		NotaFiscalSaida notaFiscal = new NotaFiscalSaida();
 
@@ -22,6 +22,7 @@ public class NotaFiscalSaidaBusiness {
 		notaFiscal.setDataLancamento(model.getDataLancamento());
 		notaFiscal.setDataDocumento(model.getDataDocumento());
 		notaFiscal.setDataVencimento(model.getDataVencimento());
+		notaFiscal.setDataCriacao(new Timestamp(System.currentTimeMillis()));
 		notaFiscal.setCondicaoPagamento(model.getCondicaoPagamento());
 		notaFiscal.setValor(model.getValor());
 		notaFiscal.setCliente(model.getCliente());
@@ -48,12 +49,14 @@ public class NotaFiscalSaidaBusiness {
 			saidaLinha.setCodigoImposto(linha.getCodigoImposto());
 			saidaLinha.setCodigoBarras(linha.getCodigoBarras());
 			saidaLinha.setPedidoVendaLinha(linha);
-			saidaLinha.getPedidoVendaLinha().setPedidoVenda(model);
+			saidaLinha.getPedidoVendaLinha().setPedidoVenda(new PedidoVenda(model.getId()));
 
 			notaFiscal.getLinhas().add(saidaLinha);
 
 		}
 
-		new NotaFiscalSaidaDAO().inserir(notaFiscal);
+		//new NotaFiscalSaidaDAO().inserir(notaFiscal);
+		
+		return notaFiscal;
 	}
 }

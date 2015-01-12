@@ -9,9 +9,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.brazuca.sapweb.dao.HistoricoNotaFiscalSaidaDAO;
+import br.com.brazuca.sapweb.dao.HistoricoPedidoVendaDAO;
 import br.com.brazuca.sapweb.dao.NotaFiscalSaidaDAO;
 import br.com.brazuca.sapweb.dao.NotaFiscalSaidaLinhaDAO;
+import br.com.brazuca.sapweb.dao.PedidoVendaDAO;
 import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaida;
+import br.com.brazuca.sapweb.model.HistoricoPedidoVenda;
 import br.com.brazuca.sapweb.restful.NotaFiscalSaidaRestful;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
@@ -25,8 +28,8 @@ import br.com.topsys.web.util.TSFacesUtil;
 
 @SuppressWarnings("serial")
 @ViewScoped
-@ManagedBean(name = "exportacaoPdvFaces")
-public class ExportacaoPdvFaces extends TSMainFaces {
+@ManagedBean(name = "exportacaoNffSaidaFaces")
+public class ExportacaoNffSaidaFaces extends TSMainFaces {
 
 	private NotaFiscalSaida notaFiscalSaida;
 	private NotaFiscalSaida notaFiscalSaidaInterface;
@@ -34,7 +37,7 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 	private List<NotaFiscalSaida> notasInterface;
 	private boolean todos;
 
-	public ExportacaoPdvFaces() {
+	public ExportacaoNffSaidaFaces() {
 
 		this.limpar();
 	}
@@ -72,7 +75,7 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 
 		if (this.validaCamposPesquisa()) {
 
-			this.notas = new NotaFiscalSaidaDAO().pesquisar(this.notaFiscalSaida);
+			this.notas = new NotaFiscalSaidaDAO().pesquisarInterface(this.notaFiscalSaida, Constantes.JNDI_SAP_SERVICO_LOCAL);
 
 			TSFacesUtil.gerarResultadoLista(this.notas);
 
@@ -103,7 +106,7 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 
 			if (!TSUtil.isEmpty(nota.isSelecionado()) && nota.isSelecionado()) {
 
-				nota.setLinhas(notaFiscalSaidaLinhaDAO.pesquisar(nota));
+				nota.setLinhas(notaFiscalSaidaLinhaDAO.pesquisarInterface(nota, Constantes.JNDI_SAP_SERVICO_LOCAL));
 
 				if (!TSUtil.isEmpty(nota.getLinhas())) {
 
@@ -128,13 +131,24 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 
 				notaFiscal.setDataCriacao(new Timestamp(System.currentTimeMillis()));
 
-				NotaFiscalSaida model = new NotaFiscalSaidaRestful().inserirLote(notaFiscal, Constantes.URL_RESTFUL_BRAZUCA_LOCAL);
+				NotaFiscalSaida model = new NotaFiscalSaidaRestful().inserirLote(notaFiscal, Constantes.URL_RESTFUL_BRAZUCA_MATRIZ);
 
 				if (TSUtil.isEmpty(model.getMensagemErro())) {
 
 					this.notas.remove(notaFiscal);
 
 					notaFiscal.setStatus(new Status(Constantes.ID_STATUS_PROCESSADO));
+
+					new HistoricoNotaFiscalSaidaDAO().inserirInterface(this.popularHistorico(notaFiscal), Constantes.JNDI_SAP_SERVICO_LOCAL);
+					
+					new HistoricoNotaFiscalSaidaDAO().inserirInterface(this.popularHistorico(notaFiscal), Constantes.JNDI_SAP_SERVICO_MATRIZ);					
+					
+					new NotaFiscalSaidaDAO().excluirInterface(notaFiscal, Constantes.JNDI_SAP_SERVICO_LOCAL);
+					
+					TSFacesUtil.addInfoMessage("Pedido com número " + notaFiscal.getPedidoVenda().getId() + " exportado com sucesso.");
+					
+					
+					
 
 					HistoricoNotaFiscalSaida historicoNotaFiscalSaida = new HistoricoNotaFiscalSaida(notaFiscal);
 
@@ -160,9 +174,71 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 		return null;
 	}
 
+	private HistoricoNotaFiscalSaida popularHistorico(NotaFiscalSaida model) {
+
+		HistoricoNotaFiscalSaida h = new HistoricoNotaFiscalSaida();
+		
+		h.setCliente(model.getCliente());
+		
+		h.setCondicaoPagamento(model.getCondicaoPagamento());
+		
+		h.setDataDocumento(model.getDataDocumento());
+		
+		h.setDataEmissao(model.getDataEmissao());
+		
+		h.setDataDocumento(model.getDataDocumento());
+		
+		h.setDataExportacao(model.getDataExportacao());
+		
+		h.setDataLancamento(model.getDataLancamento());
+		
+		h.setDataImportacao(model.getDataImportacao());
+		
+		h.setEmpresa(model.getEmpresa());
+		
+		h.setEnderecoCobrancaFormatado(model.getEnderecoCobrancaFormatado());
+		
+		h.setEnderecoEntregaFormatado(model.getEnderecoEntregaFormatado());
+		
+		h.setId(model.getId());
+		
+		h.setIdExterno(model.getIdExterno());
+		
+		h.setLinhas(model.getLinhas());
+		
+		h.setObservacao(model.getObservacao());
+		
+		h.setOrigem(model.getOrigem());
+		
+		h.setParcelaNotaFiscalSaida(model.getParcelaNotaFiscalSaida());
+		
+		h.setParcelaNotaFiscalSaidaList(model.getParcelaNotaFiscalSaidaList());
+		
+		h.setSequencia(model.getSequencia());
+		
+		h.setPercentualDesconto(model.getPercentualDesconto());
+		
+		h.setSerial(model.getSerial());
+		
+		h.setStatus(model.getStatus());
+		
+		h.setTipo(model.getTipo());
+		
+		h.setTipoEnvio(model.getTipoEnvio());
+		
+		h.setTipoResumo(model.getTipoResumo());
+		
+		h.setValor(model.getValor());
+		
+		h.setVendedor(model.getVendedor());
+
+		return h;
+
+	}
+
 	public String pesquisarInterfaceMatriz() {
 
-		this.notasInterface = new NotaFiscalSaidaDAO().pesquisarInterfaceMatriz(new NotaFiscalSaida());
+		this.notasInterface = new NotaFiscalSaidaDAO().pesquisarInterface(new NotaFiscalSaida(), Constantes.JNDI_SAP_SERVICO_MATRIZ);
 
 		TSFacesUtil.gerarResultadoLista(this.notasInterface);
 
@@ -176,13 +252,11 @@ public class ExportacaoPdvFaces extends TSMainFaces {
 
 		super.setDefaultMessage(false);
 
-		HistoricoNotaFiscalSaidaDAO historicoNotaFiscalSaidaDAO = new HistoricoNotaFiscalSaidaDAO();
+		new NotaFiscalSaidaDAO().excluirInterface(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_SERVICO_MATRIZ);
 
-		new NotaFiscalSaidaDAO().excluirInterfaceMatriz(this.notaFiscalSaidaInterface);
+		new HistoricoNotaFiscalSaidaDAO().excluir(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_MATRIZ);
 
-		historicoNotaFiscalSaidaDAO.excluir(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_MATRIZ);
-
-		historicoNotaFiscalSaidaDAO.excluir(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_LOCAL);
+		new HistoricoNotaFiscalSaidaDAO().excluir(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_LOCAL);
 
 		this.notasInterface.remove(this.notaFiscalSaidaInterface);
 
