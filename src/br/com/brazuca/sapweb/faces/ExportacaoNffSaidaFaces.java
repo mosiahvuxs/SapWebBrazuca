@@ -9,12 +9,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.brazuca.sapweb.dao.HistoricoNotaFiscalSaidaDAO;
-import br.com.brazuca.sapweb.dao.HistoricoPedidoVendaDAO;
 import br.com.brazuca.sapweb.dao.NotaFiscalSaidaDAO;
 import br.com.brazuca.sapweb.dao.NotaFiscalSaidaLinhaDAO;
-import br.com.brazuca.sapweb.dao.PedidoVendaDAO;
 import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaida;
-import br.com.brazuca.sapweb.model.HistoricoPedidoVenda;
 import br.com.brazuca.sapweb.restful.NotaFiscalSaidaRestful;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
@@ -125,8 +122,6 @@ public class ExportacaoNffSaidaFaces extends TSMainFaces {
 
 		if (!TSUtil.isEmpty(notasFiscais)) {
 
-			HistoricoNotaFiscalSaidaDAO historicoNotaFiscalSaidaDAO = new HistoricoNotaFiscalSaidaDAO();
-
 			for (NotaFiscalSaida notaFiscal : notasFiscais) {
 
 				notaFiscal.setDataCriacao(new Timestamp(System.currentTimeMillis()));
@@ -145,17 +140,6 @@ public class ExportacaoNffSaidaFaces extends TSMainFaces {
 					
 					new NotaFiscalSaidaDAO().excluirInterface(notaFiscal, Constantes.JNDI_SAP_SERVICO_LOCAL);
 					
-					TSFacesUtil.addInfoMessage("Pedido com número " + notaFiscal.getPedidoVenda().getId() + " exportado com sucesso.");
-					
-					
-					
-
-					HistoricoNotaFiscalSaida historicoNotaFiscalSaida = new HistoricoNotaFiscalSaida(notaFiscal);
-
-					historicoNotaFiscalSaidaDAO.inserir(historicoNotaFiscalSaida, null);
-
-					historicoNotaFiscalSaidaDAO.inserir(historicoNotaFiscalSaida, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_MATRIZ);
-
 					TSFacesUtil.addInfoMessage("Pedido com número " + notaFiscal.getPedidoVenda().getId() + " exportado com sucesso.");
 
 				} else {
@@ -231,6 +215,8 @@ public class ExportacaoNffSaidaFaces extends TSMainFaces {
 		h.setValor(model.getValor());
 		
 		h.setVendedor(model.getVendedor());
+		
+		h.setPedidoVenda(model.getPedidoVenda());
 
 		return h;
 

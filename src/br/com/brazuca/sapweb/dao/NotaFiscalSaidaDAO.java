@@ -1,10 +1,8 @@
 package br.com.brazuca.sapweb.dao;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
-import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
@@ -41,7 +39,7 @@ public class NotaFiscalSaidaDAO {
 
 		broker.endTransaction();
 	}
-*/
+
 	public void inserir(List<NotaFiscalSaida> notasFiscais) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
@@ -68,7 +66,7 @@ public class NotaFiscalSaidaDAO {
 
 		broker.endTransaction();
 	}
-
+*/
 	@SuppressWarnings("unchecked")
 	public List<NotaFiscalSaida> pesquisarInterface(NotaFiscalSaida model, String jndi) {
 

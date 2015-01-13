@@ -5,7 +5,7 @@ public class NotaFiscalSaidaLinha extends DocumentoLinhaAB{
 	
 	private Long interfaceId;
 	private NotaFiscalSaida notaFiscalSaida;
-	private PedidoVendaLinha pedidoVendaLinha;
+	private PedidoVenda pedidoVenda;
 	
 	public Long getInterfaceId() {
 		return interfaceId;
@@ -19,11 +19,11 @@ public class NotaFiscalSaidaLinha extends DocumentoLinhaAB{
 	public void setNotaFiscalSaida(NotaFiscalSaida notaFiscalSaida) {
 		this.notaFiscalSaida = notaFiscalSaida;
 	}
-	public PedidoVendaLinha getPedidoVendaLinha() {
-		return pedidoVendaLinha;
+	public PedidoVenda getPedidoVenda() {
+		return pedidoVenda;
 	}
-	public void setPedidoVendaLinha(PedidoVendaLinha pedidoVendaLinha) {
-		this.pedidoVendaLinha = pedidoVendaLinha;
+	public void setPedidoVenda(PedidoVenda pedidoVenda) {
+		this.pedidoVenda = pedidoVenda;
 	}
 	
 	

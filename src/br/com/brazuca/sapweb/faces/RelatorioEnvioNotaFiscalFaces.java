@@ -14,7 +14,6 @@ import br.com.brazuca.sapweb.dao.HistoricoNotaFiscalSaidaLinhaDAO;
 import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaida;
 import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.report.JasperUtil;
-import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
@@ -36,8 +35,7 @@ public class RelatorioEnvioNotaFiscalFaces {
 		this.historicoNotaFiscalSaida = new HistoricoNotaFiscalSaida();
 		this.historicoNotaFiscalSaida.setDataInicial(new Date());
 		this.historicoNotaFiscalSaida.setDataFinal(new Date());
-		this.historicoNotaFiscalSaida.setNotaFiscalSaida(new NotaFiscalSaida());
-		this.historicoNotaFiscalSaida.getNotaFiscalSaida().setPedidoVenda(new PedidoVenda());
+		this.historicoNotaFiscalSaida.setPedidoVenda(new PedidoVenda());
 
 		this.historicosLinhas = new ArrayList<HistoricoNotaFiscalSaidaLinha>();
 	}

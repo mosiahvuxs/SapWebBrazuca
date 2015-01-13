@@ -7,11 +7,10 @@ import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
-import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 
 public class NotaFiscalSaidaLinhaDAO {
-
+/*
 	public void inserir(NotaFiscalSaidaLinha model, TSDataBaseBrokerIf broker) throws TSApplicationException {
 
 		broker.setPropertySQL("notafiscalsaidalinhadao.inserir",
@@ -23,7 +22,7 @@ public class NotaFiscalSaidaLinhaDAO {
 		broker.execute();
 
 	}
-
+*/
 	@SuppressWarnings("unchecked")
 	public List<NotaFiscalSaidaLinha> pesquisarInterface(NotaFiscalSaida model, String jndi) {
 

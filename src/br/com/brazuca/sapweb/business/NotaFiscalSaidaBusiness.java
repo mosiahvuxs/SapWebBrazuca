@@ -48,8 +48,8 @@ public class NotaFiscalSaidaBusiness {
 			saidaLinha.setValor(linha.getValor());
 			saidaLinha.setCodigoImposto(linha.getCodigoImposto());
 			saidaLinha.setCodigoBarras(linha.getCodigoBarras());
-			saidaLinha.setPedidoVendaLinha(linha);
-			saidaLinha.getPedidoVendaLinha().setPedidoVenda(new PedidoVenda(model.getId()));
+			//saidaLinha.setPedidoVendaLinha(linha);
+			saidaLinha.setPedidoVenda(new PedidoVenda(model.getId()));
 
 			notaFiscal.getLinhas().add(saidaLinha);
 

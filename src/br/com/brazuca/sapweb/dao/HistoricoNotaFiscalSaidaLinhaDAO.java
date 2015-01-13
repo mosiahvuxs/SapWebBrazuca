@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaida;
 import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaidaLinha;
+import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.util.Utilitarios;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
@@ -13,19 +14,21 @@ import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 
 public class HistoricoNotaFiscalSaidaLinhaDAO {
-
-	public void inserir(HistoricoNotaFiscalSaidaLinha model, TSDataBaseBrokerIf broker) throws TSApplicationException {
+/*
+	public void inserir(NotaFiscalSaidaLinha model, TSDataBaseBrokerIf broker) throws TSApplicationException {
 
 		broker.setPropertySQL("historiconotafiscalsaidalinhadao.inserir",
 
-		model.getHistoricoNotaFiscalSaida().getId(), model.getNotaFiscalSaidaLinha().getItem().getId(), model.getNotaFiscalSaidaLinha().getQuantidade(), model.getNotaFiscalSaidaLinha().getValorUnitario(), model.getNotaFiscalSaidaLinha().getValor(),
+		model.getId(), model.getItem().getId(), model.getQuantidade(), model.getValorUnitario(), model.getValor(),
 
-		model.getNotaFiscalSaidaLinha().getCodigoImposto().getId(), model.getNotaFiscalSaidaLinha().getCodigoBarras(), model.getNotaFiscalSaidaLinha().getPedidoVendaLinha().getNumero(), model.getNotaFiscalSaidaLinha().getPedidoVendaLinha().getPedidoVenda().getId(), model.getNotaFiscalSaidaLinha().getItem().getDescricao());
+		model.getCodigoImposto().getId(), model.getCodigoBarras(), model.getPedidoVendaLinha().getNumero(), model.getPedidoVendaLinha().getPedidoVenda().getId(), 
+		
+		model.getItem().getDescricao());
 
 		broker.execute();
 
 	}
-
+*/
 	@SuppressWarnings("unchecked")
 	public List<HistoricoNotaFiscalSaidaLinha> pesquisar(HistoricoNotaFiscalSaida model) {
 
@@ -33,7 +36,7 @@ public class HistoricoNotaFiscalSaidaLinhaDAO {
 
 		StringBuilder sql = new StringBuilder("SELECT H.CLIENTE_NOME, HL.ID, HL.HISTORICO_NOTAFISCALSAIDA_ID, H.DATA_DOCUMENTO, H.DATA_LANCAMENTO, H.PEDIDO_VENDA_ID, H.DATA_EXPORTACAO, HL.ITEM_ID, HL.QUANTIDADE, HL.VALOR_UNITARIO, HL.VALOR, HL.CODIGO_IMPOSTO_ID, HL.CODIGO_BARRAS, HL.PEDIDO_VENDA_LINHA_NUMERO, HL.ITEM_DESCRICAO FROM PUBLIC.HISTORICO_NOTAFISCALSAIDA_LINHAS HL, PUBLIC.HISTORICO_NOTAFISCALSAIDA H WHERE HL.HISTORICO_NOTAFISCALSAIDA_ID = H.ID");
 
-		if (!TSUtil.isEmpty(model.getNotaFiscalSaida()) && !TSUtil.isEmpty(model.getNotaFiscalSaida().getPedidoVenda()) && !TSUtil.isEmpty(model.getNotaFiscalSaida().getPedidoVenda()) && !TSUtil.isEmpty(Utilitarios.tratarLong(model.getNotaFiscalSaida().getPedidoVenda().getId()))) {
+		if (!TSUtil.isEmpty(model) && !TSUtil.isEmpty(model.getPedidoVenda()) && !TSUtil.isEmpty(Utilitarios.tratarLong(model.getPedidoVenda().getId()))) {
 
 			sql.append(" AND HL.PEDIDO_VENDA_ID = ?");
 		}
@@ -52,9 +55,9 @@ public class HistoricoNotaFiscalSaidaLinhaDAO {
 
 		broker.setSQL(sql.toString());
 
-		if (!TSUtil.isEmpty(model.getNotaFiscalSaida()) && !TSUtil.isEmpty(model.getNotaFiscalSaida().getPedidoVenda()) && !TSUtil.isEmpty(model.getNotaFiscalSaida().getPedidoVenda()) && !TSUtil.isEmpty(Utilitarios.tratarLong(model.getNotaFiscalSaida().getPedidoVenda().getId()))) {
+		if (!TSUtil.isEmpty(model) && !TSUtil.isEmpty(model.getPedidoVenda()) && !TSUtil.isEmpty(Utilitarios.tratarLong(model.getPedidoVenda().getId()))) {
 
-			broker.set(model.getNotaFiscalSaida().getPedidoVenda().getId());
+			broker.set(model.getPedidoVenda().getId());
 		}
 
 		if (!TSUtil.isEmpty(model.getDataInicial())) {
@@ -71,8 +74,21 @@ public class HistoricoNotaFiscalSaidaLinhaDAO {
 
 		return broker.getCollectionBean(HistoricoNotaFiscalSaidaLinha.class, 
 				
-		"historicoNotaFiscalSaida.notaFiscalSaida.cliente.nome", "id", "historicoNotaFiscalSaida.id", "dataDocumento", "dataLancamento", "notaFiscalSaidaLinha.pedidoVendaLinha.pedidoVenda.id", "dataExportacao",
-		"notaFiscalSaidaLinha.item.id", "notaFiscalSaidaLinha.quantidade", "notaFiscalSaidaLinha.valorUnitario", "notaFiscalSaidaLinha.valor", "notaFiscalSaidaLinha.codigoImposto.id", "notaFiscalSaidaLinha.codigoBarras", "notaFiscalSaidaLinha.pedidoVendaLinha.numero", "notaFiscalSaidaLinha.item.descricao");
+		"notaFiscalSaida.cliente.nome", "id", "notaFiscalSaida.id", "notaFiscalSaida.dataDocumento", "notaFiscalSaida.dataLancamento", "pedidoVenda.id", "notaFiscalSaida.dataExportacao",
+		"item.id", "quantidade", "valorUnitario", "valor", "codigoImposto.id", 
+		"codigoBarras", "numero", "item.descricao");
+	}
+
+	public void inserirComBroker(NotaFiscalSaidaLinha model, TSDataBaseBrokerIf broker) throws TSApplicationException {
+
+		model.setInterfaceId(broker.getSequenceNextValue("historico_pedidovenda_linhas_id_seq"));
+
+		broker.setPropertySQL("historiconotafiscalsaidalinhadao.inserirComBroker", model.getInterfaceId(), model.getNotaFiscalSaida().getInterfaceId(), model.getItem().getId(), model.getQuantidade(), model.getValorUnitario(),
+				                  model.getValor(), model.getCodigoImposto().getId(), model.getCstCOFINS().getId(), model.getCstICMS().getId(), model.getCstIPI().getId(), model.getCstPIS().getId(), model.getContaContabil().getId(), model.getCfop().getCodigo(), model.getCodigoBarras(), model.getUtilizacao().getId(),
+				                  model.getPedidoVenda().getId());
+		
+		broker.execute();
+		
 	}
 
 }
