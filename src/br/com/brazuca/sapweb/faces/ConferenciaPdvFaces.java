@@ -59,8 +59,10 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 	public void clearFields() {
 
 		this.pedidoVenda = new PedidoVenda();
+		this.pedidoVenda.setEmpresa(this.empresa);
 		this.pedidoVendaPesquisa = new PedidoVenda();
 		this.pedidoVendaPesquisa.setCliente(new ParceiroNegocio());
+		this.pedidoVendaPesquisa.setEmpresa(this.empresa);
 		this.pedidoVendaLinha = new PedidoVendaLinha();
 		this.pedidos = new ArrayList<PedidoVenda>();
 		this.quantidade = 1;
@@ -255,7 +257,9 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 			if (TSUtil.isEmpty(nota.getMensagemErro())) {
 				
-				this.pedidos.remove(this.pedidoVenda);				
+				this.pedidos.remove(this.pedidoVenda);	
+				
+				new PedidoVendaDAO().excluir(this.pedidoVenda);
 				
 				this.limparCampos = true;
 

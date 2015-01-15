@@ -72,7 +72,7 @@ public class NotaFiscalSaidaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
 
-		StringBuilder sql = new StringBuilder("SELECT PEDIDO_VENDA_ID, ID, DATA_LANCAMENTO, DATA_DOCUMENTO, CONDICAO_PAGAMENTO_ID, VALOR, DATA_EXPORTACAO, DATA_IMPORTACAO, DATA_ATUALIZACAO, CLIENTE_NOME, VENDEDOR_NOME, ID_EXTERNO, EMPRESA_ID, CLIENTE_ID, VENDEDOR_ID, ENDERECO_ENTREGA, ENDERECO_COBRANCA, CLIENTE_IDENTIFICADOR_FEDERAL, OBSERVACAO, TIPO_RESUMO, TIPO, TIPO_ENVIO FROM PUBLIC.NOTAFISCALSAIDA WHERE 1 = 1");
+		StringBuilder sql = new StringBuilder("SELECT ID, DATA_LANCAMENTO, DATA_DOCUMENTO, DATA_VENCIMENTO, CONDICAO_PAGAMENTO_ID, VALOR, DATA_EXPORTACAO, DATA_IMPORTACAO, DATA_ATUALIZACAO, SEQUENCIA_ID, STATUS_ID, MENSAGEM_ERRO, CLIENTE_TIPO_IDENTIFICADOR, CLIENTE_IDENTIFICADOR, CLIENTE_NOME, CLIENTE_NOME_FANTASIA, CLIENTE_TELEFONE_RESIDENCIAL, CLIENTE_TELEFONE_CELULAR, CLIENTE_FAX, CLIENTE_EMAIL, CLIENTE_OBSERVACAO, CLIENTE_ENDERECO_LOGRADOURO, CLIENTE_ENDERECO_NUMERO, CLIENTE_ENDERECO_COMPLEMENTO, CLIENTE_ENDERECO_BAIRRO, CLIENTE_ENDERECO_CIDADE, CLIENTE_ENDERECO_ESTADO, CLIENTE_ENDERECO_CEP, CLIENTE_ENDERECO_PAIS, CLIENTE_ENDERECO_MUNICIPIO, CLIENTE_INSCRICAO_ESTADUAL, CLIENTE_INSCRICAO_ESTADUAL_SUBTRIB, CLIENTE_INSCRICAO_MUNICIPAL, CLIENTE_INSCRICAO_INSS, CLIENTE_DATA_ATUALIZACAO, CLIENTE_CLASSIFICACAO_ID, VENDEDOR_TIPO_IDENTIFICADOR, VENDEDOR_IDENTIFICADOR, VENDEDOR_NOME, VENDEDOR_DATA_ATUALIZACAO, VENDEDOR_GRUPO_COMISSAO_ID, ID_EXTERNO, EMPRESA_ID, CLIENTE_TIPO, CLIENTE_ID, VENDEDOR_ID, ENDERECO_ENTREGA, ENDERECO_COBRANCA, CLIENTE_IDENTIFICADOR_FEDERAL, OBSERVACAO, TIPO_RESUMO, TIPO, TIPO_ENVIO, PEDIDO_VENDA_ID FROM NOTAFISCALSAIDA WHERE 1 = 1");
 
 		if (!TSUtil.isEmpty(model.getId())) {
 
@@ -170,7 +170,21 @@ public class NotaFiscalSaidaDAO {
 
 		}
 
-		return broker.getCollectionBean(NotaFiscalSaida.class, "pedidoVenda.id", "id", "dataLancamento", "dataDocumento", "condicaoPagamento.id", "valor", "dataExportacao", "dataImportacao", "dataAtualizacao", "cliente.nome", "vendedor.nome", "idExterno", "empresa.id", "cliente.id", "vendedor.id", "enderecoEntregaFormatado", "enderecoCobrancaFormatado", "cliente.identificadorFederal", "observacao", "tipoResumo", "tipo", "tipoEnvio");
+        return broker.getCollectionBean(NotaFiscalSaida.class, "interfaceId", "dataLancamento", "dataDocumento", "dataVencimento", 
+				   "condicaoPagamento.id", "valor","dataExportacao", 
+				   "dataImportacao", "dataAtualizacao", "sequencia.id", "status.id",
+				   "mensagemErro", "cliente.identificadorFiscal.tipoIdentificador",
+				   "cliente.identificadorFiscal.identificador", "cliente.nome", "cliente.nomeFantasia",
+				   "cliente.telefoneResidencial", "cliente.telefoneCelular", "cliente.fax", "cliente.email",
+				   "cliente.observacao", "cliente.endereco.logradouro","cliente.endereco.numero",
+				   "cliente.endereco.complemento", "cliente.endereco.bairro", "cliente.endereco.cidade",
+				   "cliente.endereco.estado.id", "cliente.endereco.cep", "cliente.endereco.pais.id",
+				   "cliente.endereco.municipio.id", "cliente.identificadorFiscal.inscricaoEstadual",
+				   "cliente.identificadorFiscal.inscricaoEstadualSubstitutoTributaria", "cliente.identificadorFiscal.inscricaoMunicipal",
+				   "cliente.identificadorFiscal.inscricaoINSS", "cliente.dataAtualizacao", "cliente.classificacao.id", "vendedor.tipoIdentificador",
+				   "vendedor.identificador", "vendedor.nome", "vendedor.dataAtualizacao", "vendedor.grupoComissao.id", "idExterno", "empresa.id", "cliente.tipo", "cliente.id",
+				   "vendedor.id", "enderecoEntregaFormatado", "enderecoCobrancaFormatado", "cliente.identificadorFederal", "observacao", "tipoResumo", "tipo", "tipoEnvio", "pedidoVenda.id");
+
 	}
 
 	public void excluir(NotaFiscalSaida model, TSDataBaseBrokerIf broker) throws TSApplicationException {
@@ -185,7 +199,7 @@ public class NotaFiscalSaidaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
 
-		broker.setPropertySQL("notafiscalsaidadao.excluir", model.getId());
+		broker.setPropertySQL("notafiscalsaidadao.excluir", model.getInterfaceId());
 
 		broker.execute();
 

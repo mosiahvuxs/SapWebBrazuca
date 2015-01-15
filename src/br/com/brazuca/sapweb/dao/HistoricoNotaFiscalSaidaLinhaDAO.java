@@ -81,11 +81,11 @@ public class HistoricoNotaFiscalSaidaLinhaDAO {
 
 	public void inserirComBroker(NotaFiscalSaidaLinha model, TSDataBaseBrokerIf broker) throws TSApplicationException {
 
-		model.setInterfaceId(broker.getSequenceNextValue("historico_pedidovenda_linhas_id_seq"));
+		model.setInterfaceId(broker.getSequenceNextValue("historico_notafiscalsaida_linhas_id_seq"));
 
 		broker.setPropertySQL("historiconotafiscalsaidalinhadao.inserirComBroker", model.getInterfaceId(), model.getNotaFiscalSaida().getInterfaceId(), model.getItem().getId(), model.getQuantidade(), model.getValorUnitario(),
 				                  model.getValor(), model.getCodigoImposto().getId(), model.getCstCOFINS().getId(), model.getCstICMS().getId(), model.getCstIPI().getId(), model.getCstPIS().getId(), model.getContaContabil().getId(), model.getCfop().getCodigo(), model.getCodigoBarras(), model.getUtilizacao().getId(),
-				                  model.getPedidoVenda().getId());
+				                  model.getPedidoVendaLinha().getNumero(), model.getPedidoVendaLinha().getPedidoVenda().getId());
 		
 		broker.execute();
 		

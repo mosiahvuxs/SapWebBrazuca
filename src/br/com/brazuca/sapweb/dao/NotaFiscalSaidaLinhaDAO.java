@@ -10,27 +10,18 @@ import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.util.TSUtil;
 
 public class NotaFiscalSaidaLinhaDAO {
-/*
-	public void inserir(NotaFiscalSaidaLinha model, TSDataBaseBrokerIf broker) throws TSApplicationException {
 
-		broker.setPropertySQL("notafiscalsaidalinhadao.inserir",
-
-		model.getNotaFiscalSaida().getId(), model.getItem().getId(), model.getQuantidade(), model.getValorUnitario(), model.getValor(),
-
-		model.getCodigoImposto().getId(), model.getCodigoBarras(), model.getPedidoVendaLinha().getNumero(), model.getPedidoVendaLinha().getPedidoVenda().getId(), model.getItem().getDescricao());
-
-		broker.execute();
-
-	}
-*/
 	@SuppressWarnings("unchecked")
 	public List<NotaFiscalSaidaLinha> pesquisarInterface(NotaFiscalSaida model, String jndi) {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
 
-		broker.setPropertySQL("notafiscalsaidalinhadao.pesquisar", model.getId());
+		broker.setPropertySQL("notafiscalsaidalinhadaoI.pesquisarInterface", model.getInterfaceId());
+		
+		return broker.getCollectionBean(NotaFiscalSaidaLinha.class, "interfaceId", "notaFiscalSaida.interfaceId", "item.id", "quantidade", "valorUnitario",
+																	"valor", "codigoImposto.id", "cstCOFINS.codigo", "cstICMS.codigo", "cstIPI.codigo", "cstPIS.codigo", "contaContabil.id", "cfop.codigo", "codigoBarras",
+																	"pedidoVendaLinha.numero", "pedidoVendaLinha.pedidoVenda.id", "item.descricao", "utilizacao.id");
 
-		return broker.getCollectionBean(NotaFiscalSaidaLinha.class, "id", "notaFiscalSaida.id", "item.id", "quantidade", "valorUnitario", "valor", "codigoImposto.id", "codigoBarras", "pedidoVendaLinha.numero", "pedidoVendaLinha.pedidoVenda.id", "item.descricao");
 	}
 
 	public NotaFiscalSaidaLinha pesquisarPorPedidoVenda(PedidoVenda model, String jndi) {
@@ -46,7 +37,7 @@ public class NotaFiscalSaidaLinhaDAO {
 			broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 		}
 
-		broker.setPropertySQL("notafiscalsaidalinhadao.pesquisarPorPedidoVenda", model.getId());
+		broker.setPropertySQL("notafiscalsaidalinhadaoI.pesquisarPorPedidoVenda", model.getId());
 
 		return (NotaFiscalSaidaLinha) broker.getObjectBean(NotaFiscalSaidaLinha.class, "id", "notaFiscalSaida.id", "item.id", "quantidade", "valorUnitario", "valor", "codigoImposto.id", "codigoBarras", "pedidoVendaLinha.numero", "pedidoVendaLinha.pedidoVenda.id", "item.descricao");
 	}

@@ -8,9 +8,11 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.brazuca.sapweb.dao.EmpresaDAO;
 import br.com.brazuca.sapweb.dao.HistoricoNotaFiscalSaidaDAO;
 import br.com.brazuca.sapweb.dao.NotaFiscalSaidaDAO;
 import br.com.brazuca.sapweb.dao.NotaFiscalSaidaLinhaDAO;
+import br.com.brazuca.sapweb.model.Empresa;
 import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaida;
 import br.com.brazuca.sapweb.restful.NotaFiscalSaidaRestful;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
@@ -33,11 +35,20 @@ public class ExportacaoNffSaidaFaces extends TSMainFaces {
 	private List<NotaFiscalSaida> notas;
 	private List<NotaFiscalSaida> notasInterface;
 	private boolean todos;
+	private Empresa empresa;
 
 	public ExportacaoNffSaidaFaces() {
+		
+		this.initObjetosNaSecao();
 
 		this.limpar();
 	}
+	
+	private void initObjetosNaSecao() {
+
+		this.setEmpresa((Empresa) TSFacesUtil.getObjectInSession(Constantes.EMPRESA));
+
+	}	
 
 	public void limpar() {
 
@@ -97,13 +108,14 @@ public class ExportacaoNffSaidaFaces extends TSMainFaces {
 		super.setDefaultMessage(false);
 
 		List<NotaFiscalSaida> notasFiscais = new ArrayList<NotaFiscalSaida>();
-		NotaFiscalSaidaLinhaDAO notaFiscalSaidaLinhaDAO = new NotaFiscalSaidaLinhaDAO();
 
 		for (NotaFiscalSaida nota : this.notas) {
 
 			if (!TSUtil.isEmpty(nota.isSelecionado()) && nota.isSelecionado()) {
+				
+				nota.setEmpresa(new EmpresaDAO().obter(this.empresa));
 
-				nota.setLinhas(notaFiscalSaidaLinhaDAO.pesquisarInterface(nota, Constantes.JNDI_SAP_SERVICO_LOCAL));
+				nota.setLinhas(new NotaFiscalSaidaLinhaDAO().pesquisarInterface(nota, Constantes.JNDI_SAP_SERVICO_LOCAL));
 
 				if (!TSUtil.isEmpty(nota.getLinhas())) {
 
@@ -240,9 +252,9 @@ public class ExportacaoNffSaidaFaces extends TSMainFaces {
 
 		new NotaFiscalSaidaDAO().excluirInterface(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_SERVICO_MATRIZ);
 
-		new HistoricoNotaFiscalSaidaDAO().excluir(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_MATRIZ);
+		new HistoricoNotaFiscalSaidaDAO().excluirInterface(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_MATRIZ);
 
-		new HistoricoNotaFiscalSaidaDAO().excluir(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_LOCAL);
+		new HistoricoNotaFiscalSaidaDAO().excluirInterface(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_LOCAL);
 
 		this.notasInterface.remove(this.notaFiscalSaidaInterface);
 
@@ -289,6 +301,14 @@ public class ExportacaoNffSaidaFaces extends TSMainFaces {
 
 	public void setNotaFiscalSaidaInterface(NotaFiscalSaida notaFiscalSaidaInterface) {
 		this.notaFiscalSaidaInterface = notaFiscalSaidaInterface;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 }

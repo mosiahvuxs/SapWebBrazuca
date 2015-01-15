@@ -1,101 +1,14 @@
 package br.com.brazuca.sapweb.dao;
 
-import java.util.List;
-
 import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaida;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaida;
 import br.com.brazuca.sapweb.sap.model.NotaFiscalSaidaLinha;
-import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
-import br.com.topsys.util.TSDateUtil;
-import br.com.topsys.util.TSParseUtil;
-import br.com.topsys.util.TSUtil;
 
 public class HistoricoNotaFiscalSaidaDAO {
-
-/*	
-	public void inserir(HistoricoNotaFiscalSaida model, String jndi) throws TSApplicationException {
-
-		TSDataBaseBrokerIf broker = null;
-
-		if (TSUtil.isEmpty(jndi)) {
-
-			broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
-
-		} else {
-
-			broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
-		}
-
-		broker.beginTransaction();
-
-		model.setId(broker.getSequenceNextValue("historico_notafiscalsaida_id_seq"));
-
-		broker.setPropertySQL("historiconotafiscalsaidadao.inserir",
-
-		model.getId(), model.getDataLancamento(), model.getDataDocumento(), model.getDataVencimento(), model.getCondicaoPagamento().getId(), model.getValor(), 
-	    new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getCliente().getNome(), model.getVendedor().getNome(), 
-	    model.getIdExterno(), model.getEmpresa().getId(), model.getCliente().getId(), model.getVendedor().getId(), model.getEnderecoEntregaFormatado(), 
-	    model.getEnderecoCobrancaFormatado(), model.getCliente().getIdentificadorFederal(), model.getObservacao(), model.getTipoResumo(), 
-	    model.getTipo(), model.getTipoEnvio(), model.getStatus().getId(), model.getPedidoVenda().getId());
-
-		broker.execute();
-
-		HistoricoNotaFiscalSaidaLinhaDAO historicoNotaFiscalSaidaLinhaDAO = new HistoricoNotaFiscalSaidaLinhaDAO();
-
-		for (NotaFiscalSaidaLinha linha : model.getLinhas()) {
-
-			HistoricoNotaFiscalSaidaLinha historicoNotaFiscalSaidaLinha = new HistoricoNotaFiscalSaidaLinha();
-			historicoNotaFiscalSaidaLinha.setHistoricoNotaFiscalSaida(model);
-			historicoNotaFiscalSaidaLinha.setNotaFiscalSaidaLinha(linha);
-
-			historicoNotaFiscalSaidaLinhaDAO.inserir(historicoNotaFiscalSaidaLinha, broker);
-		}
-
-		new NotaFiscalSaidaDAO().excluir(model, broker);
-
-		broker.endTransaction();
-	}
-
-	public void inserir(List<HistoricoNotaFiscalSaida> notasFiscais) throws TSApplicationException {
-
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
-
-		broker.beginTransaction();
-
-		for (HistoricoNotaFiscalSaida model : notasFiscais) {
-
-			model.setId(broker.getSequenceNextValue("historico_notafiscalsaida_id_seq"));
-
-			broker.setPropertySQL("historiconotafiscalsaidadao.inserir",
-
-			model.getId(), model.getDataLancamento(), model.getDataDocumento(), model.getDataVencimento(), model.getCondicaoPagamento().getId(), model.getValor(), 
-		    new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getCliente().getNome(), model.getVendedor().getNome(), 
-		    model.getIdExterno(), model.getEmpresa().getId(), model.getCliente().getId(), model.getVendedor().getId(), model.getEnderecoEntregaFormatado(), 
-		    model.getEnderecoCobrancaFormatado(), model.getCliente().getIdentificadorFederal(), model.getObservacao(), model.getTipoResumo(), model.getTipo(),
-			model.getTipoEnvio(), model.getStatus().getId(), model.getPedidoVenda().getId());
-
-			broker.execute();
-
-			HistoricoNotaFiscalSaidaLinhaDAO historicoNotaFiscalSaidaLinhaDAO = new HistoricoNotaFiscalSaidaLinhaDAO();
-
-			for (NotaFiscalSaidaLinha linha : model.getLinhas()) {
-
-				HistoricoNotaFiscalSaidaLinha historicoNotaFiscalSaidaLinha = new HistoricoNotaFiscalSaidaLinha();
-				historicoNotaFiscalSaidaLinha.setHistoricoNotaFiscalSaida(model);
-				historicoNotaFiscalSaidaLinha.setNotaFiscalSaidaLinha(linha);
-
-				historicoNotaFiscalSaidaLinhaDAO.inserir(historicoNotaFiscalSaidaLinha, broker);
-			}
-
-			new NotaFiscalSaidaDAO().excluir(model, broker);
-		}
-
-		broker.endTransaction();
-	}
-*/
+/*
 	@SuppressWarnings("unchecked")
 	public List<HistoricoNotaFiscalSaida> pesquisar(HistoricoNotaFiscalSaida model) {
 
@@ -140,8 +53,8 @@ public class HistoricoNotaFiscalSaidaDAO {
 
 		return broker.getCollectionBean(HistoricoNotaFiscalSaida.class, "notaFiscalSaida.pedidoVenda.id", "id", "notaFiscalSaida.dataLancamento", "notaFiscalSaida.dataDocumento", "notaFiscalSaida.dataVencimento", "notaFiscalSaida.condicaoPagamento.id", "notaFiscalSaida.valor", "notaFiscalSaida.dataExportacao", "notaFiscalSaida.dataImportacao", "notaFiscalSaida.dataAtualizacao", "notaFiscalSaida.cliente.nome", "notaFiscalSaida.vendedor.nome", "notaFiscalSaida.idExterno", "notaFiscalSaida.empresa.id", "notaFiscalSaida.cliente.id", "notaFiscalSaida.vendedor.id", "notaFiscalSaida.enderecoEntregaFormatado", "notaFiscalSaida.enderecoCobrancaFormatado", "notaFiscalSaida.cliente.identificadorFederal", "notaFiscalSaida.observacao", "notaFiscalSaida.tipoResumo", "notaFiscalSaida.tipo", "notaFiscalSaida.tipoEnvio");
 	}
-
-	public void excluir(NotaFiscalSaida model, String jndi) throws TSApplicationException {
+*/
+	public void excluirInterface(NotaFiscalSaida model, String jndi) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
 
@@ -157,30 +70,31 @@ public class HistoricoNotaFiscalSaidaDAO {
 		
 		broker.beginTransaction();
 		
-		model.setInterfaceId(broker.getSequenceNextValue("historico_pedidovenda_id_seq"));
+		model.setInterfaceId(broker.getSequenceNextValue("historico_notafiscalsaida_id_seq"));
 		
-		broker.setPropertySQL("historicopedidovendadao.inserir", model.getInterfaceId(), model.getDataLancamento(), model.getDataDocumento(), model.getDataVencimento(),
+		broker.setPropertySQL("historiconotafiscalsaidadao.inserir", model.getInterfaceId(), model.getDataLancamento(), model.getDataDocumento(), model.getDataVencimento(),
 				 													 model.getCondicaoPagamento().getId(), model.getValor(), model.getDataExportacao(), model.getDataImportacao(),
 				 													 model.getDataAtualizacao(), model.getSequencia().getId(), model.getStatus().getId(), model.getMensagemErro(),
 				 													 model.getCliente().getIdentificadorFiscal().getTipoIdentificador(), model.getCliente().getIdentificadorFiscal().getIdentificador(),
 				 													 model.getCliente().getNome(), model.getCliente().getNomeFantasia(), model.getCliente().getTelefoneResidencial(), model.getCliente().getTelefoneCelular(),
 				 													 model.getCliente().getFax(), model.getCliente().getEmail(), model.getCliente().getObservacao(), model.getCliente().getEndereco().getLogradouro(),
 				 													 model.getCliente().getEndereco().getNumero(), model.getCliente().getEndereco().getComplemento(), model.getCliente().getEndereco().getBairro(),
-				 													 model.getCliente().getEndereco().getCidade(), model.getCliente().getEndereco().getPais().getEstado().getId(), model.getCliente().getEndereco().getCep(),
+				 													 model.getCliente().getEndereco().getCidade(), model.getCliente().getEndereco().getEstado().getId(), model.getCliente().getEndereco().getCep(),
 				 													 model.getCliente().getEndereco().getPais().getId(), model.getCliente().getEndereco().getMunicipio().getId(),
 				 													 model.getCliente().getIdentificadorFiscal().getInscricaoEstadual(), model.getCliente().getIdentificadorFiscal().getInscricaoEstadualSubstitutoTributaria(),
 				 													 model.getCliente().getIdentificadorFiscal().getInscricaoMunicipal(), model.getCliente().getIdentificadorFiscal().getInscricaoINSS(),
 				 													 model.getCliente().getDataAtualizacao(), model.getCliente().getClassificacao().getId(), model.getVendedor().getTipoIdentificador(),
 				 													 model.getVendedor().getIdentificador(), model.getVendedor().getNome(), model.getVendedor().getDataAtualizacao(), model.getVendedor().getGrupoComissao().getId(),
-				 													 model.getIdExterno(), model.getEmpresa().getId(), model.getCliente().getTipo());
+				 													 model.getIdExterno(), model.getEmpresa().getId(), model.getCliente().getTipo(), model.getCliente().getId(), model.getVendedor().getId(), model.getEnderecoEntregaFormatado(),
+																	 model.getEnderecoCobrancaFormatado(),model.getCliente().getIdentificadorFederal(), model.getObservacao(), model.getTipoResumo(), model.getTipo(), model.getTipoEnvio(), model.getPedidoVenda().getId());
 		
 		broker.execute();
 		
 		for (NotaFiscalSaidaLinha linha : model.getLinhas()) {
 			
-			linha.setPedidoVenda(new PedidoVenda());
+			linha.setNotaFiscalSaida(new NotaFiscalSaida());
 			
-			linha.getPedidoVenda().setInterfaceId(model.getInterfaceId());
+			linha.getNotaFiscalSaida().setInterfaceId(model.getInterfaceId());
 			
 			new HistoricoNotaFiscalSaidaLinhaDAO().inserirComBroker(linha, broker);
 			
@@ -189,7 +103,6 @@ public class HistoricoNotaFiscalSaidaDAO {
 		broker.endTransaction();
 		
 		return model;
-		
 	}
 
 }

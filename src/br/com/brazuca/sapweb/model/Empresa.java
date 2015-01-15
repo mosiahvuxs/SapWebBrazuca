@@ -2,6 +2,7 @@ package br.com.brazuca.sapweb.model;
 
 import java.io.Serializable;
 
+import br.com.brazuca.sapweb.sap.model.Pais;
 import br.com.topsys.util.TSUtil;
 
 @SuppressWarnings("serial")
@@ -11,7 +12,7 @@ public class Empresa implements Serializable{
 	
 	private String descricao;
 	
-	private Boolean flagAtivo; 
+	private Boolean flagAtivo;
 	
 	private String jndi;
 	
@@ -26,6 +27,14 @@ public class Empresa implements Serializable{
 	private String appUsuario;
 	
 	private String appSenha;
+	
+	private String servidorLicenca;
+	
+	private String portaLicenca;
+	
+	private String cnpj;
+	
+	private Pais pais;
 	
 	public Empresa(){
 		
@@ -117,6 +126,38 @@ public class Empresa implements Serializable{
 
 	public void setAppSenha(String appSenha) {
 		this.appSenha = appSenha;
+	}
+
+	public String getServidorLicenca() {
+		return servidorLicenca;
+	}
+
+	public void setServidorLicenca(String servidorLicenca) {
+		this.servidorLicenca = servidorLicenca;
+	}
+
+	public String getPortaLicenca() {
+		return portaLicenca;
+	}
+
+	public void setPortaLicenca(String portaLicenca) {
+		this.portaLicenca = portaLicenca;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public Pais getPais() {
+		return pais;
+	}
+
+	public void setPais(Pais pais) {
+		this.pais = pais;
 	}
 	
 	

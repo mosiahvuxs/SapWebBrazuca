@@ -18,7 +18,7 @@ public class NotaFiscalSaidaBusiness {
 
 		NotaFiscalSaida notaFiscal = new NotaFiscalSaida();
 
-		notaFiscal.setPedidoVenda(model);
+		notaFiscal.setPedidoVenda(new PedidoVenda(model.getId()));
 		notaFiscal.setDataLancamento(model.getDataLancamento());
 		notaFiscal.setDataDocumento(model.getDataDocumento());
 		notaFiscal.setDataVencimento(model.getDataVencimento());
@@ -48,15 +48,16 @@ public class NotaFiscalSaidaBusiness {
 			saidaLinha.setValor(linha.getValor());
 			saidaLinha.setCodigoImposto(linha.getCodigoImposto());
 			saidaLinha.setCodigoBarras(linha.getCodigoBarras());
-			//saidaLinha.setPedidoVendaLinha(linha);
-			saidaLinha.setPedidoVenda(new PedidoVenda(model.getId()));
+			saidaLinha.setPedidoVendaLinha(new PedidoVendaLinha());
+			
+			saidaLinha.getPedidoVendaLinha().setNumero(linha.getNumero());
+			
+			saidaLinha.getPedidoVendaLinha().setPedidoVenda(new PedidoVenda(model.getId()));
 
 			notaFiscal.getLinhas().add(saidaLinha);
 
 		}
-
-		//new NotaFiscalSaidaDAO().inserir(notaFiscal);
-		
+	
 		return notaFiscal;
 	}
 }

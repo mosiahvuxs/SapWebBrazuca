@@ -47,7 +47,7 @@ public class EmpresaDAO {
 
 		broker.setPropertySQL("empresadao.obter", model.getId());
 
-		return (Empresa) broker.getObjectBean(Empresa.class, "id", "descricao", "flagAtivo", "jndi");
+		return (Empresa) broker.getObjectBean(Empresa.class, "id", "descricao", "flagAtivo", "jndi", "servidor", "dbInstancia", "dbUsuario", "dbSenha", "appUsuario", "appSenha", "servidorLicenca", "portaLicenca", "cnpj", "pais.id");
 	}
 
 	public void excluir(Empresa model) throws TSApplicationException {

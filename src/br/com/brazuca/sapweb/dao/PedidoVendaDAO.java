@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.brazuca.sapweb.sap.model.PedidoVendaLinha;
+import br.com.brazuca.sapweb.util.Utilitarios;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
@@ -82,6 +83,11 @@ public class PedidoVendaDAO {
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
 		StringBuilder sql = new StringBuilder("SELECT PV.EMPRESA_ID, PV.ID, PV.CODIGO_SAP, PV.DATA_LANCAMENTO, PV.DATA_VENCIMENTO, PV.DATA_DOCUMENTO, PV.CLIENTE_ID, PV.CLIENTE_NOME, PV.CLIENTE_IDENTIFICADOR_EXTERIOR, PV.ENDERECO_COBRANCA, PV.ENDERECO_DESTINO, PV.VENDEDOR_ID, PV.VENDEDOR_NOME, PV.VALOR_TOTAL, PV.OBSERVACAO, PV.TIPO_ENVIO, PV.ID_EXTERNO, PV.CONDICAO_PAGAMENTO, PV.TIPO_RESUMO, PV.TIPO, PV.DATA_IMPORTACAO, PV.EMPRESA_ID, PV.CODIGO_SAP FROM PUBLIC.PEDIDO_VENDAS PV WHERE 1 = 1");
+		
+		if(!TSUtil.isEmpty(model.getEmpresa()) && !TSUtil.isEmpty(Utilitarios.tratarLong(model.getEmpresa().getId()))){
+			
+			sql.append(" AND PV.EMPRESA_ID = ? ");
+		}
 
 		if (!TSUtil.isEmpty(TSUtil.tratarLong(model.getId()))) {
 
@@ -137,7 +143,13 @@ public class PedidoVendaDAO {
 		sql.append(" ORDER BY PV.CLIENTE_NOME");
 
 		broker.setSQL(sql.toString());
-
+		
+		if(!TSUtil.isEmpty(model.getEmpresa()) && !TSUtil.isEmpty(Utilitarios.tratarLong(model.getEmpresa().getId()))){
+			
+			broker.set(model.getEmpresa().getId());
+			
+		}
+		
 		if (!TSUtil.isEmpty(TSUtil.tratarLong(model.getId()))) {
 
 			broker.set(model.getId());
@@ -194,6 +206,16 @@ public class PedidoVendaDAO {
 		broker.execute();
 
 	}
+	
+	public void excluir(PedidoVenda model) throws TSApplicationException {
+		
+        TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();		
+
+		broker.setPropertySQL("pedidovendadao.excluir", model.getId());
+
+		broker.execute();
+
+	}	
 	
 	@SuppressWarnings("unchecked")
 	public List<PedidoVenda> pesquisarInterface(PedidoVenda model, String jndi) {
