@@ -17,7 +17,7 @@
 					<p:outputLabel for="dtLacamentoInicial" value="Data Envio Inicial" style="font-weight: bold;" />
 					<p:outputLabel for="dtLacamentoFinal" value="Data Envio Final" style="font-weight: bold;" />
 
-					<p:inputText style="width: 197px;" id="numeroPedido" value="#{mbeanPesquisaModel.notaFiscalSaida.pedidoVenda.id}" onkeypress="Mascara(this, Integer)" onblur="Mascara(this, Integer)" maxlength="10" />
+					<p:inputText style="width: 197px;" id="numeroPedido" value="#{mbeanPesquisaModel.pedidoVenda.id}" onkeypress="Mascara(this, Integer)" onblur="Mascara(this, Integer)" maxlength="10" />
 					<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoInicial" pattern="dd/MM/yyyy" size="25" value="#{mbeanPesquisaModel.dataInicial}" />
 					<p:calendar navigator="true" readonlyInput="true" id="dtLacamentoFinal" pattern="dd/MM/yyyy" size="25" value="#{mbeanPesquisaModel.dataFinal}" />
 

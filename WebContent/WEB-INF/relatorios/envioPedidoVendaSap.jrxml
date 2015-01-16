@@ -11,46 +11,46 @@
 		<fieldDescription><![CDATA[id]]></fieldDescription>
 	</field>
 	<field name="historico_notafiscalsaida_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[historicoNotaFiscalSaida.id]]></fieldDescription>
+		<fieldDescription><![CDATA[notaFiscalSaida.id]]></fieldDescription>
 	</field>
 	<field name="dataDocumento" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[dataDocumento]]></fieldDescription>
+		<fieldDescription><![CDATA[notaFiscalSaida.dataDocumento]]></fieldDescription>
 	</field>
 	<field name="dataLancamento" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[dataLancamento]]></fieldDescription>
+		<fieldDescription><![CDATA[notaFiscalSaida.dataLancamento]]></fieldDescription>
 	</field>
 	<field name="pedidoVendaId" class="java.lang.Long">
-		<fieldDescription><![CDATA[notaFiscalSaidaLinha.pedidoVendaLinha.pedidoVenda.id]]></fieldDescription>
+		<fieldDescription><![CDATA[notaFiscalSaida.pedidoVenda.id]]></fieldDescription>
 	</field>
 	<field name="dataExportacao" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[dataExportacao]]></fieldDescription>
+		<fieldDescription><![CDATA[notaFiscalSaida.dataExportacao]]></fieldDescription>
 	</field>
 	<field name="item_id" class="java.lang.String">
-		<fieldDescription><![CDATA[notaFiscalSaidaLinha.item.id]]></fieldDescription>
+		<fieldDescription><![CDATA[item.id]]></fieldDescription>
 	</field>
 	<field name="quantidade" class="java.lang.Double">
-		<fieldDescription><![CDATA[notaFiscalSaidaLinha.quantidade]]></fieldDescription>
+		<fieldDescription><![CDATA[quantidade]]></fieldDescription>
 	</field>
 	<field name="valorUnitario" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[notaFiscalSaidaLinha.valorUnitario]]></fieldDescription>
+		<fieldDescription><![CDATA[valorUnitario]]></fieldDescription>
 	</field>
 	<field name="valor" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[notaFiscalSaidaLinha.valor]]></fieldDescription>
+		<fieldDescription><![CDATA[valor]]></fieldDescription>
 	</field>
 	<field name="codigo_imposto_id" class="java.lang.String">
-		<fieldDescription><![CDATA[notaFiscalSaidaLinha.codigoImposto.id]]></fieldDescription>
+		<fieldDescription><![CDATA[codigoImposto.id]]></fieldDescription>
 	</field>
 	<field name="codigoBarras" class="java.lang.String">
-		<fieldDescription><![CDATA[notaFiscalSaidaLinha.codigoBarras]]></fieldDescription>
+		<fieldDescription><![CDATA[codigoBarras]]></fieldDescription>
 	</field>
 	<field name="numero" class="java.lang.Integer">
-		<fieldDescription><![CDATA[notaFiscalSaidaLinha.pedidoVendaLinha.numero]]></fieldDescription>
+		<fieldDescription><![CDATA[numero]]></fieldDescription>
 	</field>
 	<field name="clienteNome" class="java.lang.String">
-		<fieldDescription><![CDATA[historicoNotaFiscalSaida.notaFiscalSaida.cliente.nome]]></fieldDescription>
+		<fieldDescription><![CDATA[notaFiscalSaida.cliente.nome]]></fieldDescription>
 	</field>
 	<field name="descricao" class="java.lang.String">
-		<fieldDescription><![CDATA[notaFiscalSaidaLinha.item.descricao]]></fieldDescription>
+		<fieldDescription><![CDATA[item.descricao]]></fieldDescription>
 	</field>
 	<variable name="valor_total" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{valor}]]></variableExpression>

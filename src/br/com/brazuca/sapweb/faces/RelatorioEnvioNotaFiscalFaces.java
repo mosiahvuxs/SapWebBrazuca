@@ -15,6 +15,8 @@ import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaida;
 import br.com.brazuca.sapweb.model.HistoricoNotaFiscalSaidaLinha;
 import br.com.brazuca.sapweb.report.JasperUtil;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
+import br.com.brazuca.sapweb.sap.model.Status;
+import br.com.brazuca.sapweb.util.Constantes;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
 
@@ -36,13 +38,14 @@ public class RelatorioEnvioNotaFiscalFaces {
 		this.historicoNotaFiscalSaida.setDataInicial(new Date());
 		this.historicoNotaFiscalSaida.setDataFinal(new Date());
 		this.historicoNotaFiscalSaida.setPedidoVenda(new PedidoVenda());
+		this.historicoNotaFiscalSaida.setStatus(new Status(1L));
 
 		this.historicosLinhas = new ArrayList<HistoricoNotaFiscalSaidaLinha>();
 	}
 
 	public String gerarRelatorio() {
 
-		this.historicosLinhas = new HistoricoNotaFiscalSaidaLinhaDAO().pesquisar(this.historicoNotaFiscalSaida);
+		this.historicosLinhas = new HistoricoNotaFiscalSaidaLinhaDAO().pesquisar(this.historicoNotaFiscalSaida, Constantes.JNDI_SAP_SERVICO_LOCAL);
 
 		if (!TSUtil.isEmpty(this.historicosLinhas)) {
 
