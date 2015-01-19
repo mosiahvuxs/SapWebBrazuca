@@ -58,7 +58,7 @@ public class HistoricoNotaFiscalSaidaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
 
-		broker.setPropertySQL("historiconotafiscalsaidadao.excluir", model.getIdExterno());
+		broker.setPropertySQL("historiconotafiscalsaidadao.excluir", model.getPedidoVenda().getId());
 
 		broker.execute();
 

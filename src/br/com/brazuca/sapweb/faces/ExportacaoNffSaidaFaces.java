@@ -148,7 +148,7 @@ public class ExportacaoNffSaidaFaces extends TSMainFaces {
 
 					new HistoricoNotaFiscalSaidaDAO().inserirInterface(this.popularHistorico(notaFiscal), Constantes.JNDI_SAP_SERVICO_LOCAL);
 					
-					new HistoricoNotaFiscalSaidaDAO().inserirInterface(this.popularHistorico(notaFiscal), Constantes.JNDI_SAP_SERVICO_MATRIZ);					
+					//new HistoricoNotaFiscalSaidaDAO().inserirInterface(this.popularHistorico(notaFiscal), Constantes.JNDI_SAP_SERVICO_MATRIZ);					
 					
 					new NotaFiscalSaidaDAO().excluirInterface(notaFiscal, Constantes.JNDI_SAP_SERVICO_LOCAL);
 					
@@ -252,9 +252,9 @@ public class ExportacaoNffSaidaFaces extends TSMainFaces {
 
 		new NotaFiscalSaidaDAO().excluirInterface(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_SERVICO_MATRIZ);
 
-		new HistoricoNotaFiscalSaidaDAO().excluirInterface(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_MATRIZ);
+		new HistoricoNotaFiscalSaidaDAO().excluirInterface(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_SERVICO_MATRIZ);
 
-		new HistoricoNotaFiscalSaidaDAO().excluirInterface(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_WEB_BRAZUCA_POSTGRESQL_LOCAL);
+		new HistoricoNotaFiscalSaidaDAO().excluirInterface(this.notaFiscalSaidaInterface, Constantes.JNDI_SAP_SERVICO_LOCAL);
 
 		this.notasInterface.remove(this.notaFiscalSaidaInterface);
 
