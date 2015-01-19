@@ -21,6 +21,7 @@ public class Item implements Serializable {
     private List<Estoque> estoques; 
     private BigDecimal preco;
     private EstoqueItem estoqueItem;
+    private String catalogo;
     
     public Item(){
     	
@@ -34,7 +35,11 @@ public class Item implements Serializable {
     	
     }
 
-    public String getDescricao() {
+    public Item(Empresa empresa) {
+    	this.empresa = empresa;
+	}
+
+	public String getDescricao() {
         return descricao;
     }
 
@@ -104,6 +109,14 @@ public class Item implements Serializable {
 
 	public void setEstoqueItem(EstoqueItem estoqueItem) {
 		this.estoqueItem = estoqueItem;
+	}
+
+	public String getCatalogo() {
+		return catalogo;
+	}
+
+	public void setCatalogo(String catalogo) {
+		this.catalogo = catalogo;
 	}
     
     

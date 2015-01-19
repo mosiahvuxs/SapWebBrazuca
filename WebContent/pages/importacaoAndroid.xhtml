@@ -1,0 +1,38 @@
+<ui:composition xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="mbean" value="#{importacaoAndroidFaces}" />
+
+	<h:form id="form">
+
+		<p:outputPanel style="width:97%; margin-left: 1%;margin-top:1%">
+
+			<p:fieldset legend="Filtros" style="width: 40%">
+
+				<h:panelGrid columns="2" columnClasses="coluna10,coluna90" styleClass="coluna100">
+
+					<p:outputLabel value="Clientes" />
+					<p:selectBooleanCheckbox value="#{mbean.flagCliente}" />
+
+					<p:outputLabel value="Vendedores" />
+					<p:selectBooleanCheckbox value="#{mbean.flagVendedor}" />
+
+					<p:outputLabel value="Estoques" />
+					<p:selectBooleanCheckbox value="#{mbean.flagEstoque}" />
+
+				</h:panelGrid>
+
+			</p:fieldset>
+			<br />
+
+			<p:commandButton value="Importar" onclick="PF('cdInserir').show();" icon="salvar" style="height:28px; width: 105px;" />
+
+			<p:confirmDialog message="Deseja realmente importar ?" appendTo="@(body)" header="Aviso" severity="alert" widgetVar="cdInserir">
+				<p:commandButton value="Sim" onclick="PF('cdInserir').hide();" action="#{mbean.insertEvent}" update="@form" process="@this" />
+				<p:commandButton value="Não" onclick="PF('cdInserir').hide();" />
+			</p:confirmDialog>
+
+		</p:outputPanel>
+
+	</h:form>
+
+</ui:composition>

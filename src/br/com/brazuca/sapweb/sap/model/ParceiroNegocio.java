@@ -40,6 +40,10 @@ public class ParceiroNegocio extends PessoaAB implements Serializable {
     	
 	}
 
+	public ParceiroNegocio(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
 	public ParceiroNegocioEndereco getEndereco() {
 		return endereco;
 	}

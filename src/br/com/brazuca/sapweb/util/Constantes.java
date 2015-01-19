@@ -28,7 +28,6 @@ public final class Constantes {
 	public static final String URL_RESTFUL_BRAZUCA_MATRIZ = TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("L") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("D") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("H") ? Constantes.URL_RESTFUL_BRAZUCA_DESENV_MATRIZ : Constantes.URL_RESTFUL_BRAZUCA_PROD_MATRIZ;
 	public static final String URL_RESTFUL_BRAZUCA_DESENV_MATRIZ = "http://murrinha:8085/ServicoSapBrazucaMatriz/";
 	public static final String URL_RESTFUL_BRAZUCA_PROD_MATRIZ = "http://172.16.10.7:8085/ServicoSapBrazucaMatriz/";
-
 	
 	public static final String PASTA_RELATORIO = "relatorios";
 	public static final String PASTA_ARQUIVOS = "/arquivos/";
@@ -45,6 +44,16 @@ public final class Constantes {
 
 	public static final Long TIPO_GRUPO_WEB = 1L;	
 	public static final Long TIPO_GRUPO_ANDROID = 2L;
-	public static final Long TIPO_GRUPO_IPHONE = 3L;	
+	public static final Long TIPO_GRUPO_IPHONE = 3L;
+	
+	public static final String OBJETO_OBRIGATORIO_PARCEIRO_NEGOCIO = "Favor inserir objeto ParceiroNegocio ou parceiroNegocio.id válido.";
+	
+	public static final String OBJETO_EMPRESA_OBRIGATORIO = "Favor inserir objeto Empresa ou empresa.id válida.";
+	
+	public static final Object OBJETO_PARCEIRO_NEGOCIO_TIPO = "Favor informar parceiroNegocio.tipo: {'C'- Cliente | 'S' - Fornecedor }";
+	
+	public static final String OBJETO_OBRIGATORIO_VENDEDOR = "Favor inserir objeto Vendedor.";
+	
+	public static final String ESTOQUE = "favor inserir objeto Estoque.";	
 
 }
