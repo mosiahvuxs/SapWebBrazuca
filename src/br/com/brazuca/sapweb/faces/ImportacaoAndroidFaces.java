@@ -62,10 +62,7 @@ public class ImportacaoAndroidFaces extends TSMainFaces {
 
 	@Override
 	protected String insert() throws TSApplicationException {
-
-		super.setClearFields(false);
-		super.setDefaultMessage(false);
-				
+			
 		if(this.flagCliente){
 			
 			ParceiroNegocio p = new ParceiroNegocio(this.empresa);
