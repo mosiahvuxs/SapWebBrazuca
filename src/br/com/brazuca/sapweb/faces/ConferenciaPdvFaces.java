@@ -68,6 +68,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		this.quantidade = 1;
 		this.mensagem = null;
 		this.limparCampos = false;
+
 	}
 
 	private boolean validaCamposPesquisa() {
@@ -115,7 +116,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 		if (!TSUtil.isEmpty(TSUtil.tratarString(this.codigoBarras))) {
 
-			if (!this.setarQuantidadePedidoVendaLinha(this.codigoBarras)) {
+			if (!this.setarQuantidadePedidoVendaLinha(this.codigoBarras, this.pedidoVenda)) {
 
 				this.verificarItemEstruturado(this.codigoBarras);
 			}
@@ -130,36 +131,141 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 	}
 
-	private boolean setarQuantidadePedidoVendaLinha(String codigoBarras) {
+	private boolean setarQuantidadePedidoVendaLinha(String codigoBarras, PedidoVenda model) {
 
 		boolean existe = false;
 
-		for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
+		//Boolean entrou = Boolean.FALSE;
 
-			if (!TSUtil.isEmpty(linha.getCodigoBarras()) && linha.getCodigoBarras().equals(codigoBarras)) {
+		PedidoVendaLinha linha = new PedidoVendaLinha();
 
-				existe = true;
+		linha.setPedidoVenda(model);
 
-				BigDecimal quantidadeFinal = new BigDecimal(linha.getQuantidadeLiberada().intValueExact() + this.quantidade.intValue());
+		linha.setCodigoBarras(codigoBarras);
 
-				if (quantidadeFinal.intValue() <= linha.getQuantidade().intValue()) {
+		linha = new PedidoVendaLinhaDAO().obterQuantidade(linha);
 
-					linha.setQuantidadeLiberada(quantidadeFinal);
+		if (TSUtil.isEmpty(linha)) {
+			return false;
+		}
 
-				} else {
+		if (!TSUtil.isEmpty(linha) && (linha.getQuantidade().intValue() < this.quantidade)) {
 
-					super.addErrorMessage("A quantidade solicitada é maior que a quantidade requisitada para o Item " + linha.getItem().getDescricao() + ".");
+			super.addErrorMessage("A quantidade solicitada é maior que a quantidade requisitada para o código de barras " + this.codigoBarras + " ou código não existente na lista.");
+
+			existe = true;
+
+		} else {
+
+			Integer quantidadeALiberar = this.quantidade;
+
+			for (PedidoVendaLinha item : this.pedidoVenda.getLinhas()) {
+
+				if (quantidadeALiberar == 0) {
+					break;
+				}
+
+				if (!TSUtil.isEmpty(item.getCodigoBarras()) && item.getCodigoBarras().equals(codigoBarras)) {
+
+					if (item.getQuantidade().intValue() == item.getQuantidadeLiberada().intValue()) {
+						continue;
+					}
+
+					existe = true;
+
+					if (quantidadeALiberar == item.getQuantidade().intValue()) {
+
+						item.setQuantidadeLiberada(new BigDecimal(quantidadeALiberar));
+
+						quantidadeALiberar = 0;
+
+					} else {
+						
+						if(quantidadeALiberar>this.somarQuantidadesLiberadas(codigoBarras)){
+							
+							//se a parada for maior que a soma das liberadas dar um break;
+							
+							break;
+							
+						}
+
+						if (quantidadeALiberar > (item.getQuantidade().intValue() - item.getQuantidadeLiberada().intValue())) {
+							
+							item.setQuantidadeLiberada(item.getQuantidadeLiberada().add(new BigDecimal(item.getQuantidade()).subtract(item.getQuantidadeLiberada())));
+
+							quantidadeALiberar = quantidadeALiberar - item.getQuantidadeLiberada().intValue();
+
+						} else {
+
+							item.setQuantidadeLiberada(item.getQuantidadeLiberada().add(new BigDecimal(quantidadeALiberar)));
+
+							quantidadeALiberar = quantidadeALiberar - item.getQuantidadeLiberada().intValue();
+
+						}
+
+					}
+
 				}
 
 			}
+
+			if (quantidadeALiberar > 0) {
+
+				existe = true;
+
+				super.addErrorMessage("A quantidade solicitada é maior que a quantidade requisitada para o código de barras " + this.codigoBarras + " ou código não existente na lista. Zerando todas as liberações para este código de barras");
+
+			}
+
 		}
 
 		return existe;
 	}
 
-	private void verificarItemEstruturado(String codigoBarras) {
+	private Integer somarQuantidadesLiberadas(String codigoBarras) {
+		
+		Integer valor=0;
+
+		for (PedidoVendaLinha item : this.pedidoVenda.getLinhas()) {
+			
+			if (!TSUtil.isEmpty(item.getCodigoBarras()) && item.getCodigoBarras().equals(codigoBarras)) {
+				
+				valor = valor + (item.getQuantidade().intValue() - item.getQuantidadeLiberada().intValue());
+				
+			}
+			
+		}
+		
+		return valor;
+	}
+	
+	private Integer somarQuantidadesLiberadasEstruturado(String codigoBarras, List<ItemEstruturado> itens) {
+
+		Integer valor=0;
+		
+		for (ItemEstruturado itemEstruturado : itens) {
+
+			for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
+
+				if (itemEstruturado.getItem().getId().equals(linha.getItem().getId())) {
+					
+					valor = valor + (linha.getQuantidade().intValue() - linha.getQuantidadeLiberada().intValue());					
+					
+				}
+				
+			}
+			
+		}
+		
+		return valor;
+		
+	}	
+
+	private Boolean verificarItemEstruturado(String codigoBarras) {
 
 		boolean existe = false;
+
+		Boolean entrou = false;
 
 		List<ItemEstruturado> itens = new ItemEstruturadoDAO().pesquisar(this.codigoBarras);
 
@@ -171,7 +277,7 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 				for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
 
-					if (itemEstruturado.getItem().getId().equals(linha.getItem().getId())) {
+					if (itemEstruturado.getItem().getId().equals(linha.getItem().getId()) && linha.getQuantidade().intValue() != linha.getQuantidadeLiberada().intValue()) {
 
 						existe = true;
 
@@ -190,39 +296,101 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 
 			super.addErrorMessage("Não existem itens associados ao código de barras informado.");
 
+			return true;
+
 		} else {
 
 			if (itens.size() != itensAux.size()) {
 
-				super.addErrorMessage("O código de barras informado contém itens estruturados que não estão no Pedido de Venda.");
+				super.addErrorMessage("O código de barras informado contém itens estruturados que não estão no Pedido de Venda ou sua quantidade ultrapassou a quantidade requisitada.");
+
+				return true;
 
 			} else {
 
+				Integer quantidadeALiberar;
+
 				for (ItemEstruturado itemEstruturado : itens) {
+
+					quantidadeALiberar = itemEstruturado.getItem().getQuantidade().intValue() * this.quantidade;
 
 					for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
 
 						if (itemEstruturado.getItem().getId().equals(linha.getItem().getId())) {
 
-							Integer quantidadeTotal = itemEstruturado.getItem().getQuantidade().intValue() * this.quantidade.intValue();
+							if (linha.getQuantidade().intValue() == linha.getQuantidadeLiberada().intValue()) {
+								continue;
+							}
 
-							BigDecimal quantidadeFinal = new BigDecimal(linha.getQuantidadeLiberada().intValueExact() + quantidadeTotal.intValue());
+							existe = true;
 
-							if (quantidadeFinal.intValue() <= linha.getQuantidade().intValue()) {
+							if (quantidadeALiberar == linha.getQuantidade().intValue()) {
 
-								linha.setQuantidadeLiberada(quantidadeFinal);
+								linha.setQuantidadeLiberada(new BigDecimal(quantidadeALiberar));
+
+								quantidadeALiberar = 0;
 
 							} else {
+								
+								if(quantidadeALiberar>this.somarQuantidadesLiberadasEstruturado(codigoBarras,itens)){
+									
+									//se a parada for maior que a soma das liberadas dar um break;
+									
+									break;
+									
+								}
 
-								super.addErrorMessage("A quantidade máxima já foi atingida para o Item " + linha.getItem().getDescricao() + ".");
+								if (quantidadeALiberar > (linha.getQuantidade().intValue() - linha.getQuantidadeLiberada().intValue())) {
+									
+									linha.setQuantidadeLiberada(linha.getQuantidadeLiberada().add(new BigDecimal(linha.getQuantidade()).subtract(linha.getQuantidadeLiberada())));
+
+									quantidadeALiberar = quantidadeALiberar - linha.getQuantidadeLiberada().intValue();						
+									
+								} else {
+
+									linha.setQuantidadeLiberada(linha.getQuantidadeLiberada().add(new BigDecimal(quantidadeALiberar)));
+
+									quantidadeALiberar = quantidadeALiberar - linha.getQuantidadeLiberada().intValue();
+
+								}
+
 							}
 
 						}
 					}
+
+					if (quantidadeALiberar > 0) {
+
+						super.addErrorMessage("A quantidade solicitada é maior que a quantidade requisitada para o código de barras " + this.codigoBarras + " ou código não existente na lista. Zerando todas as liberações para este código de barras");
+
+						entrou = Boolean.TRUE;
+
+						break;
+
+					}
+
 				}
 
 			}
 		}
+
+		if (entrou) {
+
+			for (ItemEstruturado itemEstruturado : itens) {
+
+				for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
+
+					if (itemEstruturado.getItem().getId().equals(linha.getItem().getId())) {
+
+						linha.setQuantidadeLiberada(BigDecimal.ZERO);
+
+					}
+				}
+			}
+
+		}
+
+		return true;
 
 	}
 
@@ -252,25 +420,24 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		if (!TSUtil.isEmpty(linhas)) {
 
 			NotaFiscalSaida nota = new NotaFiscalSaidaBusiness().inserir(this.pedidoVenda, linhas);
-			
-			nota  = new NotaFiscalSaidaRestful().inserirLote(nota, Constantes.URL_RESTFUL_BRAZUCA_LOCAL);
+
+			nota = new NotaFiscalSaidaRestful().inserirLote(nota, Constantes.URL_RESTFUL_BRAZUCA_LOCAL);
 
 			if (TSUtil.isEmpty(nota.getMensagemErro())) {
-				
-				this.pedidos.remove(this.pedidoVenda);	
-				
+
+				this.pedidos.remove(this.pedidoVenda);
+
 				new PedidoVendaDAO().excluir(this.pedidoVenda);
-				
+
 				this.limparCampos = true;
 
-				this.mensagem = "Operação realizada com sucesso";				
+				this.mensagem = "Operação realizada com sucesso";
 
 			} else {
-				
+
 				this.mensagem = "Não foi possível exportar o Pedido número : " + this.pedidoVenda.getId() + ". " + nota.getMensagemErro();
 
 			}
-			
 
 		} else {
 
@@ -290,9 +457,9 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		if (this.limparCampos) {
 
 			this.pedidoVenda = new PedidoVenda();
-			
+
 			this.pedidoVendaPesquisa = new PedidoVenda();
-			
+
 			this.pedidoVendaPesquisa.setCliente(new ParceiroNegocio());
 		}
 

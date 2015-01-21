@@ -103,4 +103,13 @@ public class PedidoVendaLinhaDAO {
 		broker.execute();
 		
 	}
+
+	public PedidoVendaLinha obterQuantidade(PedidoVendaLinha model) {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		
+		broker.setPropertySQL("pedidovendalinhadao.obterQuantidade", model.getCodigoBarras(), model.getPedidoVenda().getId());
+		
+		return (PedidoVendaLinha) broker.getObjectBean(PedidoVendaLinha.class, "codigoBarras", "quantidade");
+	}
 }
