@@ -49,6 +49,7 @@ public abstract class DocumentoAB implements Serializable {
 	private String tipo;
 	private Long tipoEnvio;
 	private String enderecoEntregaFormatado, enderecoCobrancaFormatado;
+	private Boolean flagValidar;
 
 	public Long getId() {
 		return id;
@@ -309,6 +310,14 @@ public abstract class DocumentoAB implements Serializable {
 
 	public void setEnderecoCobrancaFormatado(String enderecoCobrancaFormatado) {
 		this.enderecoCobrancaFormatado = enderecoCobrancaFormatado;
+	}
+
+	public Boolean getFlagValidar() {
+		return flagValidar;
+	}
+
+	public void setFlagValidar(Boolean flagValidar) {
+		this.flagValidar = flagValidar;
 	}
 
 }

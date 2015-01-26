@@ -418,9 +418,9 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		}
 
 		if (!TSUtil.isEmpty(linhas)) {
-
+			
 			NotaFiscalSaida nota = new NotaFiscalSaidaBusiness().inserir(this.pedidoVenda, linhas);
-
+			
 			nota = new NotaFiscalSaidaRestful().inserirLote(nota, Constantes.URL_RESTFUL_BRAZUCA_LOCAL);
 
 			if (TSUtil.isEmpty(nota.getMensagemErro())) {
