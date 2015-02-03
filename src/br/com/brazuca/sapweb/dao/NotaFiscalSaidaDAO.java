@@ -11,62 +11,7 @@ import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 
 public class NotaFiscalSaidaDAO {
-/*
-	public void inserir(NotaFiscalSaida model) throws TSApplicationException {
 
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
-
-		broker.beginTransaction();
-
-		model.setId(broker.getSequenceNextValue("notafiscalsaida_id_seq"));
-
-		broker.setPropertySQL("notafiscalsaidadao.inserir",
-
-		model.getId(), model.getDataLancamento(), model.getDataDocumento(), model.getDataVencimento(), model.getCondicaoPagamento().getId(), model.getValor(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getCliente().getNome(), model.getVendedor().getNome(), model.getId().toString(), model.getEmpresa().getId(), model.getCliente().getId(), model.getVendedor().getId(), model.getEnderecoEntregaFormatado(), model.getEnderecoCobrancaFormatado(), model.getCliente().getIdentificadorFederal(), model.getObservacao(), model.getTipoResumo(), model.getTipo(), model.getTipoEnvio(), model.getStatus().getId(), model.getPedidoVenda().getId());
-
-		broker.execute();
-
-		NotaFiscalSaidaLinhaDAO notaFiscalSaidaLinhaDAO = new NotaFiscalSaidaLinhaDAO();
-
-		for (NotaFiscalSaidaLinha linha : model.getLinhas()) {
-
-			linha.setNotaFiscalSaida(model);
-
-			notaFiscalSaidaLinhaDAO.inserir(linha, broker);
-		}
-
-		new PedidoVendaDAO().excluir(model.getPedidoVenda(), broker);
-
-		broker.endTransaction();
-	}
-
-	public void inserir(List<NotaFiscalSaida> notasFiscais) throws TSApplicationException {
-
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
-
-		broker.beginTransaction();
-
-		for (NotaFiscalSaida model : notasFiscais) {
-
-			model.setId(broker.getSequenceNextValue("notafiscalsaida_id_seq"));
-
-			broker.setPropertySQL("notafiscalsaidadao.inserir", model.getId(), model.getDataLancamento(), model.getDataDocumento(), model.getDataVencimento(), model.getCondicaoPagamento().getId(), model.getValor(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getCondicaoPagamento().getId(), model.getValor(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), model.getCliente().getNome(), model.getVendedor().getNome(), model.getIdExterno(), model.getEmpresa().getId(), model.getCliente().getId(), model.getVendedor().getId(), model.getEnderecoEntregaFormatado(), model.getEnderecoCobrancaFormatado(), model.getCliente().getIdentificadorFederal(), model.getObservacao(), model.getTipoResumo(), model.getTipo(), model.getTipoEnvio(), model.getPedidoVenda().getId());
-
-			broker.execute();
-
-			NotaFiscalSaidaLinhaDAO notaFiscalSaidaLinhaDAO = new NotaFiscalSaidaLinhaDAO();
-
-			for (NotaFiscalSaidaLinha linha : model.getLinhas()) {
-
-				linha.setNotaFiscalSaida(model);
-
-				notaFiscalSaidaLinhaDAO.inserir(linha, broker);
-			}
-		}
-
-		broker.endTransaction();
-	}
-*/
 	@SuppressWarnings("unchecked")
 	public List<NotaFiscalSaida> pesquisarInterface(NotaFiscalSaida model, String jndi) {
 

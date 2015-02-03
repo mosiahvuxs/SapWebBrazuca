@@ -2,6 +2,7 @@ package br.com.brazuca.sapweb.business;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.brazuca.sapweb.sap.model.CFOP;
@@ -31,9 +32,9 @@ public class NotaFiscalSaidaBusiness {
 		NotaFiscalSaida notaFiscal = new NotaFiscalSaida();
 
 		notaFiscal.setPedidoVenda(new PedidoVenda(model.getId()));
-		notaFiscal.setDataLancamento(model.getDataLancamento());
-		notaFiscal.setDataDocumento(model.getDataDocumento());
-		notaFiscal.setDataVencimento(model.getDataVencimento());
+		notaFiscal.setDataLancamento(new Date());
+		notaFiscal.setDataDocumento(new Date());
+		notaFiscal.setDataVencimento(null);
 		notaFiscal.setDataExportacao(new Timestamp(System.currentTimeMillis()));
 		notaFiscal.setDataCriacao(new Timestamp(System.currentTimeMillis()));
 		notaFiscal.setCondicaoPagamento(model.getCondicaoPagamento());

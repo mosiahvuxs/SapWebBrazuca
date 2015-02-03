@@ -113,28 +113,31 @@
 						<f:facet name="header">
 							Pedidos de Venda - Interface
 						</f:facet>
-						<p:column headerText="Pedido" style="width: 20px;text-align: right">
+						<p:column headerText="Pedido" style="width: 7%;text-align: right">
 								<h:outputText value="#{linha.pedidoVenda.id}"  />
 						</p:column>
-						<p:column headerText="Cliente" style="width: 300px;text-align: left">
+						<p:column headerText="Cliente" style="width: 23%;text-align: left">
 								<h:outputText value="#{linha.cliente.nome}" />
 						</p:column>
-						<p:column headerText="Data Exportação" style="width: 70px;text-align: center">
+						<p:column headerText="Dt Exportação" style="width: 10%;text-align: center">
 								<h:outputText value="#{linha.dataExportacao}" >
 									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 								</h:outputText>
 						</p:column>
-						<p:column headerText="Data Lançamento" style="width: 70px;text-align: center">
+						<p:column headerText="Dt Lançamento" style="width: 10%;text-align: center">
 								<h:outputText value="#{linha.dataLancamento}" >
 									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 								</h:outputText>
 						</p:column>
-						<p:column headerText="Data Documento" style="width: 70px;text-align: center">
+						<p:column headerText="Dt Documento" style="width: 10%;text-align: center">
 								<h:outputText value="#{linha.dataDocumento}" >
 									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 								</h:outputText>
 						</p:column>
-						<p:column headerText="Excluir" style="width: 20px;">
+						<p:column headerText="Mensagem Erro" style="width:35%;text-align:left">
+							<h:outputText value="#{linha.mensagemErro}"/>
+						</p:column>
+						<p:column headerText="Excluir" style="width: 5%;">
 							<div align="center">
 								<p:commandLink type="button" icon="delete16" id="excluir" onclick="PF('cdExcluir').show()" global="false">
 									<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
