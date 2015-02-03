@@ -29,6 +29,7 @@ public class ParceiroNegocio extends PessoaAB implements Serializable {
     private Contato contato;
     private String observacao;
     private ContasReceber contasReceber;
+    private CondicaoPagamento condicaoPagamento;
     
     public ParceiroNegocio() {
 		// TODO Auto-generated constructor stub
@@ -114,6 +115,14 @@ public class ParceiroNegocio extends PessoaAB implements Serializable {
 
 	public void setContasReceber(ContasReceber contasReceber) {
 		this.contasReceber = contasReceber;
+	}
+
+	public CondicaoPagamento getCondicaoPagamento() {
+		return condicaoPagamento;
+	}
+
+	public void setCondicaoPagamento(CondicaoPagamento condicaoPagamento) {
+		this.condicaoPagamento = condicaoPagamento;
 	}
     
 }

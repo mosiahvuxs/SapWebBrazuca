@@ -27,7 +27,7 @@ public class ParceiroNegocioDAO {
 		
 		return broker.getCollectionBean(ParceiroNegocio.class, "id", "nome", "nomeFantasia", "telefoneResidencial", "telefoneCelular", "email", "endereco.id",
 				                                               "endereco.logradouro", "endereco.numero", "endereco.bairro", "endereco.cidade", "endereco.estado.id", 
-				                                               "endereco.estado.descricao","endereco.pais.id", "endereco.pais.descricao","endereco.complemento", "identificadorFederal", "empresa.id");
+				                                               "endereco.estado.descricao","endereco.pais.id", "endereco.pais.descricao","endereco.complemento", "identificadorFederal", "empresa.id", "condicaoPagamento.id");
 		
 	}
 
@@ -39,7 +39,7 @@ public class ParceiroNegocioDAO {
 																model.getEndereco().getId(), model.getEndereco().getLogradouro(), model.getEndereco().getNumero(), model.getEndereco().getBairro(), 
 																model.getEndereco().getCidade(), model.getEndereco().getEstado().getId(), model.getEndereco().getEstado().getDescricao(),
 																model.getEndereco().getPais().getId(), model.getEndereco().getPais().getDescricao(), model.getEndereco().getComplemento(),
-																model.getIdentificadorFederal(), model.getEmpresa().getId());
+																model.getIdentificadorFederal(), model.getEmpresa().getId(), model.getCondicaoPagamento().getId());
 		
 		broker.execute();
 
