@@ -408,6 +408,8 @@ public class ConferenciaPdvFaces extends TSMainFaces {
 		List<PedidoVendaLinha> linhas = new ArrayList<PedidoVendaLinha>();
 
 		for (PedidoVendaLinha linha : this.pedidoVenda.getLinhas()) {
+			
+			linha.setVolume((linha.getQuantidadeLiberada().doubleValue()*linha.getVolume())/linha.getQuantidadeTotal());
 
 			if (linha.getQuantidadeLiberada().intValueExact() > 0) {
 

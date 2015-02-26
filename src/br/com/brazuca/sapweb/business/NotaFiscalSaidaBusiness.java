@@ -78,6 +78,8 @@ public class NotaFiscalSaidaBusiness {
 			
 			saidaLinha.getPedidoVendaLinha().setPedidoVenda(new PedidoVenda(model.getId()));
 			
+			saidaLinha.setVolume(linha.getVolume());
+			
 			saidaLinha.setCfop(new CFOP());
 			
 			saidaLinha.setCstCOFINS(new CST());

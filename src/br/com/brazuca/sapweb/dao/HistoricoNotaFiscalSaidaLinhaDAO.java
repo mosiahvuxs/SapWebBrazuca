@@ -14,21 +14,7 @@ import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 
 public class HistoricoNotaFiscalSaidaLinhaDAO {
-/*
-	public void inserir(NotaFiscalSaidaLinha model, TSDataBaseBrokerIf broker) throws TSApplicationException {
 
-		broker.setPropertySQL("historiconotafiscalsaidalinhadao.inserir",
-
-		model.getId(), model.getItem().getId(), model.getQuantidade(), model.getValorUnitario(), model.getValor(),
-
-		model.getCodigoImposto().getId(), model.getCodigoBarras(), model.getPedidoVendaLinha().getNumero(), model.getPedidoVendaLinha().getPedidoVenda().getId(), 
-		
-		model.getItem().getDescricao());
-
-		broker.execute();
-
-	}
-*/
 	@SuppressWarnings("unchecked")
 	public List<HistoricoNotaFiscalSaidaLinha> pesquisar(HistoricoNotaFiscalSaida model, String jndi) {
 
@@ -97,7 +83,7 @@ public class HistoricoNotaFiscalSaidaLinhaDAO {
 
 		broker.setPropertySQL("historiconotafiscalsaidalinhadao.inserirComBroker", model.getInterfaceId(), model.getNotaFiscalSaida().getInterfaceId(), model.getItem().getId(), model.getQuantidade(), model.getValorUnitario(),
 				                  model.getValor(), model.getCodigoImposto().getId(), model.getCstCOFINS().getId(), model.getCstICMS().getId(), model.getCstIPI().getId(), model.getCstPIS().getId(), model.getContaContabil().getId(), model.getCfop().getCodigo(), model.getCodigoBarras(), model.getUtilizacao().getId(),
-				                  model.getPedidoVendaLinha().getNumero(), model.getPedidoVendaLinha().getPedidoVenda().getId(), model.getItem().getDescricao());
+				                  model.getPedidoVendaLinha().getNumero(), model.getPedidoVendaLinha().getPedidoVenda().getId(), model.getItem().getDescricao(), model.getVolume());
 		
 		broker.execute();
 		

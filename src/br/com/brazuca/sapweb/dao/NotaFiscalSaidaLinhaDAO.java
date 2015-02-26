@@ -20,7 +20,7 @@ public class NotaFiscalSaidaLinhaDAO {
 		
 		return broker.getCollectionBean(NotaFiscalSaidaLinha.class, "interfaceId", "notaFiscalSaida.interfaceId", "item.id", "quantidade", "valorUnitario",
 																	"valor", "codigoImposto.id", "cstCOFINS.codigo", "cstICMS.codigo", "cstIPI.codigo", "cstPIS.codigo", "contaContabil.id", "cfop.codigo", "codigoBarras",
-																	"pedidoVendaLinha.numero", "pedidoVendaLinha.pedidoVenda.id", "item.descricao", "utilizacao.id");
+																	"pedidoVendaLinha.numero", "pedidoVendaLinha.pedidoVenda.id", "item.descricao", "utilizacao.id", "volume");
 
 	}
 

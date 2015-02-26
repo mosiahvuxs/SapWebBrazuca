@@ -11,6 +11,7 @@ public abstract class DocumentoLinhaAB implements Serializable {
 	private Long id;
 	private Item item;
 	private Double quantidade;
+	private Double quantidadeTotal;
 	private BigDecimal valorUnitario;
 	private CodigoImposto codigoImposto;
 	private Integer numero;
@@ -24,6 +25,7 @@ public abstract class DocumentoLinhaAB implements Serializable {
 	private Empresa empresa;
 	private String codigoBarras;
 	private Utilizacao utilizacao;
+	private Double volume;	
 
 	public Long getId() {
 		return id;
@@ -151,6 +153,22 @@ public abstract class DocumentoLinhaAB implements Serializable {
 
 	public void setUtilizacao(Utilizacao utilizacao) {
 		this.utilizacao = utilizacao;
+	}
+
+	public Double getVolume() {
+		return volume;
+	}
+
+	public void setVolume(Double volume) {
+		this.volume = volume;
+	}
+
+	public Double getQuantidadeTotal() {
+		return quantidadeTotal;
+	}
+
+	public void setQuantidadeTotal(Double quantidadeTotal) {
+		this.quantidadeTotal = quantidadeTotal;
 	}
 
 }

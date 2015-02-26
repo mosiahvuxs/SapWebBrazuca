@@ -16,7 +16,7 @@ public class PedidoVendaLinhaDAO {
 
 		broker.setPropertySQL("pedidovendalinhadao.inserir",
 
-		model.getItem().getId(), model.getCodigoBarras(), model.getQuantidade(), model.getValor(), model.getValorUnitario(), model.getCodigoImposto().getId(), model.getNumero(), model.getPedidoVenda().getId(), model.getItem().getDescricao());
+		model.getItem().getId(), model.getCodigoBarras(), model.getQuantidade(), model.getValor(), model.getValorUnitario(), model.getCodigoImposto().getId(), model.getNumero(), model.getPedidoVenda().getId(), model.getItem().getDescricao(), model.getVolume(), model.getQuantidadeTotal());
 
 		broker.execute();
 
@@ -27,7 +27,7 @@ public class PedidoVendaLinhaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		StringBuilder sql = new StringBuilder("SELECT ID, ITEM_DESCRICAO, ITEM_ID, CODIGO_BARRAS, QUANTIDADE, VALOR, VALOR_UNITARIO, CODIGO_IMPOSTO, NUMERO, PEDIDO_VENDA_ID, QUANTIDADE_LIBERADA FROM PUBLIC.PEDIDO_VENDAS_LINHAS WHERE 1 = 1 AND PEDIDO_VENDA_ID = ?");
+		StringBuilder sql = new StringBuilder("SELECT ID, ITEM_DESCRICAO, ITEM_ID, CODIGO_BARRAS, QUANTIDADE, VALOR, VALOR_UNITARIO, CODIGO_IMPOSTO, NUMERO, PEDIDO_VENDA_ID, QUANTIDADE_LIBERADA, VOLUME, QUANTIDADE_TOTAL FROM PUBLIC.PEDIDO_VENDAS_LINHAS WHERE 1 = 1 AND PEDIDO_VENDA_ID = ?");
 
 		if(!TSUtil.isEmpty(filtro)){
 			
@@ -38,20 +38,20 @@ public class PedidoVendaLinhaDAO {
 
 		broker.set(model.getSerial());
 
-		return broker.getCollectionBean(PedidoVendaLinha.class, "id", "item.descricao", "item.id", "codigoBarras", "quantidade", "valor", "valorUnitario", "codigoImposto.id", "numero", "pedidoVenda.id", "quantidadeLiberada");
+		return broker.getCollectionBean(PedidoVendaLinha.class, "id", "item.descricao", "item.id", "codigoBarras", "quantidade", "valor", "valorUnitario", "codigoImposto.id", "numero", "pedidoVenda.id", "quantidadeLiberada", "volume", "quantidadeTotal");
 	}
 
 	public PedidoVendaLinha obter(Item model) {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		StringBuilder sql = new StringBuilder("SELECT ID, ITEM_DESCRICAO, ITEM_ID, CODIGO_BARRAS, QUANTIDADE, VALOR, VALOR_UNITARIO, CODIGO_IMPOSTO, NUMERO, PEDIDO_VENDA_ID, QUANTIDADE_LIBERADA FROM PUBLIC.PEDIDO_VENDAS_LINHAS WHERE CODIGO_BARRAS = ? LIMIT 1");
+		StringBuilder sql = new StringBuilder("SELECT ID, ITEM_DESCRICAO, ITEM_ID, CODIGO_BARRAS, QUANTIDADE, VALOR, VALOR_UNITARIO, CODIGO_IMPOSTO, NUMERO, PEDIDO_VENDA_ID, QUANTIDADE_LIBERADA, VOLUME, QUANTIDADE_TOTAL FROM PUBLIC.PEDIDO_VENDAS_LINHAS WHERE CODIGO_BARRAS = ? LIMIT 1");
 
 		broker.setSQL(sql.toString());
 
 		broker.set(model.getId());
 
-		return (PedidoVendaLinha) broker.getObjectBean(PedidoVendaLinha.class, "id", "item.descricao", "item.id", "codigoBarras", "quantidade", "valor", "valorUnitario", "codigoImposto.id", "numero", "pedidoVenda.id", "quantidadeLiberada");
+		return (PedidoVendaLinha) broker.getObjectBean(PedidoVendaLinha.class, "id", "item.descricao", "item.id", "codigoBarras", "quantidade", "valor", "valorUnitario", "codigoImposto.id", "numero", "pedidoVenda.id", "quantidadeLiberada", "volume", "quantidadeTotal");
 	}
 
 	public void excluir(PedidoVendaLinha model) throws TSApplicationException {
@@ -90,7 +90,7 @@ public class PedidoVendaLinhaDAO {
 		broker.setPropertySQL("pedidovendalinhadaoI.pesquisarInterface", model.getInterfaceId());
 		
 		return broker.getCollectionBean(PedidoVendaLinha.class, "interfaceId", "pedidoVenda.interfaceId", "item.id", "quantidade", "valorUnitario",
-																	"valor", "codigoImposto.id", "cstCOFINS.codigo", "cstICMS.codigo", "cstIPI.codigo", "cstPIS.codigo", "contaContabil.id", "cfop.codigo", "codigoBarras", "utilizacao.id");
+																	"valor", "codigoImposto.id", "cstCOFINS.codigo", "cstICMS.codigo", "cstIPI.codigo", "cstPIS.codigo", "contaContabil.id", "cfop.codigo", "codigoBarras", "utilizacao.id", "volume", "quantidadeTotal");
 	}
 
 	public void inserirComBroker(PedidoVendaLinha model, TSDataBaseBrokerIf broker) throws TSApplicationException {
@@ -98,7 +98,8 @@ public class PedidoVendaLinhaDAO {
 		model.setInterfaceId(broker.getSequenceNextValue("pedidovenda_linhas_id_seq"));
 
 		broker.setPropertySQL("pedidovendalinhadaoI.inserirComBroker", model.getInterfaceId(), model.getPedidoVenda().getInterfaceId(), model.getItem().getId(), model.getQuantidade(), model.getValorUnitario(),
-				                  model.getValor(), model.getCodigoImposto().getId(), model.getCstCOFINS().getId(), model.getCstICMS().getId(), model.getCstIPI().getId(), model.getCstPIS().getId(), model.getContaContabil().getId(), model.getCfop().getCodigo(), model.getCodigoBarras(), model.getUtilizacao().getId());
+				                  model.getValor(), model.getCodigoImposto().getId(), model.getCstCOFINS().getId(), model.getCstICMS().getId(), model.getCstIPI().getId(), model.getCstPIS().getId(), model.getContaContabil().getId(), 
+				                  model.getCfop().getCodigo(), model.getCodigoBarras(), model.getUtilizacao().getId(), model.getVolume(), model.getQuantidadeTotal());
 		
 		broker.execute();
 		
