@@ -4,14 +4,17 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.brazuca.sapweb.dao.CondicaoPagamentoDAO;
 import br.com.brazuca.sapweb.dao.EstoqueDAO;
 import br.com.brazuca.sapweb.dao.ItemDAO;
 import br.com.brazuca.sapweb.dao.ParceiroNegocioDAO;
 import br.com.brazuca.sapweb.dao.VendedorDAO;
 import br.com.brazuca.sapweb.model.Empresa;
 import br.com.brazuca.sapweb.restful.ClienteRestful;
+import br.com.brazuca.sapweb.restful.CondicaoPagamentoRestful;
 import br.com.brazuca.sapweb.restful.EstoqueRestful;
 import br.com.brazuca.sapweb.restful.VendedorRestful;
+import br.com.brazuca.sapweb.sap.model.CondicaoPagamento;
 import br.com.brazuca.sapweb.sap.model.Estoque;
 import br.com.brazuca.sapweb.sap.model.Item;
 import br.com.brazuca.sapweb.sap.model.ParceiroNegocio;
@@ -26,7 +29,7 @@ import br.com.topsys.web.util.TSFacesUtil;
 @ManagedBean(name = "importacaoAndroidFaces")
 public class ImportacaoAndroidFaces extends TSMainFaces {
 
-	private Boolean flagCliente,flagEstoque,flagVendedor;
+	private Boolean flagCliente,flagEstoque,flagVendedor,flagCondicaoPagamento;
 	private Empresa empresa;
 
 	@PostConstruct
@@ -52,6 +55,8 @@ public class ImportacaoAndroidFaces extends TSMainFaces {
 		this.flagEstoque = Boolean.TRUE;
 		
 		this.flagVendedor = Boolean.TRUE;
+		
+		this.flagCondicaoPagamento = Boolean.TRUE;
 	
 	}
 
@@ -121,6 +126,20 @@ public class ImportacaoAndroidFaces extends TSMainFaces {
 			
 		}
 		
+		if(this.flagCondicaoPagamento){
+			
+			new CondicaoPagamentoDAO().excluir(new CondicaoPagamento(this.empresa));
+			
+			for (CondicaoPagamento item : new CondicaoPagamentoRestful().pesquisar(new CondicaoPagamento(this.empresa))) {
+				
+				item.setEmpresa(this.empresa);
+				
+				new CondicaoPagamentoDAO().inserir(item);
+				
+			}			
+			
+		}		
+		
 		return null;
 		
 	}
@@ -155,6 +174,14 @@ public class ImportacaoAndroidFaces extends TSMainFaces {
 
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
+	}
+
+	public Boolean getFlagCondicaoPagamento() {
+		return flagCondicaoPagamento;
+	}
+
+	public void setFlagCondicaoPagamento(Boolean flagCondicaoPagamento) {
+		this.flagCondicaoPagamento = flagCondicaoPagamento;
 	}
 
 	
