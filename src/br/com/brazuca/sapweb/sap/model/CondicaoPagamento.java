@@ -20,6 +20,8 @@ public class CondicaoPagamento implements Serializable {
 	
 	private String mensagemErro; 
 	
+	private Integer diasVencimento;	
+	
 	public CondicaoPagamento(){
 		
 	}
@@ -58,6 +60,14 @@ public class CondicaoPagamento implements Serializable {
 
 	public void setMensagemErro(String mensagemErro) {
 		this.mensagemErro = mensagemErro;
+	}
+
+	public Integer getDiasVencimento() {
+		return diasVencimento;
+	}
+
+	public void setDiasVencimento(Integer diasVencimento) {
+		this.diasVencimento = diasVencimento;
 	}
 
 }

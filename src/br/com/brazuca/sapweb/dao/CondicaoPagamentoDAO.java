@@ -23,7 +23,7 @@ public class CondicaoPagamentoDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 		
-		broker.setPropertySQL("condicaopagamentodaoI.inserir", model.getId(), model.getDescricao(), model.getEmpresa().getId());
+		broker.setPropertySQL("condicaopagamentodaoI.inserir", model.getId(), model.getDescricao(), model.getDiasVencimento(),model.getEmpresa().getId());
 		
 		broker.execute();
 		
@@ -38,7 +38,7 @@ public class CondicaoPagamentoDAO {
 		
 		broker.setPropertySQL("condicaopagamentodaoI.pesquisar", model.getEmpresa().getId());
 		
-		return broker.getCollectionBean(CondicaoPagamento.class, "id", "descricao", "empresa.id");
+		return broker.getCollectionBean(CondicaoPagamento.class, "id", "descricao", "diasVencimento","empresa.id");
 		
 	}	
 
