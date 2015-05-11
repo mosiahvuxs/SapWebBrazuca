@@ -14,7 +14,7 @@ public final class Constantes {
 	public static final String EMPRESA = "empresa";
 
 	public static final String JNDI_SAP_SERVICO_LOCAL = "java:comp/env/jdbc/ServicoSapBrazucaDS";
-	public static final String JNDI_SAP_SERVICO_MATRIZ = "java:comp/env/jdbc/ServicoSapBrazucaMatrizDS";		
+	public static final String JNDI_SAP_SERVICO_MATRIZ = "java:comp/env/jdbc/ServicoSapBrazucaMatrizDS";			
 	
 	public static final String URL_RESTFUL_BRAZUCA_LOCAL = TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("L") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("D") || TSFacesUtil.getRequest().getServerName().substring(0, 1).equalsIgnoreCase("H") ? Constantes.URL_RESTFUL_BRAZUCA_DESENV_LOCAL : Constantes.URL_RESTFUL_BRAZUCA_PROD_LOCAL;
 	//public static final String URL_RESTFUL_BRAZUCA_DESENV_LOCAL = "http://localhost:8085/ServicoSapBrazuca/";	
