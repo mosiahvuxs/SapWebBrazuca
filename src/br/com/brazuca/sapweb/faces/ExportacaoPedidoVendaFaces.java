@@ -37,7 +37,7 @@ public class ExportacaoPedidoVendaFaces extends TSMainFaces {
 	private Empresa empresa;
 
 	public ExportacaoPedidoVendaFaces() {
-		
+
 		this.initObjetoNaSecao();
 
 		this.limpar();
@@ -46,7 +46,7 @@ public class ExportacaoPedidoVendaFaces extends TSMainFaces {
 	private void initObjetoNaSecao() {
 
 		this.empresa = (Empresa) TSFacesUtil.getObjectInSession(Constantes.EMPRESA);
-		
+
 	}
 
 	public void limpar() {
@@ -54,9 +54,9 @@ public class ExportacaoPedidoVendaFaces extends TSMainFaces {
 		this.pedidoVenda = new PedidoVenda();
 
 		this.pedidoVenda.setCliente(new ParceiroNegocio());
-		
+
 		this.pedidoVenda.setVendedor(new Vendedor());
-		
+
 		this.pedidoVenda.setEmpresa(this.empresa);
 
 		if (TSUtil.isEmpty(this.lista)) {
@@ -74,17 +74,17 @@ public class ExportacaoPedidoVendaFaces extends TSMainFaces {
 
 	@Override
 	protected String find() {
-		
+
 		this.lista = new ArrayList<PedidoVenda>();
-		
-		for (PedidoVenda item : new PedidoVendaDAO().pesquisarInterface(this.pedidoVenda,Constantes.JNDI_SAP_SERVICO_LOCAL)) {
-			
-			item.setLinhas(new PedidoVendaLinhaDAO().pesquisarInterface(item,Constantes.JNDI_SAP_SERVICO_LOCAL));
+
+		for (PedidoVenda item : new PedidoVendaDAO().pesquisarInterface(this.pedidoVenda, Constantes.JNDI_SAP_SERVICO_LOCAL)) {
+
+			item.setLinhas(new PedidoVendaLinhaDAO().pesquisarInterface(item, Constantes.JNDI_SAP_SERVICO_LOCAL));
 
 			item.setEmpresa(new EmpresaDAO().obter(item.getEmpresa()));
-			
+
 			this.lista.add(item);
-			
+
 		}
 
 		TSFacesUtil.gerarResultadoLista(this.lista);
@@ -105,37 +105,42 @@ public class ExportacaoPedidoVendaFaces extends TSMainFaces {
 	protected String insert() throws TSApplicationException {
 
 		super.setClearFields(false);
-		
+
 		super.setDefaultMessage(false);
-		
+
 		List<PedidoVenda> listaExcluir = new ArrayList<PedidoVenda>();
 
 		if (!TSUtil.isEmpty(this.lista)) {
 
 			for (PedidoVenda pedido : lista) {
 
-				pedido.setDataCriacao(new Timestamp(System.currentTimeMillis()));
+				if (!TSUtil.isEmpty(pedido.isSelecionado()) && pedido.isSelecionado()) {
 
-				PedidoVenda model = new PedidoVendaRestful().inserirLote(pedido, Constantes.URL_RESTFUL_BRAZUCA_MATRIZ);
+					pedido.setDataCriacao(new Timestamp(System.currentTimeMillis()));
 
-				if (TSUtil.isEmpty(model.getMensagemErro())) {
+					PedidoVenda model = new PedidoVendaRestful().inserirLote(pedido, Constantes.URL_RESTFUL_BRAZUCA_MATRIZ);
 
-					listaExcluir.add(pedido);
+					if (TSUtil.isEmpty(model.getMensagemErro())) {
 
-					pedido.setStatus(new Status(Constantes.ID_STATUS_PROCESSADO));
+						listaExcluir.add(pedido);
 
-					new HistoricoPedidoVendaDAO().inserirInterface(this.popularHistorico(pedido), Constantes.JNDI_SAP_SERVICO_LOCAL);
+						pedido.setStatus(new Status(Constantes.ID_STATUS_PROCESSADO));
+
+						new HistoricoPedidoVendaDAO().inserirInterface(this.popularHistorico(pedido), Constantes.JNDI_SAP_SERVICO_LOCAL);
+
+						new PedidoVendaDAO().excluirInterface(pedido, Constantes.JNDI_SAP_SERVICO_LOCAL);
+
+						TSFacesUtil.addInfoMessage("Pedido com número " + pedido.getIdExterno() + " exportado com sucesso.");
+						
+					} else {
+
+						TSFacesUtil.addErrorMessage("Não foi possível exportar o Pedido número : " + pedido.getIdExterno() + ". " + model.getMensagemErro());
+
+					}
 					
-					new PedidoVendaDAO().excluirInterface(pedido, Constantes.JNDI_SAP_SERVICO_LOCAL);
-					
-					TSFacesUtil.addInfoMessage("Pedido com número " + pedido.getIdExterno() + " exportado com sucesso.");
-
-				} else {
-
-					TSFacesUtil.addErrorMessage("Não foi possível exportar o Pedido número : " + pedido.getIdExterno() + ". " + model.getMensagemErro());
 				}
 			}
-			
+
 			this.lista.removeAll(listaExcluir);
 
 		} else {
@@ -149,61 +154,61 @@ public class ExportacaoPedidoVendaFaces extends TSMainFaces {
 	}
 
 	private HistoricoPedidoVenda popularHistorico(PedidoVenda model) {
-		
+
 		HistoricoPedidoVenda h = new HistoricoPedidoVenda();
-		
+
 		h.setCliente(model.getCliente());
-		
+
 		h.setCondicaoPagamento(model.getCondicaoPagamento());
-		
+
 		h.setDataDocumento(model.getDataDocumento());
-		
+
 		h.setDataEmissao(model.getDataEmissao());
-		
+
 		h.setDataDocumento(model.getDataDocumento());
-		
+
 		h.setDataExportacao(model.getDataExportacao());
-		
+
 		h.setDataLancamento(model.getDataLancamento());
-		
+
 		h.setDataImportacao(model.getDataImportacao());
-		
+
 		h.setEmpresa(model.getEmpresa());
-		
+
 		h.setEnderecoCobrancaFormatado(model.getEnderecoCobrancaFormatado());
-		
+
 		h.setEnderecoEntregaFormatado(model.getEnderecoEntregaFormatado());
-		
+
 		h.setId(model.getId());
-		
+
 		h.setIdExterno(model.getIdExterno());
-		
+
 		h.setLinhas(model.getLinhas());
-		
+
 		h.setObservacao(model.getObservacao());
-		
+
 		h.setOrigem(model.getOrigem());
-		
+
 		h.setParcelaNotaFiscalSaida(model.getParcelaNotaFiscalSaida());
-		
+
 		h.setParcelaNotaFiscalSaidaList(model.getParcelaNotaFiscalSaidaList());
-		
+
 		h.setSequencia(model.getSequencia());
-		
+
 		h.setPercentualDesconto(model.getPercentualDesconto());
-		
+
 		h.setSerial(model.getSerial());
-		
+
 		h.setStatus(model.getStatus());
-		
+
 		h.setTipo(model.getTipo());
-		
+
 		h.setTipoEnvio(model.getTipoEnvio());
-		
+
 		h.setTipoResumo(model.getTipoResumo());
-		
+
 		h.setValor(model.getValor());
-		
+
 		h.setVendedor(model.getVendedor());
 
 		return h;
@@ -216,7 +221,7 @@ public class ExportacaoPedidoVendaFaces extends TSMainFaces {
 		TSFacesUtil.gerarResultadoLista(this.listaInterfaceMatriz);
 
 		return null;
-		
+
 	}
 
 	public PedidoVenda getPedidoVenda() {
@@ -266,6 +271,5 @@ public class ExportacaoPedidoVendaFaces extends TSMainFaces {
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}
-
 
 }

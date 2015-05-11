@@ -11,7 +11,6 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
 import br.com.brazuca.sapweb.sap.model.Entrega;
-import br.com.brazuca.sapweb.util.Constantes;
 import br.com.brazuca.sapweb.util.WebServiceUtil;
 
 public class EntregaRestful {

@@ -20,7 +20,6 @@ import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.client.filter.LoggingFilter;
 
 public class VendedorRestful {
 
@@ -30,7 +29,7 @@ public class VendedorRestful {
 		cc.getClasses().add(Vendedor.class);
 
 		Client client = Client.create(cc);
-		client.addFilter(new LoggingFilter());
+		//client.addFilter(new LoggingFilter());
 
 		WebResource resource = client.resource(Constantes.URL_RESTFUL_BRAZUCA_MATRIZ);
 

@@ -2,10 +2,13 @@ package br.com.brazuca.sapweb.model;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import br.com.brazuca.sapweb.sap.model.Pais;
 import br.com.topsys.util.TSUtil;
 
 @SuppressWarnings("serial")
+@XmlRootElement
 public class Empresa implements Serializable{
 	
 	private Long id;

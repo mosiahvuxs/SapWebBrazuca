@@ -89,17 +89,17 @@ public class PedidoVendaLinhaDAO {
 		
 		broker.setPropertySQL("pedidovendalinhadaoI.pesquisarInterface", model.getInterfaceId());
 		
-		return broker.getCollectionBean(PedidoVendaLinha.class, "interfaceId", "pedidoVenda.interfaceId", "item.id", "quantidade", "valorUnitario",
-																	"valor", "codigoImposto.id", "cstCOFINS.codigo", "cstICMS.codigo", "cstIPI.codigo", "cstPIS.codigo", "contaContabil.id", "cfop.codigo", "codigoBarras", "utilizacao.id", "volume", "quantidadeTotal");
+		return broker.getCollectionBean(PedidoVendaLinha.class, "interfaceId", "pedidoVenda.interfaceId", "item.id", "item.estoque.id","quantidade", "valorUnitario",
+																	"valor", "codigoImposto.id", "cstCOFINS.codigo", "cstICMS.codigo", "cstIPI.codigo", "cstPIS.codigo", "contaContabil.id", "cfop.codigo", "codigoBarras", "utilizacao.id", "item.descricao", "volume");
+
 	}
 
 	public void inserirComBroker(PedidoVendaLinha model, TSDataBaseBrokerIf broker) throws TSApplicationException {
 		
 		model.setInterfaceId(broker.getSequenceNextValue("pedidovenda_linhas_id_seq"));
 
-		broker.setPropertySQL("pedidovendalinhadaoI.inserirComBroker", model.getInterfaceId(), model.getPedidoVenda().getInterfaceId(), model.getItem().getId(), model.getQuantidade(), model.getValorUnitario(),
-				                  model.getValor(), model.getCodigoImposto().getId(), model.getCstCOFINS().getId(), model.getCstICMS().getId(), model.getCstIPI().getId(), model.getCstPIS().getId(), model.getContaContabil().getId(), 
-				                  model.getCfop().getCodigo(), model.getCodigoBarras(), model.getUtilizacao().getId(), model.getVolume(), model.getQuantidadeTotal());
+		broker.setPropertySQL("pedidovendalinhadaoI.inserirComBroker", model.getInterfaceId(), model.getPedidoVenda().getInterfaceId(), model.getItem().getId(), model.getItem().getEstoque().getId(),model.getQuantidade(), model.getValorUnitario(),
+				                  model.getValor(), model.getCodigoImposto().getId(), model.getCstCOFINS().getId(), model.getCstICMS().getId(), model.getCstIPI().getId(), model.getCstPIS().getId(), model.getContaContabil().getId(), model.getCfop().getCodigo(), model.getCodigoBarras(), model.getUtilizacao().getId(), model.getItem().getDescricao(), model.getVolume());
 		
 		broker.execute();
 		

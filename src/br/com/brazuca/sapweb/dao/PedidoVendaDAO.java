@@ -224,7 +224,7 @@ public class PedidoVendaDAO {
         
         StringBuilder sql = new StringBuilder();
         
-        sql.append("SELECT ID, DATA_LANCAMENTO, DATA_DOCUMENTO, DATA_VENCIMENTO, CONDICAO_PAGAMENTO_ID, VALOR, DATA_EXPORTACAO, DATA_IMPORTACAO, DATA_ATUALIZACAO, SEQUENCIA_ID, STATUS_ID, MENSAGEM_ERRO, CLIENTE_TIPO_IDENTIFICADOR, CLIENTE_IDENTIFICADOR, CLIENTE_NOME, CLIENTE_NOME_FANTASIA, CLIENTE_TELEFONE_RESIDENCIAL, CLIENTE_TELEFONE_CELULAR, CLIENTE_FAX, CLIENTE_EMAIL, CLIENTE_OBSERVACAO, CLIENTE_ENDERECO_LOGRADOURO, CLIENTE_ENDERECO_NUMERO, CLIENTE_ENDERECO_COMPLEMENTO, CLIENTE_ENDERECO_BAIRRO, CLIENTE_ENDERECO_CIDADE, CLIENTE_ENDERECO_ESTADO, CLIENTE_ENDERECO_CEP, CLIENTE_ENDERECO_PAIS, CLIENTE_ENDERECO_MUNICIPIO, CLIENTE_INSCRICAO_ESTADUAL, CLIENTE_INSCRICAO_ESTADUAL_SUBTRIB, CLIENTE_INSCRICAO_MUNICIPAL, CLIENTE_INSCRICAO_INSS, CLIENTE_DATA_ATUALIZACAO, CLIENTE_CLASSIFICACAO_ID, VENDEDOR_TIPO_IDENTIFICADOR, VENDEDOR_IDENTIFICADOR, VENDEDOR_NOME, VENDEDOR_DATA_ATUALIZACAO, VENDEDOR_GRUPO_COMISSAO_ID, ID_EXTERNO, EMPRESA_ID, CLIENTE_TIPO, CLIENTE_ID, VENDEDOR_ID, ENDERECO_ENTREGA, ENDERECO_COBRANCA, CLIENTE_IDENTIFICADOR_FEDERAL, OBSERVACAO, TIPO_RESUMO, TIPO, TIPO_ENVIO FROM PEDIDOVENDA WHERE STATUS_ID !=2 AND EMPRESA_ID = ? ");
+        sql.append("SELECT ID, DATA_LANCAMENTO, DATA_DOCUMENTO, DATA_VENCIMENTO, CONDICAO_PAGAMENTO_ID, VALOR, DATA_EXPORTACAO, DATA_IMPORTACAO, DATA_ATUALIZACAO, SEQUENCIA_ID, STATUS_ID, MENSAGEM_ERRO, CLIENTE_TIPO_IDENTIFICADOR, CLIENTE_IDENTIFICADOR, CLIENTE_NOME, CLIENTE_NOME_FANTASIA, CLIENTE_TELEFONE_RESIDENCIAL, CLIENTE_TELEFONE_CELULAR, CLIENTE_FAX, CLIENTE_EMAIL, CLIENTE_OBSERVACAO, CLIENTE_ENDERECO_LOGRADOURO, CLIENTE_ENDERECO_NUMERO, CLIENTE_ENDERECO_COMPLEMENTO, CLIENTE_ENDERECO_BAIRRO, CLIENTE_ENDERECO_CIDADE, CLIENTE_ENDERECO_ESTADO, CLIENTE_ENDERECO_CEP, CLIENTE_ENDERECO_PAIS, CLIENTE_ENDERECO_MUNICIPIO, CLIENTE_INSCRICAO_ESTADUAL, CLIENTE_INSCRICAO_ESTADUAL_SUBTRIB, CLIENTE_INSCRICAO_MUNICIPAL, CLIENTE_INSCRICAO_INSS, CLIENTE_DATA_ATUALIZACAO, CLIENTE_CLASSIFICACAO_ID, VENDEDOR_TIPO_IDENTIFICADOR, VENDEDOR_IDENTIFICADOR, VENDEDOR_NOME, VENDEDOR_DATA_ATUALIZACAO, VENDEDOR_GRUPO_COMISSAO_ID, ID_EXTERNO, EMPRESA_ID, CLIENTE_TIPO, CLIENTE_ID, VENDEDOR_ID, ENDERECO_ENTREGA, ENDERECO_COBRANCA, CLIENTE_IDENTIFICADOR_FEDERAL, OBSERVACAO, TIPO_RESUMO, TIPO, TIPO_ENVIO, PERCENTUAL_DESCONTO FROM PEDIDOVENDA WHERE STATUS_ID !=2 AND EMPRESA_ID = ? ");
         
 		if (!TSUtil.isEmpty(model.getCliente()) && !TSUtil.isEmpty(model.getCliente().getNome())) {
 
@@ -325,19 +325,19 @@ public class PedidoVendaDAO {
 		}
 		
         return broker.getCollectionBean(PedidoVenda.class, "interfaceId", "dataLancamento", "dataDocumento", "dataVencimento", 
-        													   "condicaoPagamento.id", "valor","dataExportacao", 
-        													   "dataImportacao", "dataAtualizacao", "sequencia.id", "status.id",
-        													   "mensagemErro", "cliente.identificadorFiscal.tipoIdentificador",
-        													   "cliente.identificadorFiscal.identificador", "cliente.nome", "cliente.nomeFantasia",
-        													   "cliente.telefoneResidencial", "cliente.telefoneCelular", "cliente.fax", "cliente.email",
-        													   "cliente.observacao", "cliente.endereco.logradouro","cliente.endereco.numero",
-        													   "cliente.endereco.complemento", "cliente.endereco.bairro", "cliente.endereco.cidade",
-        													   "cliente.endereco.pais.estado.id", "cliente.endereco.cep", "cliente.endereco.pais.id",
-        													   "cliente.endereco.municipio.id", "cliente.identificadorFiscal.inscricaoEstadual",
-        													   "cliente.identificadorFiscal.inscricaoEstadualSubstitutoTributaria", "cliente.identificadorFiscal.inscricaoMunicipal",
-        													   "cliente.identificadorFiscal.inscricaoINSS", "cliente.dataAtualizacao", "cliente.classificacao.id", "vendedor.tipoIdentificador",
-        													   "vendedor.identificador", "vendedor.nome", "vendedor.dataAtualizacao", "vendedor.grupoComissao.id", "idExterno", "empresa.id", "cliente.tipo", "cliente.id",
-        													   "vendedor.id", "enderecoEntregaFormatado", "enderecoCobrancaFormatado", "cliente.identificadorFederal", "observacao", "tipoResumo", "tipo", "tipoEnvio");
+				   "condicaoPagamento.id", "valor","dataExportacao", 
+				   "dataImportacao", "dataAtualizacao", "sequencia.id", "status.id",
+				   "mensagemErro", "cliente.identificadorFiscal.tipoIdentificador",
+				   "cliente.identificadorFiscal.identificador", "cliente.nome", "cliente.nomeFantasia",
+				   "cliente.telefoneResidencial", "cliente.telefoneCelular", "cliente.fax", "cliente.email",
+				   "cliente.observacao", "cliente.endereco.logradouro","cliente.endereco.numero",
+				   "cliente.endereco.complemento", "cliente.endereco.bairro", "cliente.endereco.cidade",
+				   "cliente.endereco.estado.id", "cliente.endereco.cep", "cliente.endereco.pais.id",
+				   "cliente.endereco.municipio.id", "cliente.identificadorFiscal.inscricaoEstadual",
+				   "cliente.identificadorFiscal.inscricaoEstadualSubstitutoTributaria", "cliente.identificadorFiscal.inscricaoMunicipal",
+				   "cliente.identificadorFiscal.inscricaoINSS", "cliente.dataAtualizacao", "cliente.classificacao.id", "vendedor.tipoIdentificador",
+				   "vendedor.identificador", "vendedor.nome", "vendedor.dataAtualizacao", "vendedor.grupoComissao.id", "idExterno", "empresa.id", "cliente.tipo", "cliente.id",
+				   "vendedor.id", "enderecoEntregaFormatado", "enderecoCobrancaFormatado", "cliente.identificadorFederal", "observacao", "tipoResumo", "tipo", "tipoEnvio","percentualDesconto");
 	}
 
 	public void alterarInterface(PedidoVenda model, String jndi) throws TSApplicationException{
@@ -349,7 +349,7 @@ public class PedidoVendaDAO {
 		broker.execute();
 		
 	}
-
+/*
 	public PedidoVenda inserirInterface(PedidoVenda model, String jndi) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
@@ -365,14 +365,14 @@ public class PedidoVendaDAO {
 																	 model.getCliente().getNome(), model.getCliente().getNomeFantasia(), model.getCliente().getTelefoneResidencial(), model.getCliente().getTelefoneCelular(),
 																	 model.getCliente().getFax(), model.getCliente().getEmail(), model.getCliente().getObservacao(), model.getCliente().getEndereco().getLogradouro(),
 																	 model.getCliente().getEndereco().getNumero(), model.getCliente().getEndereco().getComplemento(), model.getCliente().getEndereco().getBairro(),
-																	 model.getCliente().getEndereco().getCidade(), model.getCliente().getEndereco().getPais().getEstado().getId(), model.getCliente().getEndereco().getCep(),
+																	 model.getCliente().getEndereco().getCidade(), model.getCliente().getEndereco().getEstado().getId(), model.getCliente().getEndereco().getCep(),
 																	 model.getCliente().getEndereco().getPais().getId(), model.getCliente().getEndereco().getMunicipio().getId(),
 																	 model.getCliente().getIdentificadorFiscal().getInscricaoEstadual(), model.getCliente().getIdentificadorFiscal().getInscricaoEstadualSubstitutoTributaria(),
 																	 model.getCliente().getIdentificadorFiscal().getInscricaoMunicipal(), model.getCliente().getIdentificadorFiscal().getInscricaoINSS(),
 																	 model.getCliente().getDataAtualizacao(), model.getCliente().getClassificacao().getId(), model.getVendedor().getTipoIdentificador(),
 																	 model.getVendedor().getIdentificador(), model.getVendedor().getNome(), model.getVendedor().getDataAtualizacao(), model.getVendedor().getGrupoComissao().getId(),
 																	 model.getIdExterno(), model.getEmpresa().getId(), model.getCliente().getTipo(), model.getCliente().getId(), model.getVendedor().getId(), model.getEnderecoEntregaFormatado(),
-																	 model.getEnderecoCobrancaFormatado(),model.getCliente().getIdentificadorFederal(), model.getObservacao(), model.getTipoResumo(), model.getTipo(), model.getTipoEnvio());
+																	 model.getEnderecoCobrancaFormatado(),model.getCliente().getIdentificadorFederal(), model.getObservacao(), model.getTipoResumo(), model.getTipo(), model.getTipoEnvio(), model.getPercentualDesconto());
 		
 		broker.execute();
 		
@@ -391,7 +391,7 @@ public class PedidoVendaDAO {
 		return model;
 
 	}
-
+*/
 	public void excluirInterface(PedidoVenda model, String jndi) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(jndi);
