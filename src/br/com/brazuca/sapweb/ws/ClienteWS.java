@@ -75,11 +75,11 @@ public class ClienteWS {
 			
 			if(!TSUtil.isEmpty(lista) && lista.size()>0){
 				
-				response = Response.status(201).build();
+				response = Response.status(403).build();
 				
 			}else{
 				
-				response = Response.status(403).build();
+				response = Response.status(201).build();
 				
 			}
 

@@ -17,7 +17,6 @@ import br.com.brazuca.sapweb.dao.ItemDAO;
 import br.com.brazuca.sapweb.dao.PedidoVendaDAO;
 import br.com.brazuca.sapweb.sap.model.Estoque;
 import br.com.brazuca.sapweb.sap.model.Item;
-import br.com.brazuca.sapweb.sap.model.ParceiroNegocio;
 import br.com.brazuca.sapweb.sap.model.PedidoVenda;
 import br.com.brazuca.sapweb.util.Constantes;
 import br.com.brazuca.sapweb.validation.EstoqueValidation;
@@ -83,11 +82,11 @@ public class EstoqueWS {
 			
 			if(!TSUtil.isEmpty(lista) && lista.size()>0){
 				
-				response = Response.status(201).build();
+				response = Response.status(403).build();
 				
 			}else{
 				
-				response = Response.status(403).build();
+				response = Response.status(201).build();
 				
 			}
 
