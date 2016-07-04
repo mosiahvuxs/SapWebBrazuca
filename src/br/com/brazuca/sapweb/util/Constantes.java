@@ -22,8 +22,12 @@ public final class Constantes {
 	//public static final String URL_RESTFUL_BRAZUCA_DESENV_LOCAL = "http://murrinha:8085/ServicoSapBrazuca/";
 	//public static final String URL_RESTFUL_BRAZUCA_PROD_LOCAL = "http://murrinha:8085/ServicoSapBrazuca/";
 
-	public static final String URL_RESTFUL_BRAZUCA_DESENV_LOCAL = "http://172.16.10.147:8085/ServicoSapBrazuca/";
-	public static final String URL_RESTFUL_BRAZUCA_PROD_LOCAL = "http://172.16.10.147:8085/ServicoSapBrazuca/";
+	public static final String URL_RESTFUL_BRAZUCA_DESENV_LOCAL = "http://172.16.10.146:8085/ServicoSapBrazuca/";
+	public static final String URL_RESTFUL_BRAZUCA_PROD_LOCAL = "http://172.16.10.146:8085/ServicoSapBrazuca/";
+	
+	
+	//public static final String URL_RESTFUL_BRAZUCA_DESENV_LOCAL = "http://172.16.10.147:8085/ServicoSapBrazuca/";
+	//public static final String URL_RESTFUL_BRAZUCA_PROD_LOCAL = "http://172.16.10.147:8085/ServicoSapBrazuca/";
 	//public static final String URL_RESTFUL_BRAZUCA_DESENV_LOCAL = "http://servidor-pc:8085/ServicoSapBrazuca/";	
 	//public static final String URL_RESTFUL_BRAZUCA_PROD_LOCAL = "http://servidor-pc:8085/ServicoSapBrazuca/";
 	
